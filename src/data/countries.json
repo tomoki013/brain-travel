@@ -1,30 +1,2579 @@
 [
   {
     "name": {
-      "common": "France",
-      "official": "French Republic",
-      "nativeName": {
-        "fra": {
-          "official": "République française",
-          "common": "France"
-        }
-      }
+      "common": "Japan",
+      "official": "Japan"
     },
+    "nameJP": "日本",
+    "cca3": "JPN",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Afghanistan",
+      "official": "Islamic Republic of Afghanistan"
+    },
+    "nameJP": "アフガニスタン",
+    "cca3": "AFG",
+    "borders": [
+      "IRN",
+      "PAK",
+      "TKM",
+      "UZB",
+      "TJK",
+      "CHN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Albania",
+      "official": "Republic of Albania"
+    },
+    "nameJP": "アルバニア",
+    "cca3": "ALB",
+    "borders": [
+      "MNE",
+      "GRC",
+      "MKD",
+      "KOS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Algeria",
+      "official": "People's Democratic Republic of Algeria"
+    },
+    "nameJP": "アルジェリア",
+    "cca3": "DZA",
+    "borders": [
+      "TUN",
+      "LBY",
+      "NER",
+      "ESH",
+      "MRT",
+      "MLI",
+      "MAR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Andorra",
+      "official": "Principality of Andorra"
+    },
+    "nameJP": "アンドラ",
+    "cca3": "AND",
+    "borders": [
+      "FRA",
+      "ESP"
+    ]
+  },
+  {
+    "name": {
+      "common": "Angola",
+      "official": "Republic of Angola"
+    },
+    "nameJP": "アンゴラ",
+    "cca3": "AGO",
+    "borders": [
+      "COG",
+      "COD",
+      "ZMB",
+      "NAM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Antigua and Barbuda",
+      "official": "Antigua and Barbuda"
+    },
+    "nameJP": "アンティグア・バーブーダ",
+    "cca3": "ATG",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Argentina",
+      "official": "Argentine Republic"
+    },
+    "nameJP": "アルゼンチン",
+    "cca3": "ARG",
+    "borders": [
+      "BOL",
+      "BRA",
+      "CHL",
+      "PRY",
+      "URY"
+    ]
+  },
+  {
+    "name": {
+      "common": "Armenia",
+      "official": "Republic of Armenia"
+    },
+    "nameJP": "アルメニア",
+    "cca3": "ARM",
+    "borders": [
+      "AZE",
+      "GEO",
+      "IRN",
+      "TUR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Australia",
+      "official": "Commonwealth of Australia"
+    },
+    "nameJP": "オーストラリア",
+    "cca3": "AUS",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Austria",
+      "official": "Republic of Austria"
+    },
+    "nameJP": "オーストリア",
+    "cca3": "AUT",
+    "borders": [
+      "CZE",
+      "DEU",
+      "HUN",
+      "ITA",
+      "LIE",
+      "SVK",
+      "SVN",
+      "CHE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Azerbaijan",
+      "official": "Republic of Azerbaijan"
+    },
+    "nameJP": "アゼルバイジャン",
+    "cca3": "AZE",
+    "borders": [
+      "ARM",
+      "GEO",
+      "IRN",
+      "RUS",
+      "TUR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Bahamas",
+      "official": "Commonwealth of the Bahamas"
+    },
+    "nameJP": "バハマ",
+    "cca3": "BHS",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Bahrain",
+      "official": "Kingdom of Bahrain"
+    },
+    "nameJP": "バーレーン",
+    "cca3": "BHR",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Bangladesh",
+      "official": "People's Republic of Bangladesh"
+    },
+    "nameJP": "バングラデシュ",
+    "cca3": "BGD",
+    "borders": [
+      "MMR",
+      "IND"
+    ]
+  },
+  {
+    "name": {
+      "common": "Barbados",
+      "official": "Barbados"
+    },
+    "nameJP": "バルバドス",
+    "cca3": "BRB",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Belarus",
+      "official": "Republic of Belarus"
+    },
+    "nameJP": "ベラルーシ",
+    "cca3": "BLR",
+    "borders": [
+      "LVA",
+      "LTU",
+      "POL",
+      "RUS",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Belgium",
+      "official": "Kingdom of Belgium"
+    },
+    "nameJP": "ベルギー",
+    "cca3": "BEL",
+    "borders": [
+      "FRA",
+      "DEU",
+      "LUX",
+      "NLD"
+    ]
+  },
+  {
+    "name": {
+      "common": "Belize",
+      "official": "Belize"
+    },
+    "nameJP": "ベリーズ",
+    "cca3": "BLZ",
+    "borders": [
+      "GTM",
+      "MEX"
+    ]
+  },
+  {
+    "name": {
+      "common": "Benin",
+      "official": "Republic of Benin"
+    },
+    "nameJP": "ベナン",
+    "cca3": "BEN",
+    "borders": [
+      "BFA",
+      "NER",
+      "NGA",
+      "TGO"
+    ]
+  },
+  {
+    "name": {
+      "common": "Bhutan",
+      "official": "Kingdom of Bhutan"
+    },
+    "nameJP": "ブータン",
+    "cca3": "BTN",
+    "borders": [
+      "CHN",
+      "IND"
+    ]
+  },
+  {
+    "name": {
+      "common": "Bolivia",
+      "official": "Plurinational State of Bolivia"
+    },
+    "nameJP": "ボリビア",
+    "cca3": "BOL",
+    "borders": [
+      "ARG",
+      "BRA",
+      "CHL",
+      "PRY",
+      "PER"
+    ]
+  },
+  {
+    "name": {
+      "common": "Bosnia and Herzegovina",
+      "official": "Bosnia and Herzegovina"
+    },
+    "nameJP": "ボスニア・ヘルツェゴビナ",
+    "cca3": "BIH",
+    "borders": [
+      "HRV",
+      "MNE",
+      "SRB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Botswana",
+      "official": "Republic of Botswana"
+    },
+    "nameJP": "ボツワナ",
+    "cca3": "BWA",
+    "borders": [
+      "NAM",
+      "ZAF",
+      "ZMB",
+      "ZWE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Brazil",
+      "official": "Federative Republic of Brazil"
+    },
+    "nameJP": "ブラジル",
+    "cca3": "BRA",
+    "borders": [
+      "ARG",
+      "BOL",
+      "COL",
+      "GUF",
+      "GUY",
+      "PRY",
+      "PER",
+      "SUR",
+      "URY",
+      "VEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Brunei",
+      "official": "Nation of Brunei, Abode of Peace"
+    },
+    "nameJP": "ブルネイ",
+    "cca3": "BRN",
+    "borders": [
+      "MYS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Bulgaria",
+      "official": "Republic of Bulgaria"
+    },
+    "nameJP": "ブルガリア",
+    "cca3": "BGR",
+    "borders": [
+      "GRC",
+      "MKD",
+      "ROU",
+      "SRB",
+      "TUR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Burkina Faso",
+      "official": "Burkina Faso"
+    },
+    "nameJP": "ブルキナファソ",
+    "cca3": "BFA",
+    "borders": [
+      "BEN",
+      "CIV",
+      "GHA",
+      "MLI",
+      "NER",
+      "TGO"
+    ]
+  },
+  {
+    "name": {
+      "common": "Burundi",
+      "official": "Republic of Burundi"
+    },
+    "nameJP": "ブルンジ",
+    "cca3": "BDI",
+    "borders": [
+      "COD",
+      "RWA",
+      "TZA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Cambodia",
+      "official": "Kingdom of Cambodia"
+    },
+    "nameJP": "カンボジア",
+    "cca3": "KHM",
+    "borders": [
+      "LAO",
+      "THA",
+      "VNM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Cameroon",
+      "official": "Republic of Cameroon"
+    },
+    "nameJP": "カメルーン",
+    "cca3": "CMR",
+    "borders": [
+      "CAF",
+      "TCD",
+      "COG",
+      "GNQ",
+      "GAB",
+      "NGA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Canada",
+      "official": "Canada"
+    },
+    "nameJP": "カナダ",
+    "cca3": "CAN",
+    "borders": [
+      "USA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Cape Verde",
+      "official": "Republic of Cabo Verde"
+    },
+    "nameJP": "カーボベルデ",
+    "cca3": "CPV",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Central African Republic",
+      "official": "Central African Republic"
+    },
+    "nameJP": "中央アフリカ",
+    "cca3": "CAF",
+    "borders": [
+      "CMR",
+      "TCD",
+      "COG",
+      "COD",
+      "SSD",
+      "SDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Chad",
+      "official": "Republic of Chad"
+    },
+    "nameJP": "チャド",
+    "cca3": "TCD",
+    "borders": [
+      "CMR",
+      "CAF",
+      "LBY",
+      "NER",
+      "NGA",
+      "SDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Chile",
+      "official": "Republic of Chile"
+    },
+    "nameJP": "チリ",
+    "cca3": "CHL",
+    "borders": [
+      "ARG",
+      "BOL",
+      "PER"
+    ]
+  },
+  {
+    "name": {
+      "common": "China",
+      "official": "People's Republic of China"
+    },
+    "nameJP": "中国",
+    "cca3": "CHN",
+    "borders": [
+      "AFG",
+      "BTN",
+      "MMR",
+      "HKG",
+      "IND",
+      "KAZ",
+      "NPL",
+      "KGZ",
+      "LAO",
+      "MAC",
+      "MNG",
+      "PAK",
+      "PRK",
+      "RUS",
+      "TJK",
+      "VNM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Colombia",
+      "official": "Republic of Colombia"
+    },
+    "nameJP": "コロンビア",
+    "cca3": "COL",
+    "borders": [
+      "BRA",
+      "ECU",
+      "PAN",
+      "PER",
+      "VEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Comoros",
+      "official": "Union of the Comoros"
+    },
+    "nameJP": "コモロ",
+    "cca3": "COM",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Congo",
+      "official": "Republic of the Congo"
+    },
+    "nameJP": "コンゴ共和国",
+    "cca3": "COG",
+    "borders": [
+      "AGO",
+      "CMR",
+      "CAF",
+      "COD",
+      "GAB"
+    ]
+  },
+  {
+    "name": {
+      "common": "DR Congo",
+      "official": "Democratic Republic of the Congo"
+    },
+    "nameJP": "コンゴ民主共和国",
+    "cca3": "COD",
+    "borders": [
+      "AGO",
+      "BDI",
+      "CAF",
+      "COG",
+      "RWA",
+      "SSD",
+      "TZA",
+      "UGA",
+      "ZMB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Cook Islands",
+      "official": "Cook Islands"
+    },
+    "nameJP": "クック諸島",
+    "cca3": "COK",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Costa Rica",
+      "official": "Republic of Costa Rica"
+    },
+    "nameJP": "コスタリカ",
+    "cca3": "CRI",
+    "borders": [
+      "NIC",
+      "PAN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Ivory Coast",
+      "official": "Republic of Côte d'Ivoire"
+    },
+    "nameJP": "コートジボワール",
+    "cca3": "CIV",
+    "borders": [
+      "BFA",
+      "GHA",
+      "GIN",
+      "LBR",
+      "MLI"
+    ]
+  },
+  {
+    "name": {
+      "common": "Croatia",
+      "official": "Republic of Croatia"
+    },
+    "nameJP": "クロアチア",
+    "cca3": "HRV",
+    "borders": [
+      "BIH",
+      "HUN",
+      "MNE",
+      "SRB",
+      "SVN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Cuba",
+      "official": "Republic of Cuba"
+    },
+    "nameJP": "キューバ",
+    "cca3": "CUB",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Cyprus",
+      "official": "Republic of Cyprus"
+    },
+    "nameJP": "キプロス",
+    "cca3": "CYP",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Czechia",
+      "official": "Czech Republic"
+    },
+    "nameJP": "チェコ",
+    "cca3": "CZE",
+    "borders": [
+      "AUT",
+      "DEU",
+      "POL",
+      "SVK"
+    ]
+  },
+  {
+    "name": {
+      "common": "Denmark",
+      "official": "Kingdom of Denmark"
+    },
+    "nameJP": "デンマーク",
+    "cca3": "DNK",
+    "borders": [
+      "DEU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Djibouti",
+      "official": "Republic of Djibouti"
+    },
+    "nameJP": "ジブチ",
+    "cca3": "DJI",
+    "borders": [
+      "ERI",
+      "ETH",
+      "SOM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Dominica",
+      "official": "Commonwealth of Dominica"
+    },
+    "nameJP": "ドミニカ国",
+    "cca3": "DMA",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Dominican Republic",
+      "official": "Dominican Republic"
+    },
+    "nameJP": "ドミニカ共和国",
+    "cca3": "DOM",
+    "borders": [
+      "HTI"
+    ]
+  },
+  {
+    "name": {
+      "common": "Ecuador",
+      "official": "Republic of Ecuador"
+    },
+    "nameJP": "エクアドル",
+    "cca3": "ECU",
+    "borders": [
+      "COL",
+      "PER"
+    ]
+  },
+  {
+    "name": {
+      "common": "Egypt",
+      "official": "Arab Republic of Egypt"
+    },
+    "nameJP": "エジプト",
+    "cca3": "EGY",
+    "borders": [
+      "ISR",
+      "LBY",
+      "PSE",
+      "SDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "El Salvador",
+      "official": "Republic of El Salvador"
+    },
+    "nameJP": "エルサルバドル",
+    "cca3": "SLV",
+    "borders": [
+      "GTM",
+      "HND"
+    ]
+  },
+  {
+    "name": {
+      "common": "Equatorial Guinea",
+      "official": "Republic of Equatorial Guinea"
+    },
+    "nameJP": "赤道ギニア",
+    "cca3": "GNQ",
+    "borders": [
+      "CMR",
+      "GAB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Eritrea",
+      "official": "State of Eritrea"
+    },
+    "nameJP": "エリトリア",
+    "cca3": "ERI",
+    "borders": [
+      "DJI",
+      "ETH",
+      "SDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Estonia",
+      "official": "Republic of Estonia"
+    },
+    "nameJP": "エストニア",
+    "cca3": "EST",
+    "borders": [
+      "LVA",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Eswatini",
+      "official": "Kingdom of Eswatini"
+    },
+    "nameJP": "エスワティニ",
+    "cca3": "SWZ",
+    "borders": [
+      "MOZ",
+      "ZAF"
+    ]
+  },
+  {
+    "name": {
+      "common": "Ethiopia",
+      "official": "Federal Democratic Republic of Ethiopia"
+    },
+    "nameJP": "エチオピア",
+    "cca3": "ETH",
+    "borders": [
+      "DJI",
+      "ERI",
+      "KEN",
+      "SOM",
+      "SSD",
+      "SDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Fiji",
+      "official": "Republic of Fiji"
+    },
+    "nameJP": "フィジー",
+    "cca3": "FJI",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Finland",
+      "official": "Republic of Finland"
+    },
+    "nameJP": "フィンランド",
+    "cca3": "FIN",
+    "borders": [
+      "NOR",
+      "SWE",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "France",
+      "official": "French Republic"
+    },
+    "nameJP": "フランス",
     "cca3": "FRA",
-    "borders": ["AND", "BEL", "DEU", "ITA", "LUX", "MCO", "ESP", "CHE"]
+    "borders": [
+      "AND",
+      "BEL",
+      "DEU",
+      "ITA",
+      "LUX",
+      "MCO",
+      "ESP",
+      "CHE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Gabon",
+      "official": "Gabonese Republic"
+    },
+    "nameJP": "ガボン",
+    "cca3": "GAB",
+    "borders": [
+      "CMR",
+      "COG",
+      "GNQ"
+    ]
+  },
+  {
+    "name": {
+      "common": "Gambia",
+      "official": "Republic of the Gambia"
+    },
+    "nameJP": "ガンビア",
+    "cca3": "GMB",
+    "borders": [
+      "SEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Georgia",
+      "official": "Georgia"
+    },
+    "nameJP": "ジョージア",
+    "cca3": "GEO",
+    "borders": [
+      "ARM",
+      "AZE",
+      "RUS",
+      "TUR"
+    ]
   },
   {
     "name": {
       "common": "Germany",
-      "official": "Federal Republic of Germany",
-      "nativeName": {
-        "deu": {
-          "official": "Bundesrepublik Deutschland",
-          "common": "Deutschland"
-        }
-      }
+      "official": "Federal Republic of Germany"
     },
+    "nameJP": "ドイツ",
     "cca3": "DEU",
-    "borders": ["AUT", "BEL", "CZE", "DNK", "FRA", "LUX", "NLD", "POL", "CHE"]
+    "borders": [
+      "AUT",
+      "BEL",
+      "CZE",
+      "DNK",
+      "FRA",
+      "LUX",
+      "NLD",
+      "POL",
+      "CHE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Ghana",
+      "official": "Republic of Ghana"
+    },
+    "nameJP": "ガーナ",
+    "cca3": "GHA",
+    "borders": [
+      "BFA",
+      "CIV",
+      "TGO"
+    ]
+  },
+  {
+    "name": {
+      "common": "Greece",
+      "official": "Hellenic Republic"
+    },
+    "nameJP": "ギリシャ",
+    "cca3": "GRC",
+    "borders": [
+      "ALB",
+      "BGR",
+      "TUR",
+      "MKD"
+    ]
+  },
+  {
+    "name": {
+      "common": "Grenada",
+      "official": "Grenada"
+    },
+    "nameJP": "グレナダ",
+    "cca3": "GRD",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Guatemala",
+      "official": "Republic of Guatemala"
+    },
+    "nameJP": "グアテマラ",
+    "cca3": "GTM",
+    "borders": [
+      "BLZ",
+      "SLV",
+      "HND",
+      "MEX"
+    ]
+  },
+  {
+    "name": {
+      "common": "Guinea",
+      "official": "Republic of Guinea"
+    },
+    "nameJP": "ギニア",
+    "cca3": "GIN",
+    "borders": [
+      "CIV",
+      "GNB",
+      "LBR",
+      "MLI",
+      "SEN",
+      "SLE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Guinea-Bissau",
+      "official": "Republic of Guinea-Bissau"
+    },
+    "nameJP": "ギニアビサウ",
+    "cca3": "GNB",
+    "borders": [
+      "GIN",
+      "SEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Guyana",
+      "official": "Co-operative Republic of Guyana"
+    },
+    "nameJP": "ガイアナ",
+    "cca3": "GUY",
+    "borders": [
+      "BRA",
+      "SUR",
+      "VEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Haiti",
+      "official": "Republic of Haiti"
+    },
+    "nameJP": "ハイチ",
+    "cca3": "HTI",
+    "borders": [
+      "DOM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Vatican City",
+      "official": "Vatican City State"
+    },
+    "nameJP": "バチカン",
+    "cca3": "VAT",
+    "borders": [
+      "ITA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Honduras",
+      "official": "Republic of Honduras"
+    },
+    "nameJP": "ホンジュラス",
+    "cca3": "HND",
+    "borders": [
+      "GTM",
+      "SLV",
+      "NIC"
+    ]
+  },
+  {
+    "name": {
+      "common": "Hungary",
+      "official": "Hungary"
+    },
+    "nameJP": "ハンガリー",
+    "cca3": "HUN",
+    "borders": [
+      "AUT",
+      "HRV",
+      "ROU",
+      "SRB",
+      "SVK",
+      "SVN",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Iceland",
+      "official": "Iceland"
+    },
+    "nameJP": "アイスランド",
+    "cca3": "ISL",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "India",
+      "official": "Republic of India"
+    },
+    "nameJP": "インド",
+    "cca3": "IND",
+    "borders": [
+      "BGD",
+      "BTN",
+      "MMR",
+      "CHN",
+      "NPL",
+      "PAK"
+    ]
+  },
+  {
+    "name": {
+      "common": "Indonesia",
+      "official": "Republic of Indonesia"
+    },
+    "nameJP": "インドネシア",
+    "cca3": "IDN",
+    "borders": [
+      "TLS",
+      "MYS",
+      "PNG"
+    ]
+  },
+  {
+    "name": {
+      "common": "Iran",
+      "official": "Islamic Republic of Iran"
+    },
+    "nameJP": "イラン",
+    "cca3": "IRN",
+    "borders": [
+      "AFG",
+      "ARM",
+      "AZE",
+      "IRQ",
+      "PAK",
+      "TUR",
+      "TKM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Iraq",
+      "official": "Republic of Iraq"
+    },
+    "nameJP": "イラク",
+    "cca3": "IRQ",
+    "borders": [
+      "IRN",
+      "JOR",
+      "KWT",
+      "SAU",
+      "SYR",
+      "TUR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Ireland",
+      "official": "Republic of Ireland"
+    },
+    "nameJP": "アイルランド",
+    "cca3": "IRL",
+    "borders": [
+      "GBR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Israel",
+      "official": "State of Israel"
+    },
+    "nameJP": "イスラエル",
+    "cca3": "ISR",
+    "borders": [
+      "EGY",
+      "JOR",
+      "LBN",
+      "PSE",
+      "SYR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Italy",
+      "official": "Italian Republic"
+    },
+    "nameJP": "イタリア",
+    "cca3": "ITA",
+    "borders": [
+      "AUT",
+      "FRA",
+      "SMR",
+      "SVN",
+      "CHE",
+      "VAT"
+    ]
+  },
+  {
+    "name": {
+      "common": "Jamaica",
+      "official": "Jamaica"
+    },
+    "nameJP": "ジャマイカ",
+    "cca3": "JAM",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Jordan",
+      "official": "Hashemite Kingdom of Jordan"
+    },
+    "nameJP": "ヨルダン",
+    "cca3": "JOR",
+    "borders": [
+      "IRQ",
+      "ISR",
+      "PSE",
+      "SAU",
+      "SYR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Kazakhstan",
+      "official": "Republic of Kazakhstan"
+    },
+    "nameJP": "カザフスタン",
+    "cca3": "KAZ",
+    "borders": [
+      "CHN",
+      "KGZ",
+      "RUS",
+      "TKM",
+      "UZB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Kenya",
+      "official": "Republic of Kenya"
+    },
+    "nameJP": "ケニア",
+    "cca3": "KEN",
+    "borders": [
+      "ETH",
+      "SOM",
+      "SSD",
+      "TZA",
+      "UGA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Kiribati",
+      "official": "Independent and Sovereign Republic of Kiribati"
+    },
+    "nameJP": "キリバス",
+    "cca3": "KIR",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Kuwait",
+      "official": "State of Kuwait"
+    },
+    "nameJP": "クウェート",
+    "cca3": "KWT",
+    "borders": [
+      "IRQ",
+      "SAU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Kyrgyzstan",
+      "official": "Kyrgyz Republic"
+    },
+    "nameJP": "キルギス",
+    "cca3": "KGZ",
+    "borders": [
+      "CHN",
+      "KAZ",
+      "TJK",
+      "UZB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Laos",
+      "official": "Lao People's Democratic Republic"
+    },
+    "nameJP": "ラオス",
+    "cca3": "LAO",
+    "borders": [
+      "MMR",
+      "KHM",
+      "CHN",
+      "THA",
+      "VNM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Latvia",
+      "official": "Republic of Latvia"
+    },
+    "nameJP": "ラトビア",
+    "cca3": "LVA",
+    "borders": [
+      "BLR",
+      "EST",
+      "LTU",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Lebanon",
+      "official": "Lebanese Republic"
+    },
+    "nameJP": "レバノン",
+    "cca3": "LBN",
+    "borders": [
+      "ISR",
+      "SYR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Lesotho",
+      "official": "Kingdom of Lesotho"
+    },
+    "nameJP": "レソト",
+    "cca3": "LSO",
+    "borders": [
+      "ZAF"
+    ]
+  },
+  {
+    "name": {
+      "common": "Liberia",
+      "official": "Republic of Liberia"
+    },
+    "nameJP": "リベリア",
+    "cca3": "LBR",
+    "borders": [
+      "GIN",
+      "CIV",
+      "SLE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Libya",
+      "official": "State of Libya"
+    },
+    "nameJP": "リビア",
+    "cca3": "LBY",
+    "borders": [
+      "DZA",
+      "TCD",
+      "EGY",
+      "NER",
+      "SDN",
+      "TUN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Liechtenstein",
+      "official": "Principality of Liechtenstein"
+    },
+    "nameJP": "リヒテンシュタイン",
+    "cca3": "LIE",
+    "borders": [
+      "AUT",
+      "CHE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Lithuania",
+      "official": "Republic of Lithuania"
+    },
+    "nameJP": "リトアニア",
+    "cca3": "LTU",
+    "borders": [
+      "BLR",
+      "LVA",
+      "POL",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Luxembourg",
+      "official": "Grand Duchy of Luxembourg"
+    },
+    "nameJP": "ルクセンブルク",
+    "cca3": "LUX",
+    "borders": [
+      "BEL",
+      "FRA",
+      "DEU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Madagascar",
+      "official": "Republic of Madagascar"
+    },
+    "nameJP": "マダガスカル",
+    "cca3": "MDG",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Malawi",
+      "official": "Republic of Malawi"
+    },
+    "nameJP": "マラウイ",
+    "cca3": "MWI",
+    "borders": [
+      "MOZ",
+      "TZA",
+      "ZMB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Malaysia",
+      "official": "Malaysia"
+    },
+    "nameJP": "マレーシア",
+    "cca3": "MYS",
+    "borders": [
+      "BRN",
+      "IDN",
+      "THA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Maldives",
+      "official": "Republic of Maldives"
+    },
+    "nameJP": "モルディブ",
+    "cca3": "MDV",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Mali",
+      "official": "Republic of Mali"
+    },
+    "nameJP": "マリ",
+    "cca3": "MLI",
+    "borders": [
+      "DZA",
+      "BFA",
+      "GIN",
+      "CIV",
+      "MRT",
+      "NER",
+      "SEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Malta",
+      "official": "Republic of Malta"
+    },
+    "nameJP": "マルタ",
+    "cca3": "MLT",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Marshall Islands",
+      "official": "Republic of the Marshall Islands"
+    },
+    "nameJP": "マーシャル諸島",
+    "cca3": "MHL",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Mauritania",
+      "official": "Islamic Republic of Mauritania"
+    },
+    "nameJP": "モーリタニア",
+    "cca3": "MRT",
+    "borders": [
+      "DZA",
+      "MLI",
+      "SEN",
+      "ESH"
+    ]
+  },
+  {
+    "name": {
+      "common": "Mauritius",
+      "official": "Republic of Mauritius"
+    },
+    "nameJP": "モーリシャス",
+    "cca3": "MUS",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Mexico",
+      "official": "United Mexican States"
+    },
+    "nameJP": "メキシコ",
+    "cca3": "MEX",
+    "borders": [
+      "BLZ",
+      "GTM",
+      "USA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Micronesia",
+      "official": "Federated States of Micronesia"
+    },
+    "nameJP": "ミクロネシア連邦",
+    "cca3": "FSM",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Moldova",
+      "official": "Republic of Moldova"
+    },
+    "nameJP": "モルドバ",
+    "cca3": "MDA",
+    "borders": [
+      "ROU",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Monaco",
+      "official": "Principality of Monaco"
+    },
+    "nameJP": "モナコ",
+    "cca3": "MCO",
+    "borders": [
+      "FRA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Mongolia",
+      "official": "Mongolia"
+    },
+    "nameJP": "モンゴル",
+    "cca3": "MNG",
+    "borders": [
+      "CHN",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Montenegro",
+      "official": "Montenegro"
+    },
+    "nameJP": "モンテネグロ",
+    "cca3": "MNE",
+    "borders": [
+      "ALB",
+      "BIH",
+      "HRV",
+      "KOS",
+      "SRB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Morocco",
+      "official": "Kingdom of Morocco"
+    },
+    "nameJP": "モロッコ",
+    "cca3": "MAR",
+    "borders": [
+      "DZA",
+      "ESH",
+      "ESP"
+    ]
+  },
+  {
+    "name": {
+      "common": "Mozambique",
+      "official": "Republic of Mozambique"
+    },
+    "nameJP": "モザンビーク",
+    "cca3": "MOZ",
+    "borders": [
+      "MWI",
+      "ZAF",
+      "SWZ",
+      "TZA",
+      "ZMB",
+      "ZWE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Myanmar",
+      "official": "Republic of the Union of Myanmar"
+    },
+    "nameJP": "ミャンマー",
+    "cca3": "MMR",
+    "borders": [
+      "BGD",
+      "CHN",
+      "IND",
+      "LAO",
+      "THA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Namibia",
+      "official": "Republic of Namibia"
+    },
+    "nameJP": "ナミビア",
+    "cca3": "NAM",
+    "borders": [
+      "AGO",
+      "BWA",
+      "ZAF",
+      "ZMB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Nauru",
+      "official": "Republic of Nauru"
+    },
+    "nameJP": "ナウル",
+    "cca3": "NRU",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Nepal",
+      "official": "Federal Democratic Republic of Nepal"
+    },
+    "nameJP": "ネパール",
+    "cca3": "NPL",
+    "borders": [
+      "CHN",
+      "IND"
+    ]
+  },
+  {
+    "name": {
+      "common": "Netherlands",
+      "official": "Kingdom of the Netherlands"
+    },
+    "nameJP": "オランダ",
+    "cca3": "NLD",
+    "borders": [
+      "BEL",
+      "DEU"
+    ]
+  },
+  {
+    "name": {
+      "common": "New Zealand",
+      "official": "New Zealand"
+    },
+    "nameJP": "ニュージーランド",
+    "cca3": "NZL",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Nicaragua",
+      "official": "Republic of Nicaragua"
+    },
+    "nameJP": "ニカラグア",
+    "cca3": "NIC",
+    "borders": [
+      "CRI",
+      "HND"
+    ]
+  },
+  {
+    "name": {
+      "common": "Niger",
+      "official": "Republic of Niger"
+    },
+    "nameJP": "ニジェール",
+    "cca3": "NER",
+    "borders": [
+      "DZA",
+      "BEN",
+      "BFA",
+      "TCD",
+      "LBY",
+      "MLI",
+      "NGA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Nigeria",
+      "official": "Federal Republic of Nigeria"
+    },
+    "nameJP": "ナイジェリア",
+    "cca3": "NGA",
+    "borders": [
+      "BEN",
+      "CMR",
+      "TCD",
+      "NER"
+    ]
+  },
+  {
+    "name": {
+      "common": "Niue",
+      "official": "Niue"
+    },
+    "nameJP": "ニウエ",
+    "cca3": "NIU",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "North Korea",
+      "official": "Democratic People's Republic of Korea"
+    },
+    "nameJP": "北朝鮮",
+    "cca3": "PRK",
+    "borders": [
+      "CHN",
+      "KOR",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "North Macedonia",
+      "official": "Republic of North Macedonia"
+    },
+    "nameJP": "北マケドニア",
+    "cca3": "MKD",
+    "borders": [
+      "ALB",
+      "BGR",
+      "GRC",
+      "KOS",
+      "SRB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Norway",
+      "official": "Kingdom of Norway"
+    },
+    "nameJP": "ノルウェー",
+    "cca3": "NOR",
+    "borders": [
+      "FIN",
+      "SWE",
+      "RUS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Oman",
+      "official": "Sultanate of Oman"
+    },
+    "nameJP": "オマーン",
+    "cca3": "OMN",
+    "borders": [
+      "SAU",
+      "ARE",
+      "YEM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Pakistan",
+      "official": "Islamic Republic of Pakistan"
+    },
+    "nameJP": "パキスタン",
+    "cca3": "PAK",
+    "borders": [
+      "AFG",
+      "CHN",
+      "IND",
+      "IRN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Palau",
+      "official": "Republic of Palau"
+    },
+    "nameJP": "パラオ",
+    "cca3": "PLW",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Palestine",
+      "official": "State of Palestine"
+    },
+    "nameJP": "パレスチナ",
+    "cca3": "PSE",
+    "borders": [
+      "ISR",
+      "EGY",
+      "JOR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Panama",
+      "official": "Republic of Panama"
+    },
+    "nameJP": "パナマ",
+    "cca3": "PAN",
+    "borders": [
+      "COL",
+      "CRI"
+    ]
+  },
+  {
+    "name": {
+      "common": "Papua New Guinea",
+      "official": "Independent State of Papua New Guinea"
+    },
+    "nameJP": "パプアニューギニア",
+    "cca3": "PNG",
+    "borders": [
+      "IDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Paraguay",
+      "official": "Republic of Paraguay"
+    },
+    "nameJP": "パラグアイ",
+    "cca3": "PRY",
+    "borders": [
+      "ARG",
+      "BOL",
+      "BRA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Peru",
+      "official": "Republic of Peru"
+    },
+    "nameJP": "ペルー",
+    "cca3": "PER",
+    "borders": [
+      "BOL",
+      "BRA",
+      "CHL",
+      "COL",
+      "ECU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Philippines",
+      "official": "Republic of the Philippines"
+    },
+    "nameJP": "フィリピン",
+    "cca3": "PHL",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Poland",
+      "official": "Republic of Poland"
+    },
+    "nameJP": "ポーランド",
+    "cca3": "POL",
+    "borders": [
+      "BLR",
+      "CZE",
+      "DEU",
+      "LTU",
+      "RUS",
+      "SVK",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Portugal",
+      "official": "Portuguese Republic"
+    },
+    "nameJP": "ポルトガル",
+    "cca3": "PRT",
+    "borders": [
+      "ESP"
+    ]
+  },
+  {
+    "name": {
+      "common": "Qatar",
+      "official": "State of Qatar"
+    },
+    "nameJP": "カタール",
+    "cca3": "QAT",
+    "borders": [
+      "SAU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Romania",
+      "official": "Romania"
+    },
+    "nameJP": "ルーマニア",
+    "cca3": "ROU",
+    "borders": [
+      "BGR",
+      "HUN",
+      "MDA",
+      "SRB",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Russia",
+      "official": "Russian Federation"
+    },
+    "nameJP": "ロシア",
+    "cca3": "RUS",
+    "borders": [
+      "AZE",
+      "BLR",
+      "CHN",
+      "EST",
+      "FIN",
+      "GEO",
+      "KAZ",
+      "PRK",
+      "LVA",
+      "LTU",
+      "MNG",
+      "NOR",
+      "POL",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Rwanda",
+      "official": "Republic of Rwanda"
+    },
+    "nameJP": "ルワンダ",
+    "cca3": "RWA",
+    "borders": [
+      "BDI",
+      "COD",
+      "TZA",
+      "UGA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Saint Kitts and Nevis",
+      "official": "Federation of Saint Christopher and Nevis"
+    },
+    "nameJP": "セントクリストファー・ネーヴィス",
+    "cca3": "KNA",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Saint Lucia",
+      "official": "Saint Lucia"
+    },
+    "nameJP": "セントルシア",
+    "cca3": "LCA",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Saint Vincent and the Grenadines",
+      "official": "Saint Vincent and the Grenadines"
+    },
+    "nameJP": "セントビンセント・グレナディーン",
+    "cca3": "VCT",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Samoa",
+      "official": "Independent State of Samoa"
+    },
+    "nameJP": "サモア",
+    "cca3": "WSM",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "San Marino",
+      "official": "Republic of San Marino"
+    },
+    "nameJP": "サンマリノ",
+    "cca3": "SMR",
+    "borders": [
+      "ITA"
+    ]
+  },
+  {
+    "name": {
+      "common": "São Tomé and Príncipe",
+      "official": "Democratic Republic of São Tomé and Príncipe"
+    },
+    "nameJP": "サントメ・プリンシペ",
+    "cca3": "STP",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Saudi Arabia",
+      "official": "Kingdom of Saudi Arabia"
+    },
+    "nameJP": "サウジアラビア",
+    "cca3": "SAU",
+    "borders": [
+      "IRQ",
+      "JOR",
+      "KWT",
+      "OMN",
+      "QAT",
+      "ARE",
+      "YEM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Senegal",
+      "official": "Republic of Senegal"
+    },
+    "nameJP": "セネガル",
+    "cca3": "SEN",
+    "borders": [
+      "GMB",
+      "GIN",
+      "GNB",
+      "MLI",
+      "MRT"
+    ]
+  },
+  {
+    "name": {
+      "common": "Serbia",
+      "official": "Republic of Serbia"
+    },
+    "nameJP": "セルビア",
+    "cca3": "SRB",
+    "borders": [
+      "BIH",
+      "BGR",
+      "HRV",
+      "HUN",
+      "KOS",
+      "MKD",
+      "MNE",
+      "ROU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Seychelles",
+      "official": "Republic of Seychelles"
+    },
+    "nameJP": "セーシェル",
+    "cca3": "SYC",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Sierra Leone",
+      "official": "Republic of Sierra Leone"
+    },
+    "nameJP": "シエラレオネ",
+    "cca3": "SLE",
+    "borders": [
+      "GIN",
+      "LBR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Singapore",
+      "official": "Republic of Singapore"
+    },
+    "nameJP": "シンガポール",
+    "cca3": "SGP",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Slovakia",
+      "official": "Slovak Republic"
+    },
+    "nameJP": "スロバキア",
+    "cca3": "SVK",
+    "borders": [
+      "AUT",
+      "CZE",
+      "HUN",
+      "POL",
+      "UKR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Slovenia",
+      "official": "Republic of Slovenia"
+    },
+    "nameJP": "スロベニア",
+    "cca3": "SVN",
+    "borders": [
+      "AUT",
+      "HRV",
+      "ITA",
+      "HUN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Solomon Islands",
+      "official": "Solomon Islands"
+    },
+    "nameJP": "ソロモン諸島",
+    "cca3": "SLB",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Somalia",
+      "official": "Federal Republic of Somalia"
+    },
+    "nameJP": "ソマリア",
+    "cca3": "SOM",
+    "borders": [
+      "DJI",
+      "ETH",
+      "KEN"
+    ]
+  },
+  {
+    "name": {
+      "common": "South Africa",
+      "official": "Republic of South Africa"
+    },
+    "nameJP": "南アフリカ",
+    "cca3": "ZAF",
+    "borders": [
+      "BWA",
+      "LSO",
+      "MOZ",
+      "NAM",
+      "SWZ",
+      "ZWE"
+    ]
+  },
+  {
+    "name": {
+      "common": "South Korea",
+      "official": "Republic of Korea"
+    },
+    "nameJP": "韓国",
+    "cca3": "KOR",
+    "borders": [
+      "PRK"
+    ]
+  },
+  {
+    "name": {
+      "common": "South Sudan",
+      "official": "Republic of South Sudan"
+    },
+    "nameJP": "南スーダン",
+    "cca3": "SSD",
+    "borders": [
+      "CAF",
+      "COD",
+      "ETH",
+      "KEN",
+      "SDN",
+      "UGA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Spain",
+      "official": "Kingdom of Spain"
+    },
+    "nameJP": "スペイン",
+    "cca3": "ESP",
+    "borders": [
+      "AND",
+      "FRA",
+      "GIB",
+      "PRT",
+      "MAR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Sri Lanka",
+      "official": "Democratic Socialist Republic of Sri Lanka"
+    },
+    "nameJP": "スリランカ",
+    "cca3": "LKA",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Sudan",
+      "official": "Republic of the Sudan"
+    },
+    "nameJP": "スーダン",
+    "cca3": "SDN",
+    "borders": [
+      "CAF",
+      "TCD",
+      "EGY",
+      "ERI",
+      "ETH",
+      "LBY",
+      "SSD"
+    ]
+  },
+  {
+    "name": {
+      "common": "Suriname",
+      "official": "Republic of Suriname"
+    },
+    "nameJP": "スリナム",
+    "cca3": "SUR",
+    "borders": [
+      "BRA",
+      "GUF",
+      "GUY"
+    ]
+  },
+  {
+    "name": {
+      "common": "Sweden",
+      "official": "Kingdom of Sweden"
+    },
+    "nameJP": "スウェーデン",
+    "cca3": "SWE",
+    "borders": [
+      "FIN",
+      "NOR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Switzerland",
+      "official": "Swiss Confederation"
+    },
+    "nameJP": "スイス",
+    "cca3": "CHE",
+    "borders": [
+      "AUT",
+      "FRA",
+      "ITA",
+      "LIE",
+      "DEU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Syria",
+      "official": "Syrian Arab Republic"
+    },
+    "nameJP": "シリア",
+    "cca3": "SYR",
+    "borders": [
+      "IRQ",
+      "ISR",
+      "JOR",
+      "LBN",
+      "TUR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Tajikistan",
+      "official": "Republic of Tajikistan"
+    },
+    "nameJP": "タジキスタン",
+    "cca3": "TJK",
+    "borders": [
+      "AFG",
+      "CHN",
+      "KGZ",
+      "UZB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Tanzania",
+      "official": "United Republic of Tanzania"
+    },
+    "nameJP": "タンザニア",
+    "cca3": "TZA",
+    "borders": [
+      "BDI",
+      "COD",
+      "KEN",
+      "MWI",
+      "MOZ",
+      "RWA",
+      "UGA",
+      "ZMB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Thailand",
+      "official": "Kingdom of Thailand"
+    },
+    "nameJP": "タイ",
+    "cca3": "THA",
+    "borders": [
+      "MMR",
+      "KHM",
+      "LAO",
+      "MYS"
+    ]
+  },
+  {
+    "name": {
+      "common": "Timor-Leste",
+      "official": "Democratic Republic of Timor-Leste"
+    },
+    "nameJP": "東ティモール",
+    "cca3": "TLS",
+    "borders": [
+      "IDN"
+    ]
+  },
+  {
+    "name": {
+      "common": "Togo",
+      "official": "Togolese Republic"
+    },
+    "nameJP": "トーゴ",
+    "cca3": "TGO",
+    "borders": [
+      "BEN",
+      "BFA",
+      "GHA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Tonga",
+      "official": "Kingdom of Tonga"
+    },
+    "nameJP": "トンガ",
+    "cca3": "TON",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Trinidad and Tobago",
+      "official": "Republic of Trinidad and Tobago"
+    },
+    "nameJP": "トリニダード・トバゴ",
+    "cca3": "TTO",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Tunisia",
+      "official": "Tunisian Republic"
+    },
+    "nameJP": "チュニジア",
+    "cca3": "TUN",
+    "borders": [
+      "DZA",
+      "LBY"
+    ]
+  },
+  {
+    "name": {
+      "common": "Turkey",
+      "official": "Republic of Turkey"
+    },
+    "nameJP": "トルコ",
+    "cca3": "TUR",
+    "borders": [
+      "ARM",
+      "AZE",
+      "BGR",
+      "GEO",
+      "GRC",
+      "IRN",
+      "IRQ",
+      "SYR"
+    ]
+  },
+  {
+    "name": {
+      "common": "Turkmenistan",
+      "official": "Turkmenistan"
+    },
+    "nameJP": "トルクメニスタン",
+    "cca3": "TKM",
+    "borders": [
+      "AFG",
+      "IRN",
+      "KAZ",
+      "UZB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Tuvalu",
+      "official": "Tuvalu"
+    },
+    "nameJP": "ツバル",
+    "cca3": "TUV",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Uganda",
+      "official": "Republic of Uganda"
+    },
+    "nameJP": "ウガンダ",
+    "cca3": "UGA",
+    "borders": [
+      "COD",
+      "KEN",
+      "RWA",
+      "SSD",
+      "TZA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Ukraine",
+      "official": "Ukraine"
+    },
+    "nameJP": "ウクライナ",
+    "cca3": "UKR",
+    "borders": [
+      "BLR",
+      "HUN",
+      "MDA",
+      "POL",
+      "ROU",
+      "RUS",
+      "SVK"
+    ]
+  },
+  {
+    "name": {
+      "common": "United Arab Emirates",
+      "official": "United Arab Emirates"
+    },
+    "nameJP": "アラブ首長国連邦",
+    "cca3": "ARE",
+    "borders": [
+      "OMN",
+      "SAU"
+    ]
+  },
+  {
+    "name": {
+      "common": "United Kingdom",
+      "official": "United Kingdom of Great Britain and Northern Ireland"
+    },
+    "nameJP": "イギリス",
+    "cca3": "GBR",
+    "borders": [
+      "IRL"
+    ]
+  },
+  {
+    "name": {
+      "common": "United States",
+      "official": "United States of America"
+    },
+    "nameJP": "アメリカ合衆国",
+    "cca3": "USA",
+    "borders": [
+      "CAN",
+      "MEX"
+    ]
+  },
+  {
+    "name": {
+      "common": "Uruguay",
+      "official": "Oriental Republic of Uruguay"
+    },
+    "nameJP": "ウルグアイ",
+    "cca3": "URY",
+    "borders": [
+      "ARG",
+      "BRA"
+    ]
+  },
+  {
+    "name": {
+      "common": "Uzbekistan",
+      "official": "Republic of Uzbekistan"
+    },
+    "nameJP": "ウズベキスタン",
+    "cca3": "UZB",
+    "borders": [
+      "AFG",
+      "KAZ",
+      "KGZ",
+      "TJK",
+      "TKM"
+    ]
+  },
+  {
+    "name": {
+      "common": "Vanuatu",
+      "official": "Republic of Vanuatu"
+    },
+    "nameJP": "バヌアツ",
+    "cca3": "VUT",
+    "borders": []
+  },
+  {
+    "name": {
+      "common": "Venezuela",
+      "official": "Bolivarian Republic of Venezuela"
+    },
+    "nameJP": "ベネズエラ",
+    "cca3": "VEN",
+    "borders": [
+      "BRA",
+      "COL",
+      "GUY"
+    ]
+  },
+  {
+    "name": {
+      "common": "Vietnam",
+      "official": "Socialist Republic of Vietnam"
+    },
+    "nameJP": "ベトナム",
+    "cca3": "VNM",
+    "borders": [
+      "KHM",
+      "CHN",
+      "LAO"
+    ]
+  },
+  {
+    "name": {
+      "common": "Yemen",
+      "official": "Republic of Yemen"
+    },
+    "nameJP": "イエメン",
+    "cca3": "YEM",
+    "borders": [
+      "OMN",
+      "SAU"
+    ]
+  },
+  {
+    "name": {
+      "common": "Zambia",
+      "official": "Republic of Zambia"
+    },
+    "nameJP": "ザンビア",
+    "cca3": "ZMB",
+    "borders": [
+      "AGO",
+      "BWA",
+      "COD",
+      "MWI",
+      "MOZ",
+      "NAM",
+      "TZA",
+      "ZWE"
+    ]
+  },
+  {
+    "name": {
+      "common": "Zimbabwe",
+      "official": "Republic of Zimbabwe"
+    },
+    "nameJP": "ジンバブエ",
+    "cca3": "ZWE",
+    "borders": [
+      "BWA",
+      "MOZ",
+      "ZAF",
+      "ZMB"
+    ]
+  },
+  {
+    "name": {
+      "common": "Kosovo",
+      "official": "Republic of Kosovo"
+    },
+    "nameJP": "コソボ",
+    "cca3": "UNK",
+    "borders": [
+      "ALB",
+      "MKD",
+      "MNE",
+      "SRB"
+    ]
   }
 ]
