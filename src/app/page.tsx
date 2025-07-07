@@ -1,103 +1,201 @@
-import Image from "next/image";
+'use client';
+
+import { useState, useMemo } from 'react';
+import countriesData from '@/data/countries.json'; // データ読み込み
+
+// 修正点1: Countryの型定義をより正確に修正
+interface Country {
+	name: {
+		common: string;
+		official: string;
+		nativeName?: {
+			[key: string]: {
+				official: string;
+				common: string;
+			};
+		};
+	};
+	cca3: string;
+	borders?: string[];
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+	const allCountries: Country[] = useMemo(() => {
+		// Preprocess to remove undefined values from nativeName
+		return (countriesData as unknown as Country[]).map((country) => {
+			if (country.name?.nativeName) {
+				const cleanedNativeName: { [key: string]: { official: string; common: string } } = {};
+				Object.entries(country.name.nativeName).forEach(([lang, value]) => {
+					if (
+						value &&
+						typeof value === 'object' &&
+						(value as { official?: string; common?: string }).official &&
+						(value as { official?: string; common?: string }).common
+					) {
+						cleanedNativeName[lang] = value as { official: string; common: string };
+					}
+				});
+				return {
+					...country,
+					name: {
+						...country.name,
+						nativeName: cleanedNativeName,
+					},
+				};
+			}
+			return {
+				...country,
+				name: {
+					...country.name,
+					nativeName: undefined,
+				},
+			};
+		});
+	}, []);
+	
+	const [startCountry, setStartCountry] = useState<Country | null>(null);
+	const [goalCountry, setGoalCountry] = useState<Country | null>(null);
+	const [currentCountry, setCurrentCountry] = useState<Country | null>(null);
+	const [path, setPath] = useState<Country[]>([]);
+	const [inputValue, setInputValue] = useState('');
+	const [error, setError] = useState('');
+	const [isFinished, setIsFinished] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+	// ゲーム開始処理
+	const handleStartGame = () => {
+		if (startCountry && goalCountry && startCountry.cca3 !== goalCountry.cca3) {
+			setCurrentCountry(startCountry);
+			setPath([startCountry]);
+			setIsFinished(false);
+			setError('');
+		} else {
+			setError('スタートとゴールには、異なる国を選択してください。');
+		}
+	};
+	
+	// 回答処理
+	const handleAnswerSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!currentCountry || !goalCountry) return;
+
+		const answeredCountry = allCountries.find(
+			(c) => c.name.common.toLowerCase() === inputValue.toLowerCase()
+		);
+
+		if (!answeredCountry) {
+			setError('その国は存在しません。');
+			return;
+		}
+
+		if (currentCountry.borders?.includes(answeredCountry.cca3)) {
+			const newPath = [...path, answeredCountry];
+			setPath(newPath);
+			setCurrentCountry(answeredCountry);
+			setError('');
+			setInputValue('');
+
+			if (answeredCountry.cca3 === goalCountry.cca3) {
+				setIsFinished(true);
+			}
+		} else {
+			setError(`${currentCountry.name.common}と${answeredCountry.name.common}は隣接していません。`);
+		}
+	};
+
+	// 修正点2: 国選択のプルダウンメニューを実装
+	const handleSelectChange = (cca3: string, type: 'start' | 'goal') => {
+		const selected = allCountries.find(c => c.cca3 === cca3) || null;
+		if (type === 'start') {
+			setStartCountry(selected);
+		} else {
+			setGoalCountry(selected);
+		}
+	};
+
+	return (
+		<main className="container mx-auto p-4 md:p-8 bg-gray-900 text-white min-h-screen font-sans">
+			<h1 className="text-3xl md:text-4xl font-bold text-center mb-8">脳内世界旅行 🧠✈️</h1>
+			
+			<div className="max-w-2xl mx-auto">
+				{/* ゲーム設定エリア */}
+				<div className="bg-gray-800 p-4 rounded-lg mb-6">
+					<div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+						<div>
+							<label htmlFor="start-country" className="block mb-1 text-sm font-medium">スタート国</label>
+							<select 
+								id="start-country"
+								onChange={(e) => handleSelectChange(e.target.value, 'start')}
+								className="w-full p-2 bg-gray-700 rounded border border-gray-600"
+							>
+								<option>国を選択...</option>
+								{allCountries.map(c => <option key={c.cca3} value={c.cca3}>{c.name.common}</option>)}
+							</select>
+						</div>
+						<div>
+							<label htmlFor="goal-country" className="block mb-1 text-sm font-medium">ゴール国</label>
+							<select 
+								id="goal-country"
+								onChange={(e) => handleSelectChange(e.target.value, 'goal')}
+								className="w-full p-2 bg-gray-700 rounded border border-gray-600"
+							>
+								<option>国を選択...</option>
+								{allCountries.map(c => <option key={c.cca3} value={c.cca3}>{c.name.common}</option>)}
+							</select>
+						</div>
+					</div>
+					<button onClick={handleStartGame} disabled={!startCountry || !goalCountry} className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-500 p-2 rounded transition-colors">
+						ゲーム開始
+					</button>
+				</div>
+
+				{/* ゲームプレイエリア */}
+				{currentCountry && !isFinished && (
+					<div className="bg-gray-800 p-4 rounded-lg">
+						<div className="flex justify-between items-baseline mb-4">
+							<p>現在地: <span className="font-bold text-xl text-yellow-400">{currentCountry.name.common}</span></p>
+							<p>ゴール: <span className="font-bold text-xl text-green-400">{goalCountry?.name.common}</span></p>
+						</div>
+						
+						<form onSubmit={handleAnswerSubmit} className="flex gap-2">
+							<input 
+								type="text" 
+								value={inputValue}
+								onChange={(e) => setInputValue(e.target.value)}
+								className="bg-gray-700 p-2 rounded w-full border border-gray-600 focus:ring-2 focus:ring-blue-500 outline-none"
+								placeholder="隣接する国名を入力..."
+								autoFocus
+							/>
+							<button type="submit" className="bg-green-600 hover:bg-green-700 p-2 rounded transition-colors">回答</button>
+						</form>
+					</div>
+				)}
+
+				{/* 結果表示 */}
+				{error && <p className="text-red-500 mt-4 text-center">{error}</p>}
+				{isFinished && (
+					<div className="text-center mt-4 p-8 bg-green-800 rounded-lg">
+						<h2 className="text-4xl font-bold">🎉 クリア！ 🎉</h2>
+						<p className="mt-2">おめでとうございます！</p>
+					</div>
+				)}
+
+				{/* 辿ったルート */}
+				{path.length > 0 && (
+					<div className="mt-8">
+						<h3 className="text-xl mb-3">ルート</h3>
+						<div className="flex flex-wrap gap-2 items-center">
+							{path.map((country, index) => (
+								<div key={country.cca3} className="flex items-center gap-2">
+									{index > 0 && <span className="text-gray-400">→</span>}
+									<span className="bg-gray-600 px-3 py-1 rounded-full text-sm">
+										{country.name.common}
+									</span>
+								</div>
+							))}
+						</div>
+					</div>
+				)}
+			</div>
+		</main>
+	);
 }
