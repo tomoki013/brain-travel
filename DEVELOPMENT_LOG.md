@@ -1,5 +1,6 @@
 # 開発ログ
 
+
 ## 2025-11-03 (Step 14)
 
 **担当者:** Jules (AI Agent)
@@ -20,6 +21,24 @@
 
 **課題・申し送り:**
 - キャッシュはモジュールスコープの `Map` オブジェクトに保存されるため、ページリロードでリセットされる。永続化が必要な場合は `localStorage` などの検討が必要だが、現在の要件ではこの実装で十分と判断。
+
+## 2025-11-03 (Step 13)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ13 日本語対応の復活とスライドショーのUIバグ修正
+
+**実装概要:**
+- **タスクA: 日本語国名データの復活と検索ロジックの修正:**
+  - `i18n-iso-countries` ライブラリを導入し、ステップ12で `countries.ts` が動的生成になった際に失われていた日本語の国名データを復活させた。
+  - `src/lib/data/countries.ts` で `i18n-iso-countries` を利用して日本語名のマッピング (`countryNameJa`) を生成するように修正。
+  - `src/lib/hooks/useCountryData.ts` を修正し、`getCountryName` が日本語名を優先的に返すように変更。また、`findCountryA3CodeByName` と `getCountrySuggestions` が日本語、英語、A3コードのいずれでも正しく検索できるようにデータソースを更新した。
+- **タスクB: 結果スライドショーのUIバグ修正:**
+  - `src/components/features/game/CountryImage.tsx` を修正し、結果スライドショーで国を切り替える際に発生していた画像のチラつき（フリッカー）問題を解消。
+  - 画像 URL の状態 (`imageUrl`) の初期値を `null` に変更し、URL が非同期で読み込まれるまではローディング状態（スケルトン UI）を表示するロジックに変更した。これにより、ユーザー体験が向上した。
+
+**課題・申し送り:**
+- 依存関係に `i18n-iso-countries` を追加した。
 - `npm run build` は正常に完了することを確認済み。
 
 ## 2025-11-03 (Step 12)
