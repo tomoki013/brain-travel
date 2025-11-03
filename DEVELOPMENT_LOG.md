@@ -1,5 +1,27 @@
 # 開発ログ
 
+## 2025-11-03 (Step 12)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ12 データリストの拡充とローカル画像ロジックの改善
+
+**実装概要:**
+- **タスクA: `countries.ts` の拡充:**
+  - `src/lib/data/countries.ts` を修正し、これまで手動で定義されていた20カ国のリストを廃止。
+  - `borders.json` と `country-codes.json` をインポートし、`borders.json` に存在するすべての国の情報を動的に生成するロジックに変更した。これにより、アプリが扱う国データが網羅的になった。
+- **タスクB: ローカル画像マニフェストの作成:**
+  - `src/lib/data/localImageManifest.ts` を新規作成。
+  - `GEMINI.md` のハイブリッド画像戦略（F-07）を実装するため、ローカルに画像が存在する国（'JPN', 'FRA', 'USA'）のリストを `Set` としてエクスポートするマニフェストファイルを作成した。
+- **タスクC: `useCountryData.ts` のローカル画像ロジック修正:**
+  - `src/lib/hooks/useCountryData.ts` の `getImageUrl` 関数を修正。
+  - これまでのハードコードされたスタブ処理を削除し、代わりに `localImageManifest` をインポートして `if (localImageManifest.has(countryId))` という形式でローカル画像の存在をチェックするように変更した。
+  - これにより、ローカル画像が存在する場合はそのパスを返し、存在しない場合は Unsplash API を呼び出すという、`GEMINI.md` に準拠した正しいハイブリッド画像ロジックが実装された。
+
+**課題・申し送り:**
+- `public/images/countries/` ディレクトリが存在しなかったため、`localImageManifest.ts` の内容は `useCountryData.ts` にあったスタブ（'JPN', 'FRA', 'USA'）に基づいて作成した。今後、ローカル画像を追加する際は、このディレクトリを作成し、画像ファイルを追加した上で `localImageManifest.ts` を更新する必要がある。
+- `npm run build` は正常に完了することを確認済み。
+
 ## 2025-11-03 (Step 11 Re-execution)
 
 **担当者:** Jules (AI Agent)
@@ -121,7 +143,7 @@
 **タスク:** プロジェクト全体のエラー修正
 
 **実装概要:**
-- **ビルドエラーの修正:**
+- **ビル드エラーの修正:**
   - 開発サーバーが起動しない問題の調査のため `npm run build` を実行し、複数のビルドエラーを特定・修正。
   - `src/app/layout.tsx`: `next/font` の `Noto_Sans_JP` の `subsets` に不正な値 `"japanese"` が含まれていたのを削除。
   - `src/components/features/game/AnswerForm.tsx`: `disabled` プロパティを受け取れるように Props の型定義を修正し、フォームの無効化を実装。
@@ -180,7 +202,7 @@
   - `src/components/features/game/CountryImage.tsx`: 国の写真を表示するコンポーネント。`useCountryData` を利用。
   - `src/components/features/game/GamePanel.tsx`: 右カラムのUI（写真、お題、フォーム、履歴）をすべて表示するコンポーネント。
 - **ゲームページのリファクタリング:**
-  - `src/app/(main)/game/page.tsx` を修正し、新しく作成した `GamePanel` を使用するようにリファクタリング。これにより、UIの関心事がコンポーネントに適切に分離された。
+  - `src/app/(main)/game/page.tsx` を修正し、新しく作成した `GamePanel` を使用するようにリファクタリング。これにより、UIの関心事がコンポーントに適切に分離された。
   - `useGameLogic` から渡されるデータ構造に合わせて `WorldMap` コンポーネントのProps名を修正。
 
 **課題・申し送り:**
