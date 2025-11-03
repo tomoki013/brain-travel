@@ -2,7 +2,7 @@ import countryCodes from '../data/country-codes.json';
 import world from '../data/world.json';
 import { feature } from 'topojson-client';
 import type { FeatureCollection } from 'geojson';
-import type { Topology } from 'topojson-client';
+import type { Topology } from 'topojson-specification';
 
 // Type assertion for countryCodes.json
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
@@ -11,8 +11,8 @@ const codes = countryCodes as Record<string, { a3: string; name: string }>;
 const a3ToNumericId: Record<string, string> = {};
 const geoJson = feature(
   world as unknown as Topology,
-  world.objects.countries
-) as FeatureCollection;
+  world.objects.countries as any
+) as unknown as FeatureCollection;
 geoJson.features.forEach((feature) => {
   if (feature.id) {
     const numericId = feature.id.toString();

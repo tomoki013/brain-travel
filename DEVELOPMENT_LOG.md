@@ -1,5 +1,30 @@
 # 開発ログ
 
+## 2025-11-03 (Step 6)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** プロジェクト全体のエラー修正
+
+**実装概要:**
+- **ビルドエラーの修正:**
+  - 開発サーバーが起動しない問題の調査のため `npm run build` を実行し、複数のビルドエラーを特定・修正。
+  - `src/app/layout.tsx`: `next/font` の `Noto_Sans_JP` の `subsets` に不正な値 `"japanese"` が含まれていたのを削除。
+  - `src/components/features/game/AnswerForm.tsx`: `disabled` プロパティを受け取れるように Props の型定義を修正し、フォームの無効化を実装。
+  - `src/components/features/game/WorldMap.tsx`: `Topology` 型のインポート元を `topojson-client` から `topojson-specification` に修正。
+  - `src/lib/hooks/useCountryData.ts`: `Topology` 型のインポート元を修正し、`topojson-client` の `feature` 関数の戻り値に関する型アサーションのエラーを修正。
+- **依存関係の整備:**
+  - `Topology` 型を解決するため、`@types/topojson-specification` を `devDependencies` に追加。
+  - `package.json` で定義されている依存関係を `npm install` で正しくインストールし、`next: not found` エラーを解消。
+- **Next.js App Router の規約修正:**
+  - ルートグループ `(main)` 内に `layout.tsx` が存在しなかったため、必須ファイルとして最小限のレイアウトコンポーネントを新規作成。
+
+**課題・申し送り:**
+- 上記の修正により、`npm run build` は正常に完了するようになった。
+- しかし、エージェントの開発環境では依然として `npm run dev` がタイムアウトし、サーバーが正常に起動しない。ユーザーのローカル環境では起動が確認できているため、エージェント環境と Next.js v16 (Turbopack) との間に特有の非互換性問題が存在する可能性がある。
+
+---
+
 ## 2025-11-03 (Step 5)
 
 **担当者:** Jules (AI Agent)

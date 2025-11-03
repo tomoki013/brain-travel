@@ -4,7 +4,7 @@ import * as d3 from "d3";
 import { feature } from "topojson-client";
 import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
-import type { Topology } from "topojson-client";
+import type { Topology } from "topojson-specification";
 
 type WorldMapProps = {
   startCountryId: string;
