@@ -74,7 +74,7 @@ src/
 
 ### 3.2. 国 ID の統一
 
-- 地図データ (`world.json`) と国境データ (`borders.json`) は、**ISO 3166-1 alpha-3 (3 文字の国コード)** (例: `FRA`, `JPN`, `USA`) を共通 ID として使用する。
+- `borders.json` は A3 コード (例: FRA) を使用します。`world.json` は M49 数値 ID (例: 250) を使用します。これらのマッピングは `useCountryData` フック（`country-codes.json` を参照）によって解決されます。
 
 ### 3.3. ロジックの分離（重要）
 
@@ -86,9 +86,9 @@ src/
 
 ## 4. データファイル仕様
 
-- **地図データ:** `src/lib/data/world.json`
+- **地図データ:** `public/data/world.json`
   - 形式: TopoJSON
-  - ID: `properties.a3` (例: "FRA")
+  - ID: `id` (数値文字列, 例: "250")
 - **国境データ:** `src/lib/data/borders.json`
   - 形式: `Record<string, string[]>` (例: `{ "FRA": ["BEL", "DEU", ...], ... }`)
 
