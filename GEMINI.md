@@ -38,14 +38,22 @@ src/
 │   │   │   └── page.tsx
 │   │   └── layout.tsx              # 認証専用レイアウト
 │   ├── (main)/                   # メイン機能のルートグループ
-│   │   ├── page.tsx                # トップページ
+│   │   ├── (withFooter)/         # フッター表示グループ
+│   │   │   ├── page.tsx            # トップページ
+│   │   │   ├── terms/
+│   │   │   │   └── page.tsx        # 利用規約
+│   │   │   ├── privacy/
+│   │   │   │   └── page.tsx        # プライバシーポリシー
+│   │   │   ├── contact/
+│   │   │   │   └── page.tsx        # お問い合わせ
+│   │   │   └── layout.tsx          # フッター付きレイアウト
 │   │   ├── game/
 │   │   │   └── page.tsx            # ゲームページ
 │   │   ├── result/
 │   │   │   └── page.tsx            # 結果ページ
 │   │   ├── dashboard/
 │   │   │   └── page.tsx            # マイページ
-│   │   └── layout.tsx              # メインレイアウト (Header, Footer)
+│   │   └── layout.tsx              # メインレイアウト (Headerのみ)
 │   └── layout.tsx                  # ルートレイアウト
 ├── components/
 │   ├── features/                   # ドメイン固有のコンポーネント
