@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import borders from "../data/borders.json";
 
-type GameStatus = "playing" | "cleared" | "failed";
+type GameStatus = "playing" | "cleared" | "failed" | "given_up";
 
 // Type assertion for borders.json
 const countryBorders = borders as Record<string, string[]>;
@@ -67,6 +67,14 @@ export const useGameLogic = () => {
     }
   };
 
+  /**
+   * Gives up the game and navigates to the result page.
+   */
+  const giveUp = () => {
+    setGameStatus("given_up");
+    router.push(`/result?route=${routeHistory.join(',')}&status=given_up`);
+  };
+
   return {
     startCountry,
     goalCountry,
@@ -75,5 +83,6 @@ export const useGameLogic = () => {
     gameStatus,
     initializeGame,
     submitAnswer,
+    giveUp,
   };
 };

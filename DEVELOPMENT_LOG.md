@@ -1,5 +1,26 @@
 # 開発ログ
 
+## 2025-11-03 (Step 9)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ9 ギブアップ機能と地図ズームの実装
+
+**実装概要:**
+- **ギブアップ機能の実装:**
+  - `useGameLogic.ts` を修正し、`gameStatus` に `given_up` を追加。
+  - `giveUp` 関数を新規に作成し、ゲームの状態を `given_up` に変更後、結果ページに `status=given_up` クエリを付与して遷移させるロジックを実装した。
+  - `GamePanel.tsx` に「ギブアップする」ボタンを追加し、`giveUp` 関数を呼び出すように接続した。
+- **結果ページの対応:**
+  - `ResultPageClient.tsx` を修正し、`useSearchParams` を使って `status` クエリを読み取るようにした。
+  - `status` が `given_up` の場合、「残念！ギブアップしました」というメッセージを表示するように、UIを条件分岐させた。
+- **地図のズーム・パン機能の実装:**
+  - `WorldMap.tsx` を修正し、`d3.zoom` をインポートして利用。
+  - 地図を描画している `useEffect` フック内に、ズームとパンのロジックを追加した。具体的には、SVG内の `<path>` 要素を `<g>` 要素でラップし、`d3.zoom()` をSVG要素に適用。ズームイベント発生時に `<g>` 要素の `transform` 属性を更新することで、地図のインタラクティブな操作を実現した。
+
+**課題・申し送り:**
+- これまでの開発と同様に `npm run dev` がタイムアウトするため、フロントエンドの目視確認はできていない。`npm run build` は正常に完了することを確認済み。ユーザーによる最終的な動作確認（特に地図のズーム操作感）が必要となる。
+
 ## 2025-11-03 (Step 8)
 
 **担当者:** Jules (AI Agent)
@@ -8,9 +29,9 @@
 
 **実装概要:**
 - **回答サジェスト機能の実装:**
-  - `useCountryData.ts` を拡張し、国名の部分一致（前方一致）で国の候補リストを返す `getCountrySuggestions` 関数と、入力された国名（日・英・A3コード）からA3コードを検索する `findCountryA3CodeByName` 関数を実装。
+  - `useCountryData.ts` を拡張し、国名の部分一致（前方一致）で国の候補リストを返す `getCountrySuggestions` 関数と、入力された国名（日・英・A3コード）からA3コードを検索する `findCountry3CodeByName` 関数を実装。
   - `AnswerForm.tsx` を改修し、従来の3文字コード入力から国名入力に変更。入力に応じてサジェスト候補をリスト表示し、選択すると入力欄に反映されるようにした。
-  - フォーム送信時は、`findCountryA3CodeByName` でA3コードに変換してから `onSubmit` に渡すように変更。無効な国名の場合はアラートを表示する機能を追加。
+  - フォーム送信時は、`findCountry3CodeByName` でA3コードに変換してから `onSubmit` に渡すように変更。無効な国名の場合はアラートを表示する機能を追加。
 - **写真API連携の実装:**
   - `useCountryData.ts` の `getImageUrl` 関数を、`GEMINI.md` のハイブリッド方式ルールに従って修正。
   - 優先度1（ローカル写真）は維持しつつ、優先度2として Unsplash API への `fetch` 処理を追加。PM（ユーザー）が `.env.local` に `NEXT_PUBLIC_UNSPLASH_ACCESS_KEY` を設定する必要がある旨をコメントで追記。

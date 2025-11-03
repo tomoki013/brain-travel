@@ -43,17 +43,21 @@ export const WorldMap = ({
 
   // Draw the map and highlight countries
   useEffect(() => {
-    if (!countries) return;
+    if (!countries || !ref.current) return;
 
     const svg = d3.select(ref.current);
+    // Clear SVG content before redrawing to avoid layering issues
+    svg.selectAll("*").remove();
+
+    const g = svg.append("g"); // Group to apply transform for zoom/pan
+
     const width = parseInt(svg.style("width"));
     const height = parseInt(svg.style("height"));
 
     const projection = d3.geoMercator().fitSize([width, height], countries);
     const path = d3.geoPath().projection(projection);
 
-    svg
-      .selectAll("path")
+    g.selectAll("path")
       .data(countries.features)
       .join("path")
       .attr("d", path)
@@ -73,6 +77,16 @@ export const WorldMap = ({
         }
         return "fill-slate-200 stroke-slate-700"; // Default
       });
+
+    // Zoom functionality
+    const zoom = d3
+      .zoom<SVGSVGElement, unknown>()
+      .scaleExtent([1, 8])
+      .on("zoom", (event) => {
+        g.attr("transform", event.transform);
+      });
+
+    svg.call(zoom);
   }, [
     countries,
     startCountryId,
