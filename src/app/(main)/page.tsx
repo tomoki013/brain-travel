@@ -11,6 +11,7 @@ export default function TopPage() {
   const router = useRouter();
   const [startCountry, setStartCountry] = useState(countries[0].id);
   const [goalCountry, setGoalCountry] = useState(countries[1].id);
+  const [error, setError] = useState<string | null>(null);
 
   const countryBorders = borderData as Record<string, string[]>;
   const countryIds = Object.keys(countryBorders);
@@ -32,9 +33,10 @@ export default function TopPage() {
 
   const handleStartSelected = () => {
     if (startCountry && goalCountry && startCountry !== goalCountry) {
+      setError(null);
       router.push(`/game?start=${startCountry}&goal=${goalCountry}`);
     } else {
-      alert('スタート国とゴール国は異なる国を選択してください。');
+      setError('スタート国とゴール国は異なる国を選択してください。');
     }
   };
 
@@ -152,6 +154,7 @@ export default function TopPage() {
             </div>
           </div>
           <div className="mt-8">
+            {error && <p className="mb-4 text-sm text-red-400">{error}</p>}
             <button
               onClick={handleStartSelected}
               className="w-full rounded-md bg-teal-600 px-4 py-3 text-base font-semibold text-white shadow-sm hover:bg-teal-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal-600"
