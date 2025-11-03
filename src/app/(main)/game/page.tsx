@@ -10,7 +10,7 @@ function GameContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const gameLogic = useGameLogic();
-  const [isMapVisible, setIsMapVisible] = useState(false);
+  const [isMapVisible, setIsMapVisible] = useState(true);
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(
     null
   );
@@ -37,22 +37,23 @@ function GameContent() {
   }
 
   return (
-    <div className="grid h-dvh grid-cols-3 gap-4 p-4">
+    <div className="grid h-dvh lg:grid-cols-3 gap-4 p-4">
       {/* Left Column: Map */}
-      {isMapVisible && (
-        <div className="lg:col-span-2 col-span-3">
-          <WorldMap
-            startCountryId={gameLogic.startCountry}
-            goalCountryId={gameLogic.goalCountry}
-            currentCountryId={gameLogic.currentCountry}
-            routeHistoryIds={gameLogic.routeHistory}
-            selectedCountryId={selectedCountryId}
-          />
-        </div>
-      )}
+      <div className="lg:col-span-2 relative">
+        {!isMapVisible && (
+          <div className="absolute inset-0 z-10 bg-gray-900/50 backdrop-blur-md" />
+        )}
+        <WorldMap
+          startCountryId={gameLogic.startCountry}
+          goalCountryId={gameLogic.goalCountry}
+          currentCountryId={gameLogic.currentCountry}
+          routeHistoryIds={gameLogic.routeHistory}
+          selectedCountryId={selectedCountryId}
+        />
+      </div>
 
       {/* Right Column: Information Panel */}
-      <div className={isMapVisible ? "lg:col-span-1 col-span-3" : "col-span-3"}>
+      <div className="lg:col-span-1">
         <GamePanel
           currentCountry={gameLogic.currentCountry}
           startCountry={gameLogic.startCountry}
