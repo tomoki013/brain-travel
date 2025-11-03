@@ -1,5 +1,6 @@
 import countryCodes from "../data/country-codes.json";
 import { countries as japaneseCountries } from "../data/countries";
+import { localImageManifest } from "../data/localImageManifest";
 
 // Type assertion for country-codes.json
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
@@ -33,19 +34,8 @@ export const useCountryData = () => {
    * 例: NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=your_access_key
    */
   const getImageUrl = async (countryId: string): Promise<string> => {
-    const localImagePath = `/images/countries/${countryId}.jpg`;
-    // This check is a stub. In a real scenario, you'd check if the file exists.
-    // For this project, we assume specific files exist as per original logic.
-    const localImagePaths: { [key: string]: string } = {
-      JPN: "/images/countries/Japan.jpg",
-      FRA: "/images/countries/France.jpg",
-      USA: "/images/countries/USA.jpg",
-    };
-
-    if (localImagePaths[countryId]) {
-      // A proper check would be to see if the file exists on the server/public folder
-      // For now, we are simulating this check.
-      return localImagePaths[countryId];
+    if (localImageManifest.has(countryId)) {
+      return `/images/countries/${countryId}.jpg`;
     }
 
     const apiKey = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
@@ -54,7 +44,9 @@ export const useCountryData = () => {
         const countryName = getCountryName(countryId);
         const query = `${countryName} landmark landscape`;
         const response = await fetch(
-          `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&orientation=landscape&per_page=1`,
+          `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+            query
+          )}&orientation=landscape&per_page=1`,
           {
             headers: {
               Authorization: `Client-ID ${apiKey}`,
