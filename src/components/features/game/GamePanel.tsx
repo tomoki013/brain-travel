@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { CountryImage } from './CountryImage';
-import { AnswerForm } from './AnswerForm';
-import { useState } from 'react';
-import type { GameStatus } from '@/types';
-import { useCountryData } from '@/lib/hooks/useCountryData';
+import { CountryImage } from "./CountryImage";
+import { AnswerForm } from "./AnswerForm";
+import { useState } from "react";
+import type { GameStatus } from "@/types";
+import { useCountryData } from "@/lib/hooks/useCountryData";
 
 type GamePanelProps = {
   currentCountry: string | null;
@@ -41,18 +41,22 @@ export const GamePanel = ({
     <div className="flex h-full flex-col gap-4 rounded-lg bg-gray-50 p-6 shadow-lg">
       {currentCountry && <CountryImage countryId={currentCountry} />}
 
-      <div className="flex-grow overflow-y-auto">
+      <div className="overflow-y-auto">
         <div className="space-y-4">
           <div>
             <h2 className="text-lg font-semibold text-gray-700">お題</h2>
             <p className="text-gray-600">
-              <span className="font-bold">{getCountryName(startCountry)}</span> から{' '}
-              <span className="font-bold">{getCountryName(goalCountry)}</span> を目指せ！
+              <span className="font-bold">{getCountryName(startCountry)}</span>{" "}
+              から{" "}
+              <span className="font-bold">{getCountryName(goalCountry)}</span>{" "}
+              を目指せ！
             </p>
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-700">現在の国</h2>
-            <p className="text-2xl font-bold text-blue-600">{getCountryName(currentCountry)}</p>
+            <p className="text-2xl font-bold text-blue-600">
+              {getCountryName(currentCountry)}
+            </p>
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-700">移動履歴</h2>
@@ -68,11 +72,18 @@ export const GamePanel = ({
       </div>
 
       <div className="mt-auto space-y-4">
-        {error && <div className="rounded-md bg-red-100 p-3 text-sm text-red-700">{error}</div>}
-        <AnswerForm onSubmit={handleSubmit} disabled={gameStatus !== 'playing'} />
+        {error && (
+          <div className="rounded-md bg-red-100 p-3 text-sm text-red-700">
+            {error}
+          </div>
+        )}
+        <AnswerForm
+          onSubmit={handleSubmit}
+          disabled={gameStatus !== "playing"}
+        />
         <button
           onClick={giveUp}
-          disabled={gameStatus !== 'playing'}
+          disabled={gameStatus !== "playing"}
           className="w-full rounded-md border border-red-500 px-4 py-2 text-red-500 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-400 disabled:hover:bg-transparent"
         >
           ギブアップする
