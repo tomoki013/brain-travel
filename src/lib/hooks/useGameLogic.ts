@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import borders from "../data/borders.json";
 
 type GameStatus = "playing" | "cleared" | "failed";
@@ -9,6 +10,7 @@ type GameStatus = "playing" | "cleared" | "failed";
 const countryBorders = borders as Record<string, string[]>;
 
 export const useGameLogic = () => {
+  const router = useRouter();
   const [startCountry, setStartCountry] = useState<string | null>(null);
   const [goalCountry, setGoalCountry] = useState<string | null>(null);
   const [currentCountry, setCurrentCountry] = useState<string | null>(null);
@@ -54,7 +56,7 @@ export const useGameLogic = () => {
       // Check for goal
       if (answerCountry === goalCountry) {
         setGameStatus("cleared");
-        alert("ゴール！おめでとうございます！");
+        router.push(`/result?route=${newRouteHistory.join(',')}`);
       }
     } else {
       // Incorrect answer

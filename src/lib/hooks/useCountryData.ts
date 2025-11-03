@@ -1,42 +1,29 @@
 import countryCodes from '../data/country-codes.json';
-import world from '../data/world.json';
-import { feature } from 'topojson-client';
-import type { FeatureCollection } from 'geojson';
-import type { Topology } from 'topojson-specification';
 
-// Type assertion for countryCodes.json
+// Type assertion for country-codes.json
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
 
-// Create a mapping from a3 to numeric id
+// Create a mapping from a3 to numeric id and vice-versa
 const a3ToNumericId: Record<string, string> = {};
-const geoJson = feature(
-  world as unknown as Topology,
-  world.objects.countries as any
-) as unknown as FeatureCollection;
-geoJson.features.forEach((feature) => {
-  if (feature.id) {
-    const numericId = feature.id.toString();
-    if (codes[numericId]) {
-      a3ToNumericId[codes[numericId].a3] = numericId;
-    }
-  }
+const numericIdToA3: Record<string, string> = {};
+
+Object.keys(codes).forEach((numericId) => {
+  const a3 = codes[numericId].a3;
+  a3ToNumericId[a3] = numericId;
+  numericIdToA3[numericId] = a3;
 });
 
 /**
- * 国に関連するデータを取得するためのカスタムフック
+ * Custom hook to get country-related data
  */
 export const useCountryData = () => {
   /**
-   * 国IDに基づいて写真のURLを取得する
-   * @param countryId 国ID (ISO 3166-1 alpha-3)
-   * @returns 写真のURL
+   * Gets the photo URL based on the country ID
+   * @param countryId Country ID (ISO 3166-1 alpha-3)
+   * @returns Photo URL
    */
   const getImageUrl = (countryId: string): string => {
-    // TODO: ローカルに写真が存在するかどうかを動的にチェックする
-    //       （将来的には、`public/images/countries` 内のファイル一覧を
-    //         ビルド時に取得して定数化するなどの方法が考えられる）
-
-    // GEMINI.md のルールに基づき、まずはローカル写真を優先する
+    // This is a placeholder. A more robust solution would be needed in a real app.
     if (countryId === 'JPN') {
       return '/images/countries/Japan.jpg';
     }
@@ -48,19 +35,15 @@ export const useCountryData = () => {
     }
 
     // TODO: Implement API fetch from Unsplash or another service
-    // const apiKey = process.env.NEXT_PUBLIC_UNSPLASH_API_KEY;
-    // if (apiKey) {
-    //   // APIから写真を取得するロजिक
-    // }
 
-    // ローカル写真がない場合はデフォルト画像を返す
+    // Return default image if no local photo is found
     return '/default-globe.jpg';
   };
 
   /**
-   * 国IDに基づいて国名を取得する
-   * @param countryId 国ID (ISO 3166-1 alpha-3)
-   * @returns 国名
+   * Gets the country name based on the country ID
+   * @param countryId Country ID (ISO 3166-1 alpha-3)
+   * @returns Country name
    */
   const getCountryName = (countryId: string | null): string => {
     if (!countryId) {
