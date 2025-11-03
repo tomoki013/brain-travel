@@ -41,7 +41,7 @@ export const AnswerForm = ({ onSubmit, disabled }: AnswerFormProps) => {
             onSubmit(a3Code);
             setInputValue("");
         } else {
-            alert("有効な国名を入力してください");
+            onSubmit(""); // Pass an empty string to indicate an error
         }
     };
 

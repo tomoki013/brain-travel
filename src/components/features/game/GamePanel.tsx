@@ -2,27 +2,40 @@
 
 import { CountryImage } from './CountryImage';
 import { AnswerForm } from './AnswerForm';
-import type { useGameLogic } from '@/lib/hooks/useGameLogic';
+import { useState } from 'react';
+import type { GameStatus } from '@/types';
 import { useCountryData } from '@/lib/hooks/useCountryData';
 
-// useGameLogicの返り値の型を取得
-type GameLogic = ReturnType<typeof useGameLogic>;
-
 type GamePanelProps = {
-  gameLogic: GameLogic;
+  currentCountry: string | null;
+  startCountry: string | null;
+  goalCountry: string | null;
+  routeHistory: string[];
+  gameStatus: GameStatus;
+  submitAnswer: (answer: string, setError: (message: string) => void) => void;
+  giveUp: () => void;
 };
 
-export const GamePanel = ({ gameLogic }: GamePanelProps) => {
-  const {
-    currentCountry,
-    startCountry,
-    goalCountry,
-    routeHistory,
-    gameStatus,
-    submitAnswer,
-    giveUp,
-  } = gameLogic;
+export const GamePanel = ({
+  currentCountry,
+  startCountry,
+  goalCountry,
+  routeHistory,
+  gameStatus,
+  submitAnswer,
+  giveUp,
+}: GamePanelProps) => {
   const { getCountryName } = useCountryData();
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = (answer: string) => {
+    setError(null); // Clear previous errors
+    if (answer) {
+      submitAnswer(answer, setError);
+    } else {
+      setError("有効な国名を入力してください");
+    }
+  };
 
   return (
     <div className="flex h-full flex-col gap-4 rounded-lg bg-gray-50 p-6 shadow-lg">
@@ -55,7 +68,8 @@ export const GamePanel = ({ gameLogic }: GamePanelProps) => {
       </div>
 
       <div className="mt-auto space-y-4">
-        <AnswerForm onSubmit={submitAnswer} disabled={gameStatus !== 'playing'} />
+        {error && <div className="rounded-md bg-red-100 p-3 text-sm text-red-700">{error}</div>}
+        <AnswerForm onSubmit={handleSubmit} disabled={gameStatus !== 'playing'} />
         <button
           onClick={giveUp}
           disabled={gameStatus !== 'playing'}

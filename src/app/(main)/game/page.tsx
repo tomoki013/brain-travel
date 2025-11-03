@@ -42,7 +42,15 @@ function GameContent() {
 
       {/* Right Column: Information Panel */}
       <div className="col-span-1">
-        <GamePanel gameLogic={gameLogic} />
+        <GamePanel
+          currentCountry={gameLogic.currentCountry}
+          startCountry={gameLogic.startCountry}
+          goalCountry={gameLogic.goalCountry}
+          routeHistory={gameLogic.routeHistory}
+          gameStatus={gameLogic.gameStatus}
+          submitAnswer={gameLogic.submitAnswer}
+          giveUp={gameLogic.giveUp}
+        />
       </div>
     </div>
   );
