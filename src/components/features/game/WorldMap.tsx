@@ -26,7 +26,7 @@ export const WorldMap = ({
   useEffect(() => {
     const loadMapData = async () => {
       try {
-        const worldAtlas = await d3.json<Topology>("/lib/data/world.json");
+        const worldAtlas = await d3.json<Topology>("/data/world.json");
         if (worldAtlas) {
           const geoJson = feature(
             worldAtlas,
@@ -73,7 +73,13 @@ export const WorldMap = ({
         }
         return "fill-slate-200 stroke-slate-700"; // Default
       });
-  }, [countries, startCountryId, goalCountryId, currentCountryId, routeHistoryIds]);
+  }, [
+    countries,
+    startCountryId,
+    goalCountryId,
+    currentCountryId,
+    routeHistoryIds,
+  ]);
 
   return <svg ref={ref} className="w-full h-full" />;
 };
