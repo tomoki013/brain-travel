@@ -1,5 +1,25 @@
 # 開発ログ
 
+## 2025-11-03 (Step 17)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ17 地図のインタラクション強化（選択中ハイライト・表示切替）
+
+**実装概要:**
+- **タスクA: 地図の表示/非表示トグル機能:**
+  - `game/page.tsx` に地図の表示状態を管理する `isMapVisible` state を追加。
+  - `GamePanel.tsx` に「地図を表示/隠す」ボタンを実装し、state を切り替えられるようにした。
+  - `isMapVisible` の状態に応じて、Tailwind CSS のクラスを動的に変更し、地図非表示時には `GamePanel` が画面全体に広がるようにレイアウトを調整した。
+- **タスクB: 「選択中の国」ハイライト機能:**
+  - `game/page.tsx` に選択中の国を管理する `selectedCountryId` state を追加。
+  - `AnswerForm.tsx` でサジェストが選択された際、親コンポーネントに選択された国IDを通知する `onSuggestionSelect` コールバックを実装。
+  - `WorldMap.tsx` を修正し、`selectedCountryId` で渡された国を新しい色（緑）でハイライトするロジックを追加した。ハイライトの優先順位も考慮済み。
+- **追加タスク: トップページのUI修正:**
+  - トップページの "OR" 区切り線の両脇にある `div` に `flex-grow` クラスを追加し、レイアウトが崩れないように修正した。
+
+**課題・申し送り:**
+- Props のバケツリレーが少し深くなってきた (`page.tsx` -> `GamePanel.tsx` -> `AnswerForm.tsx`)。現状では問題ないが、将来的にコンポーネントの状態管理が複雑化する場合は、React Context や Zustand などの状態管理ライブラリの導入を検討する価値があるかもしれない。
 ## 2025-11-03 (Step 16)
 
 **担当者:** Jules (AI Agent)

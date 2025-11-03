@@ -102,9 +102,9 @@ export default function TopPage() {
 
         {/* Divider */}
         <motion.div className="my-8 flex items-center" variants={itemVariants}>
-          <div className="border-t border-gray-400"></div>
+          <div className="flex-grow border-t border-gray-400"></div>
           <span className="mx-4 text-gray-300">OR</span>
-          <div className="border-t border-gray-400"></div>
+          <div className="flex-grow border-t border-gray-400"></div>
         </motion.div>
 
         {/* Selected Start */}

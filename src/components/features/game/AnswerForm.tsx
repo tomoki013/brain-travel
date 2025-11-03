@@ -6,6 +6,7 @@ import { useCountryData } from "@/lib/hooks/useCountryData";
 type AnswerFormProps = {
   onSubmit: (answer: string) => void;
   disabled: boolean;
+  onSuggestionSelect: (countryId: string | null) => void;
 };
 
 type Suggestion = {
@@ -14,7 +15,11 @@ type Suggestion = {
   japaneseName: string;
 };
 
-export const AnswerForm = ({ onSubmit, disabled }: AnswerFormProps) => {
+export const AnswerForm = ({
+  onSubmit,
+  disabled,
+  onSuggestionSelect,
+}: AnswerFormProps) => {
   const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const { findCountryA3CodeByName, getCountrySuggestions } = useCountryData();
@@ -26,12 +31,14 @@ export const AnswerForm = ({ onSubmit, disabled }: AnswerFormProps) => {
       setSuggestions(getCountrySuggestions(value));
     } else {
       setSuggestions([]);
+      onSuggestionSelect(null); // Clear selection
     }
   };
 
   const handleSuggestionClick = (suggestion: Suggestion) => {
     setInputValue(suggestion.japaneseName || suggestion.englishName);
     setSuggestions([]);
+    onSuggestionSelect(suggestion.a3); // Set selection
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -40,6 +47,7 @@ export const AnswerForm = ({ onSubmit, disabled }: AnswerFormProps) => {
     if (a3Code) {
       onSubmit(a3Code);
       setInputValue("");
+      onSuggestionSelect(null); // Clear selection after submit
     } else {
       onSubmit(""); // Pass an empty string to indicate an error
     }
