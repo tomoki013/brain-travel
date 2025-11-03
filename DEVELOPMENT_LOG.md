@@ -1,5 +1,26 @@
 # 開発ログ
 
+## 2025-11-03 (Step 8)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ8 ユーザビリティと世界観の向上
+
+**実装概要:**
+- **回答サジェスト機能の実装:**
+  - `useCountryData.ts` を拡張し、国名の部分一致（前方一致）で国の候補リストを返す `getCountrySuggestions` 関数と、入力された国名（日・英・A3コード）からA3コードを検索する `findCountryA3CodeByName` 関数を実装。
+  - `AnswerForm.tsx` を改修し、従来の3文字コード入力から国名入力に変更。入力に応じてサジェスト候補をリスト表示し、選択すると入力欄に反映されるようにした。
+  - フォーム送信時は、`findCountryA3CodeByName` でA3コードに変換してから `onSubmit` に渡すように変更。無効な国名の場合はアラートを表示する機能を追加。
+- **写真API連携の実装:**
+  - `useCountryData.ts` の `getImageUrl` 関数を、`GEMINI.md` のハイブリッド方式ルールに従って修正。
+  - 優先度1（ローカル写真）は維持しつつ、優先度2として Unsplash API への `fetch` 処理を追加。PM（ユーザー）が `.env.local` に `NEXT_PUBLIC_UNSPLASH_ACCESS_KEY` を設定する必要がある旨をコメントで追記。
+  - 優先度3として、API連携が失敗した場合にデフォルト画像 (`/default-globe.jpg`) を返すフォールバック処理を実装。
+  - `getImageUrl` が `async` 関数になったことに伴い、`CountryImage.tsx` を `useEffect` と `useState` を使って非同期でURLを取得・表示するよう修正した。
+
+**課題・申し送り:**
+- `npm run build` は正常に完了したが、引き続き `npm run dev` がタイムアウトするため、フロントエンドの目視確認はできていない。サジェスト機能のUIやAPI連携後の画像表示について、ユーザーによる最終確認が必要となる。
+- Unsplash API の連携部分は、APIキーが `.env.local` に正しく設定されていない場合、デフォルト画像が表示される動作となる。
+
 ## 2025-11-03 (Step 7)
 
 **担当者:** Jules (AI Agent)
