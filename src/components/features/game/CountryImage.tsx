@@ -6,13 +6,14 @@ import { useEffect, useState } from 'react';
 
 type CountryImageProps = {
   countryId: string;
+  className?: string;
 };
 
 /**
  * 国の画像を表示するコンポーネント
  * @param countryId 国ID (ISO 3166-1 alpha-3)
  */
-export const CountryImage = ({ countryId }: CountryImageProps) => {
+export const CountryImage = ({ countryId, className }: CountryImageProps) => {
     const { getImageUrl, getCountryName } = useCountryData();
     const [imageUrl, setImageUrl] = useState('/default-globe.jpg'); // Default image
     const countryName = getCountryName(countryId);
@@ -36,10 +37,10 @@ export const CountryImage = ({ countryId }: CountryImageProps) => {
     }, [countryId, getImageUrl]);
 
     return (
-        <div className="relative h-60 w-full overflow-hidden rounded-lg shadow-md">
+        <div className={className || "relative h-60 w-full overflow-hidden rounded-lg shadow-md"}>
             <Image
                 src={imageUrl}
-                alt={`Image of ${countryName}`}
+                alt={countryName ? `Image of ${countryName}` : 'Country image'}
                 fill
                 style={{ objectFit: 'cover' }}
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

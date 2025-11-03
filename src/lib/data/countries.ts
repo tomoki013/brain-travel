@@ -1,9 +1,6 @@
 // src/lib/data/countries.ts
 
-export interface Country {
-  id: string; // ISO 3166-1 alpha-3
-  name: string; // Japanese name
-}
+import type { Country } from "@/types";
 
 export const countries: Country[] = [
   { id: 'JPN', name: '日本' },

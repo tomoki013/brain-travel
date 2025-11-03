@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import type { GameStatus } from "@/types";
 import borders from "../data/borders.json";
-
-type GameStatus = "playing" | "cleared" | "failed" | "given_up";
 
 // Type assertion for borders.json
 const countryBorders = borders as Record<string, string[]>;
@@ -33,15 +32,19 @@ export const useGameLogic = () => {
   /**
    * Submits an answer and updates the game state.
    * @param answerCountry - The ISO 3166-1 alpha-3 code of the answered country.
+   * @param setError - A callback function to set an error message in the UI.
    */
-  const submitAnswer = (answerCountry: string) => {
+  const submitAnswer = (
+    answerCountry: string,
+    setError: (message: string) => void
+  ) => {
     if (gameStatus !== "playing" || !currentCountry) {
       return;
     }
 
     // Check if the answered country is a valid country code
     if (!countryBorders[answerCountry]) {
-      alert("存在しない国名です。");
+      setError("存在しない国名です。");
       console.error(`Invalid country code: ${answerCountry}`);
       return;
     }
@@ -60,7 +63,7 @@ export const useGameLogic = () => {
       }
     } else {
       // Incorrect answer
-      alert("不正解です。その国へは陸路で移動できません。");
+      setError("不正解です。その国へは陸路で移動できません。");
       console.error(
         `${answerCountry} does not border ${currentCountry}. Borders: ${countryBorders[currentCountry]}`
       );
