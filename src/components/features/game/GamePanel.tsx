@@ -20,6 +20,7 @@ export const GamePanel = ({ gameLogic }: GamePanelProps) => {
     routeHistory,
     gameStatus,
     submitAnswer,
+    giveUp,
   } = gameLogic;
   const { getCountryName } = useCountryData();
 
@@ -53,8 +54,15 @@ export const GamePanel = ({ gameLogic }: GamePanelProps) => {
         </div>
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto space-y-4">
         <AnswerForm onSubmit={submitAnswer} disabled={gameStatus !== 'playing'} />
+        <button
+          onClick={giveUp}
+          disabled={gameStatus !== 'playing'}
+          className="w-full rounded-md border border-red-500 px-4 py-2 text-red-500 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-400 disabled:hover:bg-transparent"
+        >
+          ギブアップする
+        </button>
       </div>
     </div>
   );

@@ -7,18 +7,27 @@ import { ResultSlideshow } from "@/components/features/result/ResultSlideshow";
 export const ResultPageClient = () => {
   const searchParams = useSearchParams();
   const routeQuery = searchParams.get("route");
+  const status = searchParams.get("status");
   const routeHistory = routeQuery ? routeQuery.split(",") : [];
 
   const { getCountryName } = useCountryData();
   const countryNames = routeHistory.map(getCountryName).join(" → ");
 
+  const isGivenUp = status === "given_up";
+
   return (
     <div className="container mx-auto p-8 text-center">
-      <h1 className="text-4xl font-bold text-sky-600 mb-4">
-        クリアおめでとう！
+      <h1
+        className={`text-4xl font-bold mb-4 ${
+          isGivenUp ? "text-gray-700" : "text-sky-600"
+        }`}
+      >
+        {isGivenUp ? "残念！ギブアップしました" : "クリアおめでとう！"}
       </h1>
       <p className="text-lg mb-8">
-        あなたは見事、世界旅行を達成しました！
+        {isGivenUp
+          ? "今回の旅はここまでです。"
+          : "あなたは見事、世界旅行を達成しました！"}
       </p>
 
       <div className="mb-12">
