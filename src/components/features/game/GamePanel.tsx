@@ -14,6 +14,9 @@ type GamePanelProps = {
   gameStatus: GameStatus;
   submitAnswer: (answer: string, setError: (message: string) => void) => void;
   giveUp: () => void;
+  isMapVisible: boolean;
+  setIsMapVisible: (value: boolean) => void;
+  setSelectedCountryId: (countryId: string | null) => void;
 };
 
 export const GamePanel = ({
@@ -24,6 +27,9 @@ export const GamePanel = ({
   gameStatus,
   submitAnswer,
   giveUp,
+  isMapVisible,
+  setIsMapVisible,
+  setSelectedCountryId,
 }: GamePanelProps) => {
   const { getCountryName } = useCountryData();
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +57,12 @@ export const GamePanel = ({
               <span className="font-bold">{getCountryName(goalCountry)}</span>{" "}
               を目指せ！
             </p>
+            <button
+                onClick={() => setIsMapVisible(!isMapVisible)}
+                className="mt-2 text-sm text-blue-600 hover:underline"
+            >
+                {isMapVisible ? "地図を隠す" : "地図を表示する"}
+            </button>
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-700">現在の国</h2>
@@ -80,6 +92,7 @@ export const GamePanel = ({
         <AnswerForm
           onSubmit={handleSubmit}
           disabled={gameStatus !== "playing"}
+          onSuggestionSelect={setSelectedCountryId}
         />
         <button
           onClick={giveUp}

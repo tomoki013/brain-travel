@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, Suspense } from "react";
+import { useEffect, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { WorldMap } from "@/components/features/game/WorldMap";
 import { GamePanel } from "@/components/features/game/GamePanel";
@@ -10,6 +10,10 @@ function GameContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const gameLogic = useGameLogic();
+  const [isMapVisible, setIsMapVisible] = useState(false);
+  const [selectedCountryId, setSelectedCountryId] = useState<string | null>(
+    null
+  );
 
   const startCountry = searchParams.get("start");
   const goalCountry = searchParams.get("goal");
@@ -35,17 +39,20 @@ function GameContent() {
   return (
     <div className="grid h-dvh grid-cols-3 gap-4 p-4">
       {/* Left Column: Map */}
-      <div className="col-span-2">
-        <WorldMap
-          startCountryId={gameLogic.startCountry}
-          goalCountryId={gameLogic.goalCountry}
-          currentCountryId={gameLogic.currentCountry}
-          routeHistoryIds={gameLogic.routeHistory}
-        />
-      </div>
+      {isMapVisible && (
+        <div className="lg:col-span-2 col-span-3">
+          <WorldMap
+            startCountryId={gameLogic.startCountry}
+            goalCountryId={gameLogic.goalCountry}
+            currentCountryId={gameLogic.currentCountry}
+            routeHistoryIds={gameLogic.routeHistory}
+            selectedCountryId={selectedCountryId}
+          />
+        </div>
+      )}
 
       {/* Right Column: Information Panel */}
-      <div className="col-span-1">
+      <div className={isMapVisible ? "lg:col-span-1 col-span-3" : "col-span-3"}>
         <GamePanel
           currentCountry={gameLogic.currentCountry}
           startCountry={gameLogic.startCountry}
@@ -54,6 +61,9 @@ function GameContent() {
           gameStatus={gameLogic.gameStatus}
           submitAnswer={gameLogic.submitAnswer}
           giveUp={gameLogic.giveUp}
+          isMapVisible={isMapVisible}
+          setIsMapVisible={setIsMapVisible}
+          setSelectedCountryId={setSelectedCountryId}
         />
       </div>
     </div>

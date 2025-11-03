@@ -11,6 +11,7 @@ type WorldMapProps = {
   goalCountryId: string;
   currentCountryId: string;
   routeHistoryIds: string[];
+  selectedCountryId: string | null;
 };
 
 export const WorldMap = ({
@@ -18,6 +19,7 @@ export const WorldMap = ({
   goalCountryId,
   currentCountryId,
   routeHistoryIds,
+  selectedCountryId,
 }: WorldMapProps) => {
   const ref = useRef<SVGSVGElement>(null);
   const [countries, setCountries] = useState<FeatureCollection | null>(null);
@@ -72,6 +74,9 @@ export const WorldMap = ({
         if (countryId === currentCountryId) {
           return "fill-yellow-400 stroke-slate-700"; // Current country
         }
+        if (countryId === selectedCountryId) {
+          return "fill-green-400 stroke-slate-700"; // Selected country
+        }
         if (routeHistoryIds.includes(countryId)) {
           return "fill-sky-300 stroke-slate-700"; // Route history
         }
@@ -93,6 +98,7 @@ export const WorldMap = ({
     goalCountryId,
     currentCountryId,
     routeHistoryIds,
+    selectedCountryId,
   ]);
 
   return <svg ref={ref} className="w-full h-full" />;
