@@ -5,6 +5,7 @@ import { feature } from "topojson-client";
 import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import type { Topology } from "topojson-specification";
+import { a3ToNumericId } from "@/lib/hooks/useCountryData";
 
 type WorldMapProps = {
   startCountryId: string;
@@ -59,25 +60,35 @@ export const WorldMap = ({
     const projection = d3.geoMercator().fitSize([width, height], countries);
     const path = d3.geoPath().projection(projection);
 
+    const startNumericId = a3ToNumericId[startCountryId];
+    const goalNumericId = a3ToNumericId[goalCountryId];
+    const currentNumericId = a3ToNumericId[currentCountryId];
+    const selectedNumericId = selectedCountryId
+      ? a3ToNumericId[selectedCountryId]
+      : null;
+    const routeHistoryNumericIds = routeHistoryIds.map(
+      (id) => a3ToNumericId[id]
+    );
+
     g.selectAll("path")
       .data(countries.features)
       .join("path")
       .attr("d", path)
       .attr("class", (d) => {
-        const countryId = d.properties?.a3;
-        if (countryId === startCountryId) {
+        const countryNumericId = d.id;
+        if (countryNumericId === startNumericId) {
           return "fill-sky-500 stroke-slate-700"; // Start country
         }
-        if (countryId === goalCountryId) {
+        if (countryNumericId === goalNumericId) {
           return "fill-red-500 stroke-slate-700"; // Goal country
         }
-        if (countryId === currentCountryId) {
+        if (countryNumericId === currentNumericId) {
           return "fill-yellow-400 stroke-slate-700"; // Current country
         }
-        if (countryId === selectedCountryId) {
+        if (countryNumericId === selectedNumericId) {
           return "fill-green-400 stroke-slate-700"; // Selected country
         }
-        if (routeHistoryIds.includes(countryId)) {
+        if (routeHistoryNumericIds.includes(countryNumericId as string)) {
           return "fill-sky-300 stroke-slate-700"; // Route history
         }
         return "fill-slate-200 stroke-slate-700"; // Default

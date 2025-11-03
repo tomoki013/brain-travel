@@ -6,7 +6,7 @@ import { localImageManifest } from "../data/localImageManifest";
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
 
 // Create a mapping from a3 to numeric id and vice-versa
-const a3ToNumericId: Record<string, string> = {};
+export const a3ToNumericId: Record<string, string> = {};
 const numericIdToA3: Record<string, string> = {};
 
 Object.keys(codes).forEach((numericId) => {
