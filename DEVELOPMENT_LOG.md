@@ -1,5 +1,26 @@
 # 開発ログ
 
+## 2025-11-04 (Step 19)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ19 静的ページのコンテンツ作成とHTMLサイトマップの追加
+
+**実装概要:**
+- **タスクA: 静的ページの更新:**
+  - `src/app/(main)/(withFooter)/terms/page.tsx` のダミーテキストを、指定された利用規約のプレースホルダーに置き換え。
+  - `src/app/(main)/(withFooter)/privacy/page.tsx` のダミーテキストを、指定されたプライバシーポリシーのプレースホルダーに置き換え。
+  - `src/app/(main)/(withFooter)/contact/page.tsx` のダミーテキストを、指定されたお問い合わせの内容に置き換え。
+- **タスクB: HTMLサイトマップの作成:**
+  - `src/app/(main)/(withFooter)/sitemap/page.tsx` を新規作成し、主要ページへのリンクを設置した。
+- **タスクC: フッターの更新:**
+  - `src/components/layout/Footer.tsx` を修正し、「サイトマップ」へのリンクを追加。
+- **タスクD: GEMINI.md の更新:**
+  - `GEMINI.md` の「3.1. ディレクトリ構成」に、新規作成した `sitemap/page.tsx` を追記した。
+
+**課題・申し送り:**
+- 今回のタスクは主にコンテンツの更新と静的ファイルの追加であり、既存のアプリケーションロジックへの影響はない。
+- `npm run build` が正常に完了することを確認済み。
 ## 2025-11-03 (Step 18)
 
 **担当者:** Jules (AI Agent)
@@ -140,7 +161,7 @@
 
 **実装概要:**
 - **タスクA: 日本語国名データの復活と検索ロジックの修正:**
-  - `i18n-iso-countries` ライブラリを導入し、ステップ12で `countries.ts` が動的生成になった際に失われていた日本語の国名データを復活させた。
+  - `i18n-iso-countries` ライブラリを導入し、ステップ12で `countries.ts` が動적生成になった際に失われていた日本語の国名データを復活させた。
   - `src/lib/data/countries.ts` で `i18n-iso-countries` を利用して日本語名のマッピング (`countryNameJa`) を生成するように修正。
   - `src/lib/hooks/useCountryData.ts` を修正し、`getCountryName` が日本語名を優先的に返すように変更。また、`findCountryA3CodeByName` と `getCountrySuggestions` が日本語、英語、A3コードのいずれでも正しく検索できるようにデータソースを更新した。
 - **タスクB: 結果スライドショーのUIバグ修正:**
