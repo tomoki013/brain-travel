@@ -1,21 +1,18 @@
-'use client';
+"use client";
 
-import { WorldMap } from '@/components/game/WorldMap';
+import { WorldMap } from "@/components/features/game/WorldMap";
 
 // ゲームページ
 export default function GamePage() {
   // ダミーデータ
-  const startCountry = { id: 'JPN', name: '日本' };
-  const goalCountry = { id: 'FRA', name: 'フランス' };
+  const startCountry = { id: "JPN", name: "日本" };
+  const goalCountry = { id: "FRA", name: "フランス" };
 
   return (
     <div className="flex h-screen">
       {/* 左カラム：地図 */}
       <div className="w-2/3 h-full">
-        <WorldMap
-          startCountry={startCountry.id}
-          goalCountry={goalCountry.id}
-        />
+        <WorldMap startCountry={startCountry.id} goalCountry={goalCountry.id} />
       </div>
 
       {/* 右カラム：情報パネル */}
