@@ -24,6 +24,9 @@ const allCountries = Object.values(codes).map((country) => {
   };
 });
 
+// Cache for API results
+const imageCache = new Map<string, string>();
+
 /**
  * Custom hook to get country-related data
  */
@@ -33,10 +36,17 @@ export const useCountryData = () => {
    * 例: NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=your_access_key
    */
   const getImageUrl = async (countryId: string): Promise<string> => {
+    // Priority 1: Check local manifest
     if (localImageManifest.has(countryId)) {
       return `/images/countries/${countryId}.jpg`;
     }
 
+    // Priority 2: Check cache
+    if (imageCache.has(countryId)) {
+      return imageCache.get(countryId)!;
+    }
+
+    // Priority 3: Fetch from Unsplash API
     const apiKey = process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY;
     if (apiKey) {
       try {
@@ -55,13 +65,17 @@ export const useCountryData = () => {
         if (!response.ok) throw new Error("Unsplash API request failed");
         const data = await response.json();
         if (data.results && data.results.length > 0) {
-          return data.results[0].urls.regular;
+          const imageUrl = data.results[0].urls.regular;
+          // Priority 4: Save to cache
+          imageCache.set(countryId, imageUrl);
+          return imageUrl;
         }
       } catch (error) {
         console.error("Failed to fetch image from Unsplash:", error);
       }
     }
 
+    // Priority 5: Return default image
     return "/default-globe.jpg";
   };
 
