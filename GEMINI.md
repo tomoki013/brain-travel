@@ -46,6 +46,8 @@ src/
 │   │   │   │   └── page.tsx        # プライバシーポリシー
 │   │   │   ├── contact/
 │   │   │   │   └── page.tsx        # お問い合わせ
+│   │   │   ├── sitemap/
+│   │   │   │   └── page.tsx        # サイトマップ
 │   │   │   └── layout.tsx          # フッター付きレイアウト
 │   │   ├── game/
 │   │   │   └── page.tsx            # ゲームページ

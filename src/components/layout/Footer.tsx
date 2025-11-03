@@ -14,6 +14,9 @@ const Footer = () => {
           <Link href="/contact" className="hover:underline">
             お問い合わせ
           </Link>
+          <Link href="/sitemap" className="hover:underline">
+            サイトマップ
+          </Link>
         </div>
         <p className="text-sm">&copy; 2025 脳内世界旅行</p>
       </div>
