@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import { ResultSlideshow } from "@/components/features/result/ResultSlideshow";
@@ -38,6 +39,15 @@ export const ResultPageClient = () => {
       </div>
 
       <ResultSlideshow routeHistory={routeHistory} />
+
+      <div className="mt-12">
+        <Link
+          href="/"
+          className="bg-sky-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors"
+        >
+          トップページに戻る
+        </Link>
+      </div>
     </div>
   );
 };
