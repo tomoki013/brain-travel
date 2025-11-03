@@ -59,7 +59,7 @@ export const useGameLogic = () => {
       // Check for goal
       if (answerCountry === goalCountry) {
         setGameStatus("cleared");
-        router.push(`/result?route=${newRouteHistory.join(',')}`);
+        router.push(`/result?route=${newRouteHistory.join(",")}`);
       }
     } else {
       // Incorrect answer
@@ -75,7 +75,7 @@ export const useGameLogic = () => {
    */
   const giveUp = () => {
     setGameStatus("given_up");
-    router.push(`/result?route=${routeHistory.join(',')}&status=given_up`);
+    router.push(`/result?route=${routeHistory.join(",")}&status=given_up`);
   };
 
   return {

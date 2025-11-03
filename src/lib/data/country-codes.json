@@ -161,10 +161,12 @@
   "804": { "a3": "UKR", "name": "Ukraine" },
   "807": { "a3": "MKD", "name": "North Macedonia" },
   "818": { "a3": "EGY", "name": "Egypt" },
-  "826": { "a3": "GBR", "name": "United Kingdom of Great Britain and Northern Ireland" },
+  "826": {
+    "a3": "GBR",
+    "name": "United Kingdom of Great Britain and Northern Ireland"
+  },
   "834": { "a3": "TZA", "name": "United Republic of Tanzania" },
   "840": { "a3": "USA", "name": "United States of America" },
-  "854": { "a3": "BFA", "name": "Burkina Faso" },
   "858": { "a3": "URY", "name": "Uruguay" },
   "860": { "a3": "UZB", "name": "Uzbekistan" },
   "862": { "a3": "VEN", "name": "Venezuela (Bolivarian Republic of)" },
