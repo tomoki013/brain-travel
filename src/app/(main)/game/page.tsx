@@ -1,19 +1,28 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { WorldMap } from '@/components/features/game/WorldMap';
 import { GamePanel } from '@/components/features/game/GamePanel';
 import { useGameLogic } from '@/lib/hooks/useGameLogic';
 
-// ゲームページ
-export default function GamePage() {
+function GameContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const gameLogic = useGameLogic();
 
-  // マウント時にゲームを初期化
+  const startCountry = searchParams.get('start');
+  const goalCountry = searchParams.get('goal');
+
   useEffect(() => {
-    gameLogic.initializeGame('JPN', 'FRA');
+    if (startCountry && goalCountry) {
+      gameLogic.initializeGame(startCountry, goalCountry);
+    } else {
+      // If query parameters are missing, redirect to the top page.
+      router.push('/');
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [startCountry, goalCountry]);
 
   if (!gameLogic.startCountry || !gameLogic.goalCountry || !gameLogic.currentCountry) {
     return <div>Loading...</div>;
@@ -36,5 +45,14 @@ export default function GamePage() {
         <GamePanel gameLogic={gameLogic} />
       </div>
     </div>
+  );
+}
+
+// Wrap the component with Suspense as useSearchParams requires it
+export default function GamePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <GameContent />
+    </Suspense>
   );
 }
