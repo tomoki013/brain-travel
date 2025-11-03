@@ -63,8 +63,10 @@ export const GamePanel = ({
         </motion.div>
       </AnimatePresence>
 
-      <div className="overflow-y-auto">
-        <div className="space-y-4">
+      {/* Info Panel Section */}
+      <div className="flex flex-1 flex-col overflow-y-auto">
+        {/* Scrollable Content */}
+        <div className="flex-1 space-y-4 pr-2 overflow-y-auto">
           <div>
             <h2 className="text-lg font-semibold text-gray-200">お題</h2>
             <p className="text-gray-100">
@@ -73,12 +75,6 @@ export const GamePanel = ({
               <span className="font-bold">{getCountryName(goalCountry)}</span>{" "}
               を目指せ！
             </p>
-            <button
-              onClick={() => setIsMapVisible(!isMapVisible)}
-              className="mt-2 text-sm text-cyan-300 hover:underline"
-            >
-              {isMapVisible ? "地図を隠す" : "地図を表示する"}
-            </button>
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-200">現在の国</h2>
@@ -107,9 +103,9 @@ export const GamePanel = ({
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="mt-auto space-y-4">
+        {/* Sticky Footer for Form */}
+        <div className="mt-auto pt-4 space-y-4">
         {error && (
           <div className="rounded-md bg-red-900/50 p-3 text-sm text-red-200 border border-red-700">
             {error}
@@ -127,6 +123,7 @@ export const GamePanel = ({
         >
           ギブアップする
         </button>
+        </div>
       </div>
     </div>
   );

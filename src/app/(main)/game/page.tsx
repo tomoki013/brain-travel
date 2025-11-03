@@ -39,10 +39,7 @@ function GameContent() {
   return (
     <div className="grid h-dvh lg:grid-cols-3 gap-4 p-4">
       {/* Left Column: Map */}
-      <div className="lg:col-span-2 relative">
-        {!isMapVisible && (
-          <div className="absolute inset-0 z-10 bg-gray-900/50 backdrop-blur-md" />
-        )}
+      <div className="lg:col-span-2 relative h-full">
         <WorldMap
           startCountryId={gameLogic.startCountry}
           goalCountryId={gameLogic.goalCountry}
@@ -50,6 +47,23 @@ function GameContent() {
           routeHistoryIds={gameLogic.routeHistory}
           selectedCountryId={selectedCountryId}
         />
+        {isMapVisible ? (
+          <button
+            onClick={() => setIsMapVisible(false)}
+            className="absolute top-4 right-4 z-10 rounded-full bg-black/50 px-4 py-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
+          >
+            地図を隠す
+          </button>
+        ) : (
+          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-gray-900/50 backdrop-blur-md">
+            <button
+              onClick={() => setIsMapVisible(true)}
+              className="rounded-full bg-cyan-500/80 px-6 py-3 text-lg font-bold text-white shadow-lg transition-transform hover:scale-105"
+            >
+              地図を表示する
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Right Column: Information Panel */}
