@@ -6,18 +6,23 @@ import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import type { Topology } from "topojson-client";
 
-// highlightする国を string[] で受け取る
 type WorldMapProps = {
-  startCountry: string; // JPN
-  goalCountry: string; // FRA
+  startCountry: string;
+  goalCountry: string;
+  currentCountry: string;
+  routeHistory: string[];
 };
 
-// WorldMap コンポーネント
-export const WorldMap = ({ startCountry, goalCountry }: WorldMapProps) => {
+export const WorldMap = ({
+  startCountry,
+  goalCountry,
+  currentCountry,
+  routeHistory,
+}: WorldMapProps) => {
   const ref = useRef<SVGSVGElement>(null);
   const [countries, setCountries] = useState<FeatureCollection | null>(null);
 
-  // world.json を非同期で読み込む
+  // Load world map data
   useEffect(() => {
     const loadMapData = async () => {
       try {
@@ -36,7 +41,7 @@ export const WorldMap = ({ startCountry, goalCountry }: WorldMapProps) => {
     loadMapData();
   }, []);
 
-  // 地図を描画する
+  // Draw the map and highlight countries
   useEffect(() => {
     if (!countries) return;
 
@@ -55,14 +60,20 @@ export const WorldMap = ({ startCountry, goalCountry }: WorldMapProps) => {
       .attr("class", (d) => {
         const countryId = d.properties?.a3;
         if (countryId === startCountry) {
-          return "fill-sky-500 stroke-slate-700";
+          return "fill-sky-500 stroke-slate-700"; // Start country
         }
         if (countryId === goalCountry) {
-          return "fill-red-500 stroke-slate-700";
+          return "fill-red-500 stroke-slate-700"; // Goal country
         }
-        return "fill-slate-200 stroke-slate-700";
+        if (countryId === currentCountry) {
+          return "fill-yellow-400 stroke-slate-700"; // Current country
+        }
+        if (routeHistory.includes(countryId)) {
+          return "fill-sky-300 stroke-slate-700"; // Route history
+        }
+        return "fill-slate-200 stroke-slate-700"; // Default
       });
-  }, [countries, startCountry, goalCountry]);
+  }, [countries, startCountry, goalCountry, currentCountry, routeHistory]);
 
   return <svg ref={ref} className="w-full h-full" />;
 };
