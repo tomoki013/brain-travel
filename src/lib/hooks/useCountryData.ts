@@ -1,5 +1,5 @@
 import countryCodes from "../data/country-codes.json";
-import { countries as japaneseCountries } from "../data/countries";
+import { countries as japaneseCountries, countryNameJa } from "../data/countries";
 import { localImageManifest } from "../data/localImageManifest";
 
 // Type assertion for country-codes.json
@@ -17,11 +17,10 @@ Object.keys(codes).forEach((numericId) => {
 
 // Create a comprehensive list for searching
 const allCountries = Object.values(codes).map((country) => {
-  const japaneseInfo = japaneseCountries.find((c) => c.id === country.a3);
   return {
     a3: country.a3,
     englishName: country.name,
-    japaneseName: japaneseInfo ? japaneseInfo.name : "",
+    japaneseName: countryNameJa[country.a3] || "",
   };
 });
 
@@ -75,6 +74,11 @@ export const useCountryData = () => {
     if (!countryId) {
       return "N/A";
     }
+    // Prioritize Japanese name
+    if (countryNameJa[countryId]) {
+      return countryNameJa[countryId];
+    }
+    // Fallback to English name
     const numericId = a3ToNumericId[countryId];
     if (numericId && codes[numericId]) {
       return codes[numericId].name;
