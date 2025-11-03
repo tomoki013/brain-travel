@@ -1,5 +1,6 @@
 "use client";
 
+import { motion, AnimatePresence } from "framer-motion";
 import { CountryImage } from "./CountryImage";
 import { AnswerForm } from "./AnswerForm";
 import { useState } from "react";
@@ -44,48 +45,73 @@ export const GamePanel = ({
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 rounded-lg bg-gray-50 p-6 shadow-lg">
-      {currentCountry && <CountryImage countryId={currentCountry} />}
+    <div className="flex h-full flex-col gap-4 rounded-lg bg-black/20 p-6 shadow-lg backdrop-blur-sm text-white">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentCountry}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          {currentCountry && (
+            <CountryImage
+              countryId={currentCountry}
+              className="rounded-lg shadow-xl"
+            />
+          )}
+        </motion.div>
+      </AnimatePresence>
 
       <div className="overflow-y-auto">
         <div className="space-y-4">
           <div>
-            <h2 className="text-lg font-semibold text-gray-700">お題</h2>
-            <p className="text-gray-600">
+            <h2 className="text-lg font-semibold text-gray-200">お題</h2>
+            <p className="text-gray-100">
               <span className="font-bold">{getCountryName(startCountry)}</span>{" "}
               から{" "}
               <span className="font-bold">{getCountryName(goalCountry)}</span>{" "}
               を目指せ！
             </p>
             <button
-                onClick={() => setIsMapVisible(!isMapVisible)}
-                className="mt-2 text-sm text-blue-600 hover:underline"
+              onClick={() => setIsMapVisible(!isMapVisible)}
+              className="mt-2 text-sm text-cyan-300 hover:underline"
             >
-                {isMapVisible ? "地図を隠す" : "地図を表示する"}
+              {isMapVisible ? "地図を隠す" : "地図を表示する"}
             </button>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-700">現在の国</h2>
-            <p className="text-2xl font-bold text-blue-600">
+            <h2 className="text-lg font-semibold text-gray-200">現在の国</h2>
+            <p className="text-4xl font-bold text-white">
               {getCountryName(currentCountry)}
             </p>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-700">移動履歴</h2>
-            <ul className="list-disc space-y-1 pl-5">
-              {routeHistory.map((countryId, index) => (
-                <li key={`${countryId}-${index}`} className="text-gray-600">
-                  {getCountryName(countryId)}
-                </li>
-              ))}
-            </ul>
+            <h2 className="text-lg font-semibold text-gray-200 mb-2">
+              移動履歴
+            </h2>
+            <div className="max-h-48 overflow-y-auto rounded-md border border-yellow-800/50 bg-yellow-50/10 p-3">
+              <ul className="space-y-2">
+                {routeHistory.map((countryId, index) => (
+                  <li
+                    key={`${countryId}-${index}`}
+                    className="font-mono text-sm text-yellow-200"
+                  >
+                    <span className="font-sans font-bold text-gray-300 mr-2">
+                      {index + 1}.
+                    </span>
+                    {getCountryName(countryId)}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       <div className="mt-auto space-y-4">
         {error && (
-          <div className="rounded-md bg-red-100 p-3 text-sm text-red-700">
+          <div className="rounded-md bg-red-900/50 p-3 text-sm text-red-200 border border-red-700">
             {error}
           </div>
         )}
@@ -97,7 +123,7 @@ export const GamePanel = ({
         <button
           onClick={giveUp}
           disabled={gameStatus !== "playing"}
-          className="w-full rounded-md border border-red-500 px-4 py-2 text-red-500 transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:border-gray-300 disabled:text-gray-400 disabled:hover:bg-transparent"
+          className="w-full rounded-md border border-red-500 px-4 py-2 text-red-400 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:border-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent"
         >
           ギブアップする
         </button>
