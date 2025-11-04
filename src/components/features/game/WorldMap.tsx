@@ -76,22 +76,27 @@ export const WorldMap = ({
       .attr("d", path)
       .attr("class", (d) => {
         const countryNumericId = d.id;
-        if (countryNumericId === startNumericId) {
-          return "fill-sky-500 stroke-slate-700"; // Start country
-        }
+        const baseClasses = "stroke-white/20 stroke-1 transition-colors";
+
+        // Highest priority: Goal, Start, Current
         if (countryNumericId === goalNumericId) {
-          return "fill-red-500 stroke-slate-700"; // Goal country
+          return `fill-rose-500 ${baseClasses}`; // Goal
+        }
+        if (countryNumericId === startNumericId) {
+          return `fill-emerald-500 ${baseClasses}`; // Start
         }
         if (countryNumericId === currentNumericId) {
-          return "fill-yellow-400 stroke-slate-700"; // Current country
+          return `fill-yellow-400 ${baseClasses}`; // Current
         }
+        // Lower priority: Selected, History
         if (countryNumericId === selectedNumericId) {
-          return "fill-green-400 stroke-slate-700"; // Selected country
+          return `fill-cyan-400 ${baseClasses}`; // Selected
         }
         if (routeHistoryNumericIds.includes(countryNumericId as string)) {
-          return "fill-sky-300 stroke-slate-700"; // Route history
+          return `fill-emerald-300/70 ${baseClasses}`; // History
         }
-        return "fill-slate-200 stroke-slate-700"; // Default
+        // Default
+        return `fill-gray-500/50 ${baseClasses}`;
       });
 
     // Zoom functionality

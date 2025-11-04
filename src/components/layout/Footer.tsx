@@ -2,23 +2,32 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-6">
-      <div className="container mx-auto px-4 text-center">
-        <div className="flex justify-center space-x-6 mb-4">
-          <Link href="/terms" className="hover:underline">
+    <footer className="bg-black/30 text-white backdrop-blur-sm">
+      <div className="container mx-auto px-6 py-8 text-center">
+        <div className="mb-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+          <Link href="/terms" className="transition-opacity hover:opacity-80">
             利用規約
           </Link>
-          <Link href="/privacy" className="hover:underline">
+          <Link
+            href="/privacy"
+            className="transition-opacity hover:opacity-80"
+          >
             プライバシーポリシー
           </Link>
-          <Link href="/contact" className="hover:underline">
+          <Link
+            href="/contact"
+            className="transition-opacity hover:opacity-80"
+          >
             お問い合わせ
           </Link>
-          <Link href="/sitemap" className="hover:underline">
+          <Link
+            href="/sitemap"
+            className="transition-opacity hover:opacity-80"
+          >
             サイトマップ
           </Link>
         </div>
-        <p className="text-sm">&copy; 2025 脳内世界旅行</p>
+        <p className="text-xs text-white/60">&copy; 2025 脳内世界旅行</p>
       </div>
     </footer>
   );

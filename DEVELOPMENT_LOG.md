@@ -1,5 +1,30 @@
 # 開発ログ
 
+## 2025-11-04 (Step 20)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ20 UI/UXの全面的な向上（トップページを除く）
+
+**実装概要:**
+- **タスクA: ゲームページUI/UXの向上:**
+  - `game/page.tsx`: `CountryImage` を利用した全画面背景を追加し、没入感を向上させました。
+  - `GamePanel.tsx`: 背景を半透明のガラスモーフィズム風 (`bg-white/30 backdrop-blur-lg`) に変更し、タイポグラフィを調整、エラーメッセージのデザインを改善しました。
+  - `AnswerForm.tsx`: `GamePanel` の新しいデザインと調和するように、入力欄とサジェストリストのデザインを刷新しました。
+  - `WorldMap.tsx`: ハイライトカラーをより鮮やかで美しい配色 (`fill-emerald-500`, `fill-rose-500` 等) に変更しました。
+- **タスクB: 結果ページUI/UXの向上:**
+  - `ResultPageClient.tsx`: `CountryImage` を利用した壮大な全画面背景を追加し、「クリア！」のテキストに `framer-motion` を使ったアニメーションを実装しました。
+  - `ResultSlideshow.tsx`: レイアウトを画面の主役になるように調整し、`AnimatePresence` のアニメーションをより滑らかなクロスフェードエフェクトに変更しました。
+- **タスクC: 静的ページUI/UXの向上:**
+  - `@tailwindcss/typography` を導入し、静的ページ (`/terms`, `/privacy`, `/contact`, `/sitemap`) に `prose` クラスを適用しました。
+  - コンテンツの `max-w-3xl` を `max-w-4xl` に変更し、`py-12` を `py-24` に増やすことで、可読性と余白を改善しました。
+- **タスクD: レイアウトコンポーネントのUI/UX向上:**
+  - `Header.tsx` と `Footer.tsx`: アプリ全体のトーンに合わせ、背景を半透明 (`bg-black/30 backdrop-blur-sm`) にし、デザインを統一しました。
+
+**課題・申し送り:**
+- アプリ全体に渡る大規模なUI改修を実施しました。特に `framer-motion` を活用したアニメーションや、ガラスモーフィズム、背景画像など、視覚的な要素が多いため、多様なデバイスや画面サイズでの最終的な表示確認が重要です。
+- `@tailwindcss/typography` を新たに `devDependencies` として導入しました。今後の静的コンテンツ追加時にも `prose` クラスの活用を推奨します。
+
 ## 2025-11-03 (Step 19)
 
 **担当者:** Jules (AI Agent)
