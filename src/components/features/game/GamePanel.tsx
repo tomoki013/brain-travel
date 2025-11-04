@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { CountryImage } from "./CountryImage";
-import { AnswerForm } from "./AnswerForm";
+import { CountrySelector } from "@/components/features/shared/CountrySelector";
 import { useState } from "react";
 import type { GameStatus } from "@/types";
 import { useCountryData } from "@/lib/hooks/useCountryData";
@@ -32,8 +32,9 @@ export const GamePanel = ({
   setIsMapVisible,
   setSelectedCountryId,
 }: GamePanelProps) => {
-  const { getCountryName } = useCountryData();
+  const { getCountryName, countries } = useCountryData();
   const [error, setError] = useState<string | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   const handleSubmit = (answer: string) => {
     setError(null); // Clear previous errors
@@ -42,7 +43,13 @@ export const GamePanel = ({
     } else {
       setError("有効な国名を入力してください");
     }
+    setSelectedCountry(null); // Reset visual selection after submit
   };
+
+  const handleSuggestionSelect = (countryId: string | null) => {
+    setSelectedCountryId(countryId);
+    setSelectedCountry(countryId);
+  }
 
   return (
     <div className="flex h-full flex-col gap-4 rounded-lg bg-black/20 p-4 shadow-2xl backdrop-blur-md text-white">
@@ -115,10 +122,13 @@ export const GamePanel = ({
               {error}
             </div>
           )}
-          <AnswerForm
+          <CountrySelector
+            id="game-country-selector"
+            value={selectedCountry}
             onSubmit={handleSubmit}
+            onSuggestionSelect={handleSuggestionSelect}
+            countriesList={countries} // Pass all countries
             disabled={gameStatus !== "playing"}
-            onSuggestionSelect={setSelectedCountryId}
           />
           <div className="grid grid-cols-2 gap-3">
             <button

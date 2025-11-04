@@ -62,7 +62,9 @@ src/
 │   │   ├── game/
 │   │   │   ├── WorldMap.tsx        # ★ d3.js 地図
 │   │   │   └── GamePanel.tsx       # ★ 右側パネル
-│   │   └── result/                 # (結果表示関連コンポーネント)
+│   │   ├── result/                 # (結果表示関連コンポーネント)
+│   │   └── shared/
+│   │       └── CountrySelector.tsx # ★ 国選択コンポーネント
 │   ├── layout/                     # ページレイアウト用コンポーネント
 │   │   └── Header.tsx
 │   └── ui/                         # 汎用的なUIコンポーネント
