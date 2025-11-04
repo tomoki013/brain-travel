@@ -27,18 +27,19 @@ export const AnswerForm = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
+
     if (value) {
       setSuggestions(getCountrySuggestions(value));
     } else {
       setSuggestions([]);
-      onSuggestionSelect(null); // Clear selection
+      onSuggestionSelect(null);
     }
   };
 
   const handleSuggestionClick = (suggestion: Suggestion) => {
     setInputValue(suggestion.japaneseName || suggestion.englishName);
     setSuggestions([]);
-    onSuggestionSelect(suggestion.a3); // Set selection
+    onSuggestionSelect(suggestion.a3);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,34 +48,34 @@ export const AnswerForm = ({
     if (a3Code) {
       onSubmit(a3Code);
       setInputValue("");
-      onSuggestionSelect(null); // Clear selection after submit
+      onSuggestionSelect(null);
     } else {
-      onSubmit(""); // Pass an empty string to indicate an error
+      onSubmit(""); // Submit "" to trigger error
     }
   };
 
   return (
     <div className="relative">
       <form onSubmit={handleSubmit} className="flex gap-2">
-        <fieldset disabled={disabled} className="flex w-full gap-2">
+        <fieldset disabled={disabled} className="flex-grow flex gap-2">
           <input
             type="text"
             value={inputValue}
             onChange={handleInputChange}
             placeholder="次の国を入力..."
-            className="w-full rounded-md border-2 border-white/50 bg-white/20 px-4 py-2 text-white placeholder-white/70 transition-colors focus:border-cyan-400 focus:bg-white/30 focus:outline-none disabled:cursor-not-allowed disabled:bg-white/10"
+            className="w-full rounded-md border border-white/30 bg-black/20 px-4 py-2 text-white placeholder-white/70 transition-colors focus:border-cyan-400 focus:bg-black/30 focus:outline-none disabled:cursor-not-allowed disabled:bg-white/10"
             autoComplete="off"
           />
           <button
             type="submit"
-            className="shrink-0 rounded-md bg-cyan-500 px-6 py-2 font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:bg-cyan-500/50 disabled:shadow-none"
+            className="shrink-0 rounded-md bg-cyan-500 px-6 py-2 font-bold text-white shadow-lg transition-all hover:bg-cyan-400 active:scale-95 disabled:cursor-not-allowed disabled:bg-cyan-500/50 disabled:shadow-none"
           >
             回答
           </button>
         </fieldset>
       </form>
       {suggestions.length > 0 && (
-        <ul className="absolute z-10 mt-1 w-full max-h-48 overflow-y-auto rounded-md border border-white/30 bg-black/50 text-white shadow-lg backdrop-blur-lg">
+        <ul className="absolute bottom-full z-10 mb-2 w-full max-h-48 overflow-y-auto rounded-md border border-white/30 bg-black/50 text-white shadow-lg backdrop-blur-lg">
           {suggestions.map((s) => (
             <li
               key={s.a3}

@@ -25,7 +25,6 @@ export const WorldMap = ({
   const ref = useRef<SVGSVGElement>(null);
   const [countries, setCountries] = useState<FeatureCollection | null>(null);
 
-  // Load world map data
   useEffect(() => {
     const loadMapData = async () => {
       try {
@@ -44,20 +43,24 @@ export const WorldMap = ({
     loadMapData();
   }, []);
 
-  // Draw the map and highlight countries
   useEffect(() => {
     if (!countries || !ref.current) return;
 
     const svg = d3.select(ref.current);
-    // Clear SVG content before redrawing to avoid layering issues
     svg.selectAll("*").remove();
 
-    const g = svg.append("g"); // Group to apply transform for zoom/pan
+    const g = svg.append("g");
 
     const width = parseInt(svg.style("width"));
     const height = parseInt(svg.style("height"));
 
-    const projection = d3.geoMercator().fitSize([width, height], countries);
+    const projection = d3
+      .geoMercator()
+      .scale(width / 2 / Math.PI)
+      .translate([width / 2, height / 1.5])
+      .center([50, 20]);
+
+    projection.fitSize([width, height], countries);
     const path = d3.geoPath().projection(projection);
 
     const startNumericId = a3ToNumericId[startCountryId];
@@ -76,33 +79,30 @@ export const WorldMap = ({
       .attr("d", path)
       .attr("class", (d) => {
         const countryNumericId = d.id;
-        const baseClasses = "stroke-white/20 stroke-1 transition-colors";
+        const baseClasses =
+          "stroke-gray-500 stroke-1 transition-colors duration-300";
 
-        // Highest priority: Goal, Start, Current
         if (countryNumericId === goalNumericId) {
-          return `fill-rose-500 ${baseClasses}`; // Goal
+          return `fill-rose-500 ${baseClasses}`;
         }
         if (countryNumericId === startNumericId) {
-          return `fill-emerald-500 ${baseClasses}`; // Start
+          return `fill-emerald-400 ${baseClasses}`;
         }
         if (countryNumericId === currentNumericId) {
-          return `fill-yellow-400 ${baseClasses}`; // Current
+          return `fill-amber-400 ${baseClasses}`;
         }
-        // Lower priority: Selected, History
         if (countryNumericId === selectedNumericId) {
-          return `fill-cyan-400 ${baseClasses}`; // Selected
+          return `fill-sky-400 ${baseClasses}`;
         }
         if (routeHistoryNumericIds.includes(countryNumericId as string)) {
-          return `fill-emerald-300/70 ${baseClasses}`; // History
+          return `fill-emerald-400/50 ${baseClasses}`;
         }
-        // Default
-        return `fill-gray-500/50 ${baseClasses}`;
+        return `fill-gray-700 hover:fill-gray-600 ${baseClasses}`;
       });
 
-    // Zoom functionality
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
-      .scaleExtent([1, 8])
+      .scaleExtent([1, 10])
       .on("zoom", (event) => {
         g.attr("transform", event.transform);
       });
@@ -117,5 +117,5 @@ export const WorldMap = ({
     selectedCountryId,
   ]);
 
-  return <svg ref={ref} className="w-full h-full" />;
+  return <svg ref={ref} className="w-full h-full rounded-lg" />;
 };

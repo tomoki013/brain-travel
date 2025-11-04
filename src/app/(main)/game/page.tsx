@@ -5,12 +5,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { WorldMap } from "@/components/features/game/WorldMap";
 import { GamePanel } from "@/components/features/game/GamePanel";
 import { useGameLogic } from "@/lib/hooks/useGameLogic";
+import { CountryImage } from "@/components/features/game/CountryImage";
 
 function GameContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const gameLogic = useGameLogic();
-  const [isMapVisible, setIsMapVisible] = useState(true);
+  //
+  //
+  const [isMapVisible, setIsMapVisible] = useState(false);
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(
     null
   );
@@ -22,7 +25,6 @@ function GameContent() {
     if (startCountry && goalCountry) {
       gameLogic.initializeGame(startCountry, goalCountry);
     } else {
-      // If query parameters are missing, redirect to the top page.
       router.push("/");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -33,53 +35,63 @@ function GameContent() {
     !gameLogic.goalCountry ||
     !gameLogic.currentCountry
   ) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex h-dvh w-full items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
   }
 
   return (
-    <div className="grid h-dvh lg:grid-cols-3 gap-4 p-4">
-      {/* Left Column: Map */}
-      <div className="lg:col-span-2 relative h-full">
-        <WorldMap
-          startCountryId={gameLogic.startCountry}
-          goalCountryId={gameLogic.goalCountry}
-          currentCountryId={gameLogic.currentCountry}
-          routeHistoryIds={gameLogic.routeHistory}
-          selectedCountryId={selectedCountryId}
+    <div className="relative h-dvh w-full overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <CountryImage
+          countryId={gameLogic.startCountry}
+          className="h-full w-full object-cover blur-md scale-110"
         />
-        {isMapVisible ? (
-          <button
-            onClick={() => setIsMapVisible(false)}
-            className="absolute top-4 right-4 z-10 rounded-full bg-black/50 px-4 py-2 text-white backdrop-blur-sm transition-colors hover:bg-black/70"
-          >
-            地図を隠す
-          </button>
-        ) : (
-          <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-gray-900/50 backdrop-blur-md">
-            <button
-              onClick={() => setIsMapVisible(true)}
-              className="rounded-full bg-cyan-500/80 px-6 py-3 text-lg font-bold text-white shadow-lg transition-transform hover:scale-105"
-            >
-              地図を表示する
-            </button>
-          </div>
-        )}
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* Right Column: Information Panel */}
-      <div className="lg:col-span-1">
-        <GamePanel
-          currentCountry={gameLogic.currentCountry}
-          startCountry={gameLogic.startCountry}
-          goalCountry={gameLogic.goalCountry}
-          routeHistory={gameLogic.routeHistory}
-          gameStatus={gameLogic.gameStatus}
-          submitAnswer={gameLogic.submitAnswer}
-          giveUp={gameLogic.giveUp}
-          isMapVisible={isMapVisible}
-          setIsMapVisible={setIsMapVisible}
-          setSelectedCountryId={setSelectedCountryId}
-        />
+      {/* Game Layout */}
+      <div className="relative z-10 grid h-full lg:grid-cols-3 gap-4 p-4">
+        {/* Map Area */}
+        <div className="lg:col-span-2 relative h-full">
+          {isMapVisible ? (
+            <WorldMap
+              startCountryId={gameLogic.startCountry}
+              goalCountryId={gameLogic.goalCountry}
+              currentCountryId={gameLogic.currentCountry}
+              routeHistoryIds={gameLogic.routeHistory}
+              selectedCountryId={selectedCountryId}
+            />
+          ) : (
+            <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-gray-900/50 backdrop-blur-md">
+              <button
+                onClick={() => setIsMapVisible(true)}
+                className="rounded-full bg-cyan-500/80 px-6 py-3 text-lg font-bold text-white shadow-lg transition-transform hover:scale-105"
+              >
+                地図を表示する
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Panel Area */}
+        <div className="lg:col-span-1 h-full">
+          <GamePanel
+            currentCountry={gameLogic.currentCountry}
+            startCountry={gameLogic.startCountry}
+            goalCountry={gameLogic.goalCountry}
+            routeHistory={gameLogic.routeHistory}
+            gameStatus={gameLogic.gameStatus}
+            submitAnswer={gameLogic.submitAnswer}
+            giveUp={gameLogic.giveUp}
+            isMapVisible={isMapVisible}
+            setIsMapVisible={setIsMapVisible}
+            setSelectedCountryId={setSelectedCountryId}
+          />
+        </div>
       </div>
     </div>
   );
@@ -88,7 +100,13 @@ function GameContent() {
 // Wrap the component with Suspense as useSearchParams requires it
 export default function GamePage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex h-dvh w-full items-center justify-center bg-gray-900 text-white">
+          <p>Loading Game...</p>
+        </div>
+      }
+    >
       <GameContent />
     </Suspense>
   );
