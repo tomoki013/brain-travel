@@ -1,34 +1,56 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CountryImage } from "@/components/features/game/CountryImage";
 import { CountrySelector } from "@/components/features/home/CountrySelector";
-import borderData from "@/lib/data/borders.json";
+import { useCountryData } from "@/lib/hooks/useCountryData";
+import { Country } from "@/types";
 
 export default function TopPage() {
   const router = useRouter();
-  const [startCountry, setStartCountry] = useState<string | null>("JPN");
-  const [goalCountry, setGoalCountry] = useState<string | null>("FRA");
+  const { getPlayableCountries, getCountriesInSameContinent, countries } =
+    useCountryData();
+  const [startCountry, setStartCountry] = useState<string | null>(null);
+  const [goalCountry, setGoalCountry] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const countryBorders = borderData as Record<string, string[]>;
-  const countryIds = Object.keys(countryBorders);
+  const playableCountries = useMemo(() => getPlayableCountries(), []);
+  const goalCountries = useMemo(() => {
+    if (!startCountry) return [];
+    const sameContinentA3s = getCountriesInSameContinent(startCountry);
+    return countries.filter(
+      (c) => sameContinentA3s.includes(c.id) && c.id !== startCountry
+    );
+  }, [startCountry, countries]);
 
   // Generate a random country ID for the background on initial render only
   const [randomBgCountryId] = useState(() => {
-    if (countryIds.length === 0) return "";
-    return countryIds[Math.floor(Math.random() * countryIds.length)];
+    if (countries.length === 0) return "";
+    return countries[Math.floor(Math.random() * countries.length)].id;
   });
 
   const handleStartRandom = () => {
-    let randomStart, randomGoal;
-    do {
-      randomStart = countryIds[Math.floor(Math.random() * countryIds.length)];
-      randomGoal = countryIds[Math.floor(Math.random() * countryIds.length)];
-    } while (randomStart === randomGoal);
-    router.push(`/game?start=${randomStart}&goal=${randomGoal}`);
+    // 1. Pick a random start country from the playable list
+    const randomStartCountry =
+      playableCountries[Math.floor(Math.random() * playableCountries.length)];
+
+    // 2. Get the list of countries in the same continent
+    const continentPeers = getCountriesInSameContinent(randomStartCountry.id);
+    const validGoalCountries = continentPeers.filter(
+      (id) => id !== randomStartCountry.id
+    );
+
+    // 3. Pick a random goal country from that list
+    const randomGoalCountryId =
+      validGoalCountries[
+        Math.floor(Math.random() * validGoalCountries.length)
+      ];
+
+    router.push(
+      `/game?start=${randomStartCountry.id}&goal=${randomGoalCountryId}`
+    );
   };
 
   const handleStartSelected = () => {
@@ -127,7 +149,11 @@ export default function TopPage() {
                 <CountrySelector
                   id="start-country"
                   value={startCountry}
-                  onChange={setStartCountry}
+                  onChange={(countryId) => {
+                    setStartCountry(countryId);
+                    setGoalCountry(null); // Reset goal country when start changes
+                  }}
+                  countriesList={playableCountries}
                 />
               </div>
             </div>
@@ -143,6 +169,8 @@ export default function TopPage() {
                   id="goal-country"
                   value={goalCountry}
                   onChange={setGoalCountry}
+                  countriesList={goalCountries}
+                  disabled={!startCountry}
                 />
               </div>
             </div>
