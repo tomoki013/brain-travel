@@ -4,13 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CountryImage } from "@/components/features/game/CountryImage";
-import { countries } from "@/lib/data/countries";
+import { CountrySelector } from "@/components/features/home/CountrySelector";
 import borderData from "@/lib/data/borders.json";
 
 export default function TopPage() {
   const router = useRouter();
-  const [startCountry, setStartCountry] = useState(countries[0].id);
-  const [goalCountry, setGoalCountry] = useState(countries[1].id);
+  const [startCountry, setStartCountry] = useState<string | null>("JPN");
+  const [goalCountry, setGoalCountry] = useState<string | null>("FRA");
   const [error, setError] = useState<string | null>(null);
 
   const countryBorders = borderData as Record<string, string[]>;
@@ -119,44 +119,32 @@ export default function TopPage() {
             <div>
               <label
                 htmlFor="start-country"
-                className="block text-sm font-medium leading-6 text-gray-200"
+                className="block text-sm font-medium leading-6 text-gray-200 text-left"
               >
                 スタート国
               </label>
-              <select
-                id="start-country"
-                name="start-country"
-                value={startCountry}
-                onChange={(e) => setStartCountry(e.target.value)}
-                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
-                {countries.map((country) => (
-                  <option key={country.id} value={country.id}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
+              <div className="mt-2">
+                <CountrySelector
+                  id="start-country"
+                  value={startCountry}
+                  onChange={setStartCountry}
+                />
+              </div>
             </div>
             <div>
               <label
                 htmlFor="goal-country"
-                className="block text-sm font-medium leading-6 text-gray-200"
+                className="block text-sm font-medium leading-6 text-gray-200 text-left"
               >
                 ゴール国
               </label>
-              <select
-                id="goal-country"
-                name="goal-country"
-                value={goalCountry}
-                onChange={(e) => setGoalCountry(e.target.value)}
-                className="mt-2 block w-full rounded-md border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              >
-                {countries.map((country) => (
-                  <option key={country.id} value={country.id}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
+              <div className="mt-2">
+                <CountrySelector
+                  id="goal-country"
+                  value={goalCountry}
+                  onChange={setGoalCountry}
+                />
+              </div>
             </div>
           </div>
           <div className="mt-8">

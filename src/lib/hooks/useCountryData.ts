@@ -121,7 +121,9 @@ export const useCountryData = () => {
    * @param input The string to search for.
    * @returns A list of suggested countries.
    */
-  const getCountrySuggestions = (input: string): typeof allCountries => {
+  const getCountrySuggestions = (
+    input: string
+  ): { a3: string; englishName: string; japaneseName: string }[] => {
     const normalizedInput = input.trim().toLowerCase();
     if (!normalizedInput) return [];
     return allCountries
@@ -135,10 +137,16 @@ export const useCountryData = () => {
       .slice(0, 5); // Return top 5 matches
   };
 
+  const countries = allCountries.map((c) => ({
+    id: c.a3,
+    name: c.japaneseName || c.englishName,
+  }));
+
   return {
     getImageUrl,
     getCountryName,
     findCountryA3CodeByName,
     getCountrySuggestions,
+    countries,
   };
 };
