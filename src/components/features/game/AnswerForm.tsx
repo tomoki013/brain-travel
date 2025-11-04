@@ -56,30 +56,30 @@ export const AnswerForm = ({
   return (
     <div className="relative">
       <form onSubmit={handleSubmit} className="flex gap-2">
-        <fieldset disabled={disabled} className="flex gap-2 w-full">
+        <fieldset disabled={disabled} className="flex w-full gap-2">
           <input
             type="text"
             value={inputValue}
             onChange={handleInputChange}
-            placeholder="国名を入力..."
-            className="border border-gray-300 rounded-md p-2 glow disabled:bg-gray-200"
+            placeholder="次の国を入力..."
+            className="w-full rounded-md border-2 border-white/50 bg-white/20 px-4 py-2 text-white placeholder-white/70 transition-colors focus:border-cyan-400 focus:bg-white/30 focus:outline-none disabled:cursor-not-allowed disabled:bg-white/10"
             autoComplete="off"
           />
           <button
             type="submit"
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-700 disabled:bg-blue-300"
+            className="shrink-0 rounded-md bg-cyan-500 px-6 py-2 font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:bg-cyan-500/50 disabled:shadow-none"
           >
             回答
           </button>
         </fieldset>
       </form>
       {suggestions.length > 0 && (
-        <ul className="absolute z-10 w-full bg-white border border-gray-300 rounded-md mt-1 max-h-48 overflow-y-auto">
+        <ul className="absolute z-10 mt-1 w-full max-h-48 overflow-y-auto rounded-md border border-white/30 bg-black/50 text-white shadow-lg backdrop-blur-lg">
           {suggestions.map((s) => (
             <li
               key={s.a3}
               onClick={() => handleSuggestionClick(s)}
-              className="p-2 hover:bg-gray-100 cursor-pointer text-black"
+              className="cursor-pointer px-4 py-2 transition-colors hover:bg-cyan-500/50"
             >
               {s.japaneseName} ({s.englishName})
             </li>

@@ -67,13 +67,16 @@ export const ResultPageClient = () => {
 
       {/* Content Overlay */}
       <div className="relative z-10 w-full max-w-4xl text-center">
-        <h1
-          className={`text-4xl sm:text-5xl font-bold mb-4 ${
-            isGivenUp ? "text-gray-300" : "text-cyan-300"
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className={`text-5xl sm:text-7xl font-extrabold mb-4 drop-shadow-lg ${
+            isGivenUp ? "text-gray-300" : "text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500"
           }`}
         >
-          {isGivenUp ? "残念！ギブアップしました" : "クリアおめでとう！"}
-        </h1>
+          {isGivenUp ? "GIVE UP" : "CLEAR!"}
+        </motion.h1>
         <p className="text-lg text-gray-200 mb-8">
           {isGivenUp
             ? "今回の旅はここまでです。"

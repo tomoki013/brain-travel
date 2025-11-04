@@ -43,7 +43,7 @@ export const GamePanel = ({
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 rounded-lg bg-blue-300 p-6 shadow-lg backdrop-blur-sm text-white">
+    <div className="flex h-full flex-col gap-4 rounded-lg bg-white/30 p-6 shadow-lg backdrop-blur-lg text-white">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentCountry}
@@ -65,10 +65,12 @@ export const GamePanel = ({
       {/* Info Panel Section */}
       <div className="flex flex-1 flex-col overflow-y-auto">
         {/* Scrollable Content */}
-        <div className="flex-1 space-y-4 pr-2 overflow-y-auto">
+        <div className="flex-1 space-y-6 pr-2 overflow-y-auto">
           <div>
-            <h2 className="text-lg font-semibold text-gray-200">お題</h2>
-            <p className="text-gray-100">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-white/70">
+              お題
+            </h2>
+            <p className="mt-1 text-lg">
               <span className="font-bold">{getCountryName(startCountry)}</span>{" "}
               から{" "}
               <span className="font-bold">{getCountryName(goalCountry)}</span>{" "}
@@ -76,26 +78,30 @@ export const GamePanel = ({
             </p>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-200">現在の国</h2>
-            <p className="text-4xl font-bold text-white">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-white/70">
+              現在の国
+            </h2>
+            <p className="mt-1 text-4xl font-bold text-white drop-shadow-lg">
               {getCountryName(currentCountry)}
             </p>
           </div>
           <div>
-            <h2 className="text-lg font-semibold text-gray-200 mb-2">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-white/70 mb-2">
               移動履歴
             </h2>
-            <div className="max-h-48 overflow-y-auto rounded-md border border-yellow-800/50 bg-yellow-50/10 p-3">
+            <div className="max-h-48 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
               <ul className="space-y-2">
                 {routeHistory.map((countryId, index) => (
                   <li
                     key={`${countryId}-${index}`}
-                    className="font-mono text-sm text-yellow-200"
+                    className="flex items-baseline"
                   >
-                    <span className="font-sans font-bold text-gray-300 mr-2">
-                      {index + 1}.
+                    <span className="mr-3 font-mono text-white/60">
+                      {String(index + 1).padStart(2, "0")}.
                     </span>
-                    {getCountryName(countryId)}
+                    <span className="font-semibold">
+                      {getCountryName(countryId)}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -106,8 +112,22 @@ export const GamePanel = ({
         {/* Sticky Footer for Form */}
         <div className="mt-auto pt-4 space-y-4">
           {error && (
-            <div className="rounded-md bg-red-900/50 p-3 text-sm text-red-200 border border-red-700">
-              {error}
+            <div className="flex items-center gap-3 rounded-lg border border-red-500/50 bg-red-500/30 px-4 py-3 text-base font-semibold text-white shadow-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 shrink-0"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>{error}</span>
             </div>
           )}
           <AnswerForm

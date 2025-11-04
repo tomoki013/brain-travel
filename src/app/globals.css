@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans JP", sans-serif;
+
+  /* Typography Plugin Customization */
+  --prose-body: #374151; /* gray-700 */
+  --prose-headings: #111827; /* gray-900 */
+  --prose-lead: #4b5563; /* gray-600 */
+  --prose-links: #1d4ed8; /* blue-700 */
+  --prose-bold: #111827; /* gray-900 */
+  --prose-counters: #6b7280; /* gray-500 */
+  --prose-bullets: #d1d5db; /* gray-300 */
+  --prose-hr: #e5e7eb; /* gray-200 */
+  --prose-quotes: #111827; /* gray-900 */
+  --prose-quote-borders: #e5e7eb; /* gray-200 */
+  --prose-captions: #6b7280; /* gray-500 */
+  --prose-code: #111827; /* gray-900 */
+  --prose-pre-code: #e5e7eb; /* gray-200 */
+  --prose-pre-bg: #1f2937; /* gray-800 */
+  --prose-th-borders: #d1d5db; /* gray-300 */
+  --prose-td-borders: #e5e7eb; /* gray-200 */
+}
