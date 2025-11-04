@@ -39,7 +39,7 @@ export const CountryImage = ({ countryId, className }: CountryImageProps) => {
   }, [countryId, getImageUrl]);
 
   const containerClassName =
-    className || "relative h-60 w-full overflow-hidden rounded-lg shadow-md";
+    className || "h-60 w-full overflow-hidden rounded-lg shadow-md";
 
   return (
     <div className={containerClassName}>

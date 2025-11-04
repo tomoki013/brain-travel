@@ -79,7 +79,7 @@ export const AnswerForm = ({
             <li
               key={s.a3}
               onClick={() => handleSuggestionClick(s)}
-              className="p-2 hover:bg-gray-100 cursor-pointer"
+              className="p-2 hover:bg-gray-100 cursor-pointer text-black"
             >
               {s.japaneseName} ({s.englishName})
             </li>

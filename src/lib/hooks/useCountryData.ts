@@ -1,5 +1,5 @@
 import countryCodes from "../data/country-codes.json";
-import { countries as japaneseCountries, countryNameJa } from "../data/countries";
+import { countryNameJa } from "../data/countries";
 import { localImageManifest } from "../data/localImageManifest";
 
 // Type assertion for country-codes.json
