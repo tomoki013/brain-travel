@@ -8,14 +8,19 @@ interface CountrySelectorProps {
   value: string | null;
   onChange: (a3Code: string) => void;
   id: string; // for label htmlFor
+  countriesList?: Country[];
+  disabled?: boolean;
 }
 
 export const CountrySelector = ({
   value,
   onChange,
   id,
+  countriesList,
+  disabled = false,
 }: CountrySelectorProps) => {
   const { getCountrySuggestions, countries, getCountryName } = useCountryData();
+  const countrySource = countriesList || countries;
 
   // The text inside the input field
   const [inputValue, setInputValue] = useState("");
@@ -54,10 +59,10 @@ export const CountrySelector = ({
     setInputValue(query);
 
     if (query) {
-      const suggestions = getCountrySuggestions(query).map((c) => ({
-        id: c.a3,
-        name: c.japaneseName || c.englishName,
-      }));
+      const normalizedQuery = query.toLowerCase();
+      const suggestions = countrySource.filter((country) =>
+        country.name.toLowerCase().includes(normalizedQuery)
+      );
       setDisplayCountries(suggestions);
       setIsSuggestMode(true);
       setIsListOpen(true);
@@ -73,7 +78,7 @@ export const CountrySelector = ({
       setIsListOpen(false);
     } else {
       // Otherwise, show all countries
-      setDisplayCountries(countries);
+      setDisplayCountries(countrySource);
       setIsSuggestMode(false);
       setIsListOpen(true);
     }
@@ -106,23 +111,25 @@ export const CountrySelector = ({
           onFocus={() => {
             if (inputValue) {
               setIsSuggestMode(true);
-              const suggestions = getCountrySuggestions(inputValue).map(
-                (c) => ({
-                  id: c.a3,
-                  name: c.japaneseName || c.englishName,
-                })
+              const normalizedQuery = inputValue.toLowerCase();
+              const suggestions = countrySource.filter((country) =>
+                country.name.toLowerCase().includes(normalizedQuery)
               );
               setDisplayCountries(suggestions);
               setIsListOpen(true);
             }
           }}
           onBlur={onBlur}
-          className="w-full rounded-md border-0 bg-white/70 py-2.5 pl-4 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-white/50 placeholder:text-gray-500 focus:bg-white/90 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 transition"
-          placeholder="国名を入力..."
+          disabled={disabled}
+          className={`w-full rounded-md border-0 bg-white/70 py-2.5 pl-4 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-white/50 placeholder:text-gray-500 focus:bg-white/90 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 transition ${
+            disabled ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          placeholder={disabled ? "スタート国を先に選んでください" : "国名を入力..."}
         />
         <button
           type="button"
           onClick={handleDropdownClick}
+          disabled={disabled}
           className="absolute inset-y-0 right-0 flex items-center justify-center w-12 text-xl text-gray-600 hover:text-indigo-500 rounded-r-md transition-colors"
           aria-label="すべての国を表示"
         >

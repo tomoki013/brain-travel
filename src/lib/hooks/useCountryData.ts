@@ -1,6 +1,8 @@
 import countryCodes from "../data/country-codes.json";
 import { countryNameJa } from "../data/countries";
 import { localImageManifest } from "../data/localImageManifest";
+import { continentMap } from "../data/continentMapping";
+import { Country } from "@/types";
 
 // Type assertion for country-codes.json
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
@@ -137,10 +139,48 @@ export const useCountryData = () => {
       .slice(0, 5); // Return top 5 matches
   };
 
-  const countries = allCountries.map((c) => ({
+  const countries: Country[] = allCountries.map((c) => ({
     id: c.a3,
     name: c.japaneseName || c.englishName,
   }));
+
+  /**
+   * Gets a list of country A3 codes in the same continent as the given A3 code.
+   * @param a3Code The A3 code of the country.
+   * @returns An array of A3 codes.
+   */
+  const getCountriesInSameContinent = (a3Code: string): string[] => {
+    const continentId = continentMap[a3Code];
+    if (continentId === undefined) {
+      return [];
+    }
+    return Object.keys(continentMap).filter(
+      (key) => continentMap[key] === continentId
+    );
+  };
+
+  /**
+   * Gets a list of countries that are not isolated (i.e., have land borders).
+   * @returns An array of Country objects.
+   */
+  const getPlayableCountries = (): Country[] => {
+    // Count how many countries are in each continent chunk
+    const continentCounts = Object.values(continentMap).reduce(
+      (acc, id) => {
+        acc[id] = (acc[id] || 0) + 1;
+        return acc;
+      },
+      {} as Record<number, number>
+    );
+
+    // Filter out countries that are in a continent chunk of size 1 (isolated)
+    const playableA3Codes = Object.keys(continentMap).filter((a3) => {
+      const continentId = continentMap[a3];
+      return continentCounts[continentId] > 1;
+    });
+
+    return countries.filter((country) => playableA3Codes.includes(country.id));
+  };
 
   return {
     getImageUrl,
@@ -148,5 +188,7 @@ export const useCountryData = () => {
     findCountryA3CodeByName,
     getCountrySuggestions,
     countries,
+    getCountriesInSameContinent,
+    getPlayableCountries,
   };
 };
