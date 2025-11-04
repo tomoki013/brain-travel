@@ -28,6 +28,8 @@ export const GamePanel = ({
   gameStatus,
   submitAnswer,
   giveUp,
+  isMapVisible,
+  setIsMapVisible,
   setSelectedCountryId,
 }: GamePanelProps) => {
   const { getCountryName } = useCountryData();
@@ -43,7 +45,7 @@ export const GamePanel = ({
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 rounded-lg bg-white/30 p-6 shadow-lg backdrop-blur-lg text-white">
+    <div className="flex h-full flex-col gap-4 rounded-lg bg-black/20 p-4 shadow-2xl backdrop-blur-md text-white">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentCountry}
@@ -51,23 +53,21 @@ export const GamePanel = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full h-60 shrink-0 relative"
+          className="relative aspect-video w-full"
         >
           {currentCountry && (
             <CountryImage
               countryId={currentCountry}
-              className="rounded-lg shadow-xl"
+              className="rounded-lg object-cover shadow-xl"
             />
           )}
         </motion.div>
       </AnimatePresence>
 
-      {/* Info Panel Section */}
-      <div className="flex flex-1 flex-col overflow-y-auto">
-        {/* Scrollable Content */}
-        <div className="flex-1 space-y-6 pr-2 overflow-y-auto">
+      <div className="flex flex-1 flex-col overflow-y-hidden">
+        <div className="flex-1 space-y-4 overflow-y-auto pr-2">
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-widest text-white/70">
+            <h2 className="text-base font-bold uppercase tracking-widest text-white/60">
               お題
             </h2>
             <p className="mt-1 text-lg">
@@ -78,7 +78,7 @@ export const GamePanel = ({
             </p>
           </div>
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-widest text-white/70">
+            <h2 className="text-base font-bold uppercase tracking-widest text-white/60">
               現在の国
             </h2>
             <p className="mt-1 text-4xl font-bold text-white drop-shadow-lg">
@@ -86,10 +86,10 @@ export const GamePanel = ({
             </p>
           </div>
           <div>
-            <h2 className="text-sm font-bold uppercase tracking-widest text-white/70 mb-2">
+            <h2 className="text-base font-bold uppercase tracking-widest text-white/60 mb-2">
               移動履歴
             </h2>
-            <div className="max-h-48 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
+            <div className="max-h-40 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
               <ul className="space-y-2">
                 {routeHistory.map((countryId, index) => (
                   <li
@@ -109,25 +109,10 @@ export const GamePanel = ({
           </div>
         </div>
 
-        {/* Sticky Footer for Form */}
-        <div className="mt-auto pt-4 space-y-4">
+        <div className="mt-auto pt-4 space-y-3">
           {error && (
-            <div className="flex items-center gap-3 rounded-lg border border-red-500/50 bg-red-500/30 px-4 py-3 text-base font-semibold text-white shadow-lg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>{error}</span>
+            <div className="rounded-md bg-red-500/30 p-2 text-center text-sm font-semibold text-red-100">
+              {error}
             </div>
           )}
           <AnswerForm
@@ -135,13 +120,21 @@ export const GamePanel = ({
             disabled={gameStatus !== "playing"}
             onSuggestionSelect={setSelectedCountryId}
           />
-          <button
-            onClick={giveUp}
-            disabled={gameStatus !== "playing"}
-            className="w-full rounded-md border border-red-500 px-4 py-2 text-red-400 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:border-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent"
-          >
-            ギブアップする
-          </button>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => setIsMapVisible(!isMapVisible)}
+              className="w-full rounded-md bg-white/20 px-4 py-2 text-white transition-colors hover:bg-white/30"
+            >
+              {isMapVisible ? "地図を隠す" : "地図を表示"}
+            </button>
+            <button
+              onClick={giveUp}
+              disabled={gameStatus !== "playing"}
+              className="w-full rounded-md bg-red-900/50 px-4 py-2 text-red-200 transition-colors hover:bg-red-900/70 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+            >
+              ギブアップ
+            </button>
+          </div>
         </div>
       </div>
     </div>
