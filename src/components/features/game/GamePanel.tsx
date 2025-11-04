@@ -28,8 +28,6 @@ export const GamePanel = ({
   gameStatus,
   submitAnswer,
   giveUp,
-  isMapVisible,
-  setIsMapVisible,
   setSelectedCountryId,
 }: GamePanelProps) => {
   const { getCountryName } = useCountryData();
@@ -45,7 +43,7 @@ export const GamePanel = ({
   };
 
   return (
-    <div className="flex h-full flex-col gap-4 rounded-lg bg-black/20 p-6 shadow-lg backdrop-blur-sm text-white">
+    <div className="flex h-full flex-col gap-4 rounded-lg bg-blue-300 p-6 shadow-lg backdrop-blur-sm text-white">
       <AnimatePresence mode="wait">
         <motion.div
           key={currentCountry}
@@ -53,7 +51,7 @@ export const GamePanel = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="w-full h-60 flex-shrink-0"
+          className="w-full h-60 shrink-0 relative"
         >
           {currentCountry && (
             <CountryImage
@@ -107,23 +105,23 @@ export const GamePanel = ({
 
         {/* Sticky Footer for Form */}
         <div className="mt-auto pt-4 space-y-4">
-        {error && (
-          <div className="rounded-md bg-red-900/50 p-3 text-sm text-red-200 border border-red-700">
-            {error}
-          </div>
-        )}
-        <AnswerForm
-          onSubmit={handleSubmit}
-          disabled={gameStatus !== "playing"}
-          onSuggestionSelect={setSelectedCountryId}
-        />
-        <button
-          onClick={giveUp}
-          disabled={gameStatus !== "playing"}
-          className="w-full rounded-md border border-red-500 px-4 py-2 text-red-400 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:border-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent"
-        >
-          ギブアップする
-        </button>
+          {error && (
+            <div className="rounded-md bg-red-900/50 p-3 text-sm text-red-200 border border-red-700">
+              {error}
+            </div>
+          )}
+          <AnswerForm
+            onSubmit={handleSubmit}
+            disabled={gameStatus !== "playing"}
+            onSuggestionSelect={setSelectedCountryId}
+          />
+          <button
+            onClick={giveUp}
+            disabled={gameStatus !== "playing"}
+            className="w-full rounded-md border border-red-500 px-4 py-2 text-red-400 transition-colors hover:bg-red-500/20 disabled:cursor-not-allowed disabled:border-gray-500 disabled:text-gray-400 disabled:hover:bg-transparent"
+          >
+            ギブアップする
+          </button>
         </div>
       </div>
     </div>
