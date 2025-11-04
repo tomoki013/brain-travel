@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { CountryImage } from "@/components/features/game/CountryImage";
-import { CountrySelector } from "@/components/features/home/CountrySelector";
+import { CountrySelector } from "@/components/features/shared/CountrySelector";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import { Country } from "@/types";
 
