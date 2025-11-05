@@ -153,7 +153,7 @@ export default function TopPage() {
                     setStartCountry(countryId);
                     setGoalCountry(null); // Reset goal country when start changes
                   }}
-                  countriesList={playableCountries}
+                  availableCountries={playableCountries}
                 />
               </div>
             </div>
@@ -169,7 +169,7 @@ export default function TopPage() {
                   id="goal-country"
                   value={goalCountry}
                   onChange={setGoalCountry}
-                  countriesList={goalCountries}
+                  availableCountries={goalCountries}
                   disabled={!startCountry}
                 />
               </div>

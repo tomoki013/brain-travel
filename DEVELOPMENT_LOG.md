@@ -1,5 +1,26 @@
 # 開発ログ
 
+## 2025-11-04 (Step 30)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** 総合的なエラー修正と安定化
+
+**実装概要:**
+
+- **タスクA: ビルドエラーの修正:**
+  - `npm run build` で発生していた複数のTypeScriptの型エラーを修正しました。
+  - `src/app/(main)/(withFooter)/page.tsx`: `CountrySelector` コンポーネントに渡す `countriesList` prop が `availableCountries` にリネームされていたため、呼び出し元を修正しました。
+  - `src/app/(main)/game/page.tsx`: `GamePanel` コンポーネントの `props` が不足していたため、`useGameLogic` フックから `error`, `setError`, `getNeighborCountries` を追加で渡すように修正しました。
+- **タスクB: 動作確認:**
+  - 上記の修正により、`npm run build` が正常に完了することを確認しました。
+  - `npm run dev` で開発サーバーを起動し、Playwrightスクリプトによる自動スクリーンショットでトップページが正常に表示されることを確認しました。
+
+**課題・申し送り:**
+
+- これまでの開発で頻発していたビルドエラーと型定義の不整合を解消し、プロジェクトの安定性が向上しました。
+- 今後は、機能追加やリファクタリングを行う際に `npm run build` を実行し、型エラーが発生しないことを確認しながら進めることが推奨されます。
+
 ## 2025-11-04 (Step 28)
 
 **担当者:** Jules (AI Agent)
