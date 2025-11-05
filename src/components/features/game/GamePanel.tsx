@@ -119,6 +119,7 @@ export const GamePanel = ({
             id="game-country-selector"
             value={null}
             onChange={(a3Code) => submitAnswer(a3Code)}
+            onSubmit={(a3Code) => submitAnswer(a3Code)}
             onSuggestionSelect={setSelectedCountryId}
             availableCountries={getNeighborCountries()}
             onError={setError}

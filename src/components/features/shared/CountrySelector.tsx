@@ -109,15 +109,31 @@ export const CountrySelector = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (disabled) return;
+
+    // Case 1: If there is exactly one suggestion, submit it.
+    if (suggestions.length === 1) {
+      onSubmit?.(suggestions[0].id);
+      onSuggestionSelect?.(suggestions[0].id); // Highlight it
+      setInputValue(""); // Clear input after submission
+      onSuggestionSelect?.(null);
+      setIsFocused(false);
+      setIsListOpen(false);
+      return;
+    }
+
+    // Case 2: Validate the text input and submit if it's a valid country.
     const a3Code = findCountryA3CodeByName(inputValue);
     if (a3Code) {
       onSubmit?.(a3Code);
+      onSuggestionSelect?.(a3Code); // Highlight it
     } else {
       onError?.("有効な国名を入力してください");
+      onSuggestionSelect?.(null);
     }
     setInputValue("");
-    onSuggestionSelect?.(null);
     setIsFocused(false);
+    setIsListOpen(false);
   };
 
   // suggestions state
