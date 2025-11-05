@@ -21,7 +21,7 @@ const getFlagEmoji = (a3Code: string) => {
 interface CountrySelectorProps {
   value: string | null;
   id: string;
-  countriesList?: Country[];
+  availableCountries?: Country[];
   disabled?: boolean;
   onChange?: (a3Code: string) => void; // Restored for homepage
   onSuggestionSelect?: (a3Code: string | null) => void;
@@ -32,7 +32,7 @@ interface CountrySelectorProps {
 export const CountrySelector = ({
   value,
   id,
-  countriesList,
+  availableCountries,
   disabled = false,
   onChange,
   onSuggestionSelect,
@@ -41,24 +41,27 @@ export const CountrySelector = ({
 }: CountrySelectorProps) => {
   const { countries, getCountryName, findCountryA3CodeByName } = useCountryData();
   const countrySource = useMemo(() => {
-    const source = countriesList || countries;
+    const source = availableCountries || countries;
     // Enhance with flag and English name for display
     return source.map(country => ({
       ...country,
       flag: getFlagEmoji(country.id),
       englishName: i18nCountries.getName(country.id, "en") || country.id,
     }));
-  }, [countriesList, countries]);
+  }, [availableCountries, countries]);
 
   const [inputValue, setInputValue] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isListOpen, setIsListOpen] = useState(false); // For suggestions
+  const [isFocused, setIsFocused] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setInputValue(value ? getCountryName(value) ?? "" : "");
-  }, [value]);
+    if (!isFocused) {
+      setInputValue(value ? getCountryName(value) ?? "" : "");
+    }
+  }, [value, isFocused, getCountryName]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -101,17 +104,7 @@ export const CountrySelector = ({
     onSuggestionSelect?.(country.id);
     setIsListOpen(false);
     setIsModalOpen(false); // Close modal on selection
-  };
-
-  const onBlur = () => {
-    setTimeout(() => {
-        if (!isListOpen) {
-          const currentCountryName = value ? getCountryName(value) ?? "" : "";
-          if(findCountryA3CodeByName(inputValue) !== value) {
-            setInputValue(currentCountryName);
-          }
-        }
-    }, 150);
+    setIsFocused(false);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -124,6 +117,7 @@ export const CountrySelector = ({
     }
     setInputValue("");
     onSuggestionSelect?.(null);
+    setIsFocused(false);
   };
 
   // suggestions state
@@ -149,9 +143,9 @@ export const CountrySelector = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm p-4 overflow-y-auto flex flex-col items-center"
+        className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm p-4 overflow-y-auto flex flex-col"
       >
-        <div className="w-full max-w-lg h-full flex flex-col">
+        <div className="w-full max-w-6xl mx-auto h-full flex flex-col">
           <div className="flex items-center justify-between mb-4 flex-shrink-0">
             <h2 className="text-xl font-bold text-white">国を選択</h2>
             <button
@@ -168,12 +162,12 @@ export const CountrySelector = ({
             placeholder="国名を検索..."
             className="w-full rounded-md border-0 bg-white/20 py-2.5 px-4 text-white placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm flex-shrink-0"
           />
-          <ul className="flex-1 overflow-y-auto mt-4 space-y-2 pr-2">
+          <ul className="w-full max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 p-4 overflow-y-auto mt-4">
             {filteredCountries.map((country) => (
               <li
                 key={country.id}
                 onClick={() => handleSelectCountry(country)}
-                className="p-2 flex items-center gap-4 cursor-pointer rounded-md hover:bg-white/20"
+                className="p-2 bg-white/10 rounded-md hover:bg-white/20 flex items-center gap-4 cursor-pointer"
               >
                 <span className="text-3xl font-sans">{country.flag}</span>
                 <div>
@@ -201,12 +195,8 @@ export const CountrySelector = ({
         type="text"
         value={inputValue}
         onChange={handleInputChange}
-        onFocus={() => {
-          if (inputValue) {
-            // Logic to show suggestions under the input
-          }
-        }}
-        onBlur={onBlur}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         disabled={disabled}
         className={`w-full rounded-md border-0 bg-white/70 py-2.5 pl-4 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-white/50 placeholder:text-gray-500 focus:bg-white/90 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 transition ${
           disabled ? "cursor-not-allowed opacity-50" : ""
