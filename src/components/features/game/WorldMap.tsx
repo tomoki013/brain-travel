@@ -55,12 +55,10 @@ export const WorldMap = ({
     const height = parseInt(svg.style("height"));
 
     const projection = d3
-      .geoMercator()
-      .scale(width / 2 / Math.PI)
-      .translate([width / 2, height / 1.5])
-      .center([50, 20]);
-
-    projection.fitSize([width, height], countries);
+      .geoOrthographic()
+      .fitSize([width, height], { type: "Sphere" })
+      .center([0, 0])
+      .translate([width / 2, height / 2]);
     const path = d3.geoPath().projection(projection);
 
     const startNumericId = a3ToNumericId[startCountryId];
@@ -73,14 +71,20 @@ export const WorldMap = ({
       (id) => a3ToNumericId[id]
     );
 
-    g.selectAll("path")
+    g.append("path")
+      .datum({ type: "Sphere" } as any)
+      .attr("d", path)
+      .attr("class", "fill-gray-900");
+
+    g.append("g")
+      .selectAll("path")
       .data(countries.features)
       .join("path")
       .attr("d", path)
       .attr("class", (d) => {
         const countryNumericId = d.id;
         const baseClasses =
-          "stroke-gray-500 stroke-1 transition-colors duration-300";
+          "stroke-black stroke-[0.5px] transition-colors duration-300";
 
         if (countryNumericId === goalNumericId) {
           return `fill-rose-500 ${baseClasses}`;
@@ -97,17 +101,31 @@ export const WorldMap = ({
         if (routeHistoryNumericIds.includes(countryNumericId as string)) {
           return `fill-emerald-400/50 ${baseClasses}`;
         }
-        return `fill-gray-700 hover:fill-gray-600 ${baseClasses}`;
+        return `fill-gray-300 hover:fill-gray-400 ${baseClasses}`;
+      });
+
+    const initialScale = projection.scale();
+
+    const drag = d3
+      .drag<SVGSVGElement, unknown>()
+      .on("drag", (event) => {
+        const rotate = projection.rotate();
+        const k = 75 / projection.scale();
+        projection.rotate([rotate[0] + event.dx * k, rotate[1] - event.dy * k]);
+        path.projection(projection);
+        g.selectAll("path").attr("d", path as any);
       });
 
     const zoom = d3
       .zoom<SVGSVGElement, unknown>()
       .scaleExtent([1, 10])
       .on("zoom", (event) => {
-        g.attr("transform", event.transform);
+        projection.scale(initialScale * event.transform.k);
+        path.projection(projection);
+        g.selectAll("path").attr("d", path as any);
       });
 
-    svg.call(zoom);
+    svg.call(drag).call(zoom);
   }, [
     countries,
     startCountryId,
@@ -117,5 +135,5 @@ export const WorldMap = ({
     selectedCountryId,
   ]);
 
-  return <svg ref={ref} className="w-full h-full rounded-lg" />;
+  return <svg ref={ref} className="w-full h-full rounded-lg bg-black" />;
 };
