@@ -30,6 +30,12 @@ function GameContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startCountry, goalCountry]);
 
+  useEffect(() => {
+    if (gameLogic.currentCountry) {
+      setSelectedCountryId(gameLogic.currentCountry);
+    }
+  }, [gameLogic.currentCountry]);
+
   if (
     !gameLogic.startCountry ||
     !gameLogic.goalCountry ||
