@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@plugin "@tailwindcss/typography";
+
 @theme {
   --font-sans: "Noto Sans JP", sans-serif;
 
