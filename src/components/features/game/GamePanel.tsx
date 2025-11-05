@@ -13,11 +13,14 @@ type GamePanelProps = {
   goalCountry: string | null;
   routeHistory: string[];
   gameStatus: GameStatus;
-  submitAnswer: (answer: string, setError: (message: string) => void) => void;
+  error: string | null;
+  setError: (error: string | null) => void;
+  submitAnswer: (answer: string) => void;
   giveUp: () => void;
   isMapVisible: boolean;
   setIsMapVisible: (value: boolean) => void;
   setSelectedCountryId: (countryId: string | null) => void;
+  getNeighborCountries: () => any[];
 };
 
 export const GamePanel = ({
@@ -26,30 +29,16 @@ export const GamePanel = ({
   goalCountry,
   routeHistory,
   gameStatus,
+  error,
+  setError,
   submitAnswer,
   giveUp,
   isMapVisible,
   setIsMapVisible,
   setSelectedCountryId,
+  getNeighborCountries,
 }: GamePanelProps) => {
-  const { getCountryName, countries } = useCountryData();
-  const [error, setError] = useState<string | null>(null);
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-
-  const handleSubmit = (answer: string) => {
-    setError(null); // Clear previous errors
-    if (answer) {
-      submitAnswer(answer, setError);
-    } else {
-      setError("有効な国名を入力してください");
-    }
-    setSelectedCountry(null); // Reset visual selection after submit
-  };
-
-  const handleSuggestionSelect = (countryId: string | null) => {
-    setSelectedCountryId(countryId);
-    setSelectedCountry(countryId);
-  }
+  const { getCountryName } = useCountryData();
 
   return (
     <div className="flex h-full flex-col gap-4 rounded-lg bg-black/20 p-4 shadow-2xl backdrop-blur-md text-white">
@@ -124,10 +113,11 @@ export const GamePanel = ({
           )}
           <CountrySelector
             id="game-country-selector"
-            value={selectedCountry}
-            onSubmit={handleSubmit}
-            onSuggestionSelect={handleSuggestionSelect}
-            countriesList={countries} // Pass all countries
+            value={null}
+            onChange={(a3Code) => submitAnswer(a3Code)}
+            onSuggestionSelect={setSelectedCountryId}
+            availableCountries={getNeighborCountries()}
+            onError={setError}
             disabled={gameStatus !== "playing"}
           />
           <div className="grid grid-cols-2 gap-3">
