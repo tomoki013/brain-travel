@@ -3,10 +3,9 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { CountryImage } from "@/components/features/game/CountryImage";
 import { CountrySelector } from "@/components/features/shared/CountrySelector";
 import { useCountryData } from "@/lib/hooks/useCountryData";
-import { Country } from "@/types";
+import Image from "next/image";
 
 export default function TopPage() {
   const router = useRouter();
@@ -16,20 +15,17 @@ export default function TopPage() {
   const [goalCountry, setGoalCountry] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const playableCountries = useMemo(() => getPlayableCountries(), []);
+  const playableCountries = useMemo(
+    () => getPlayableCountries(),
+    [getPlayableCountries]
+  );
   const goalCountries = useMemo(() => {
     if (!startCountry) return [];
     const sameContinentA3s = getCountriesInSameContinent(startCountry);
     return countries.filter(
       (c) => sameContinentA3s.includes(c.id) && c.id !== startCountry
     );
-  }, [startCountry, countries]);
-
-  // Generate a random country ID for the background on initial render only
-  const [randomBgCountryId] = useState(() => {
-    if (countries.length === 0) return "";
-    return countries[Math.floor(Math.random() * countries.length)].id;
-  });
+  }, [startCountry, countries, getCountriesInSameContinent]);
 
   const handleStartRandom = () => {
     // 1. Pick a random start country from the playable list
@@ -44,9 +40,7 @@ export default function TopPage() {
 
     // 3. Pick a random goal country from that list
     const randomGoalCountryId =
-      validGoalCountries[
-        Math.floor(Math.random() * validGoalCountries.length)
-      ];
+      validGoalCountries[Math.floor(Math.random() * validGoalCountries.length)];
 
     router.push(
       `/game?start=${randomStartCountry.id}&goal=${randomGoalCountryId}`
@@ -86,10 +80,16 @@ export default function TopPage() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center p-8 overflow-hidden">
       {/* Background Image */}
-      <CountryImage
-        countryId={randomBgCountryId}
-        className="absolute inset-0 z-0"
-      />
+      <div className={`absolute inset-0 z-0`}>
+        <Image
+          src={`/images/default-globe.jpg`}
+          alt={`壮大な地球の画像`}
+          fill
+          style={{ objectFit: "cover" }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
+        />
+      </div>
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       {/* Content Overlay */}
@@ -124,9 +124,9 @@ export default function TopPage() {
 
         {/* Divider */}
         <motion.div className="my-8 flex items-center" variants={itemVariants}>
-          <div className="flex-grow border-t border-gray-400"></div>
+          <div className="grow border-t border-gray-400"></div>
           <span className="mx-4 text-gray-300">OR</span>
-          <div className="flex-grow border-t border-gray-400"></div>
+          <div className="grow border-t border-gray-400"></div>
         </motion.div>
 
         {/* Selected Start */}
