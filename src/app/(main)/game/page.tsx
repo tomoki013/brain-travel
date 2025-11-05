@@ -86,6 +86,9 @@ function GameContent() {
             routeHistory={gameLogic.routeHistory}
             gameStatus={gameLogic.gameStatus}
             submitAnswer={gameLogic.submitAnswer}
+            error={gameLogic.error}
+            setError={gameLogic.setError}
+            getNeighborCountries={gameLogic.getNeighborCountries}
             giveUp={gameLogic.giveUp}
             isMapVisible={isMapVisible}
             setIsMapVisible={setIsMapVisible}
