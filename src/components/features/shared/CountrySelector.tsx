@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import { Country } from "@/types";
 import * as i18nCountries from "i18n-iso-countries";
@@ -47,19 +48,21 @@ export const CountrySelector = ({
   }, [countriesList, countries]);
 
   const [inputValue, setInputValue] = useState("");
-  const [displayCountries, setDisplayCountries] = useState(countrySource);
-  const [isListOpen, setIsListOpen] = useState(false);
-  const [isSuggestMode, setIsSuggestMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(false); // For suggestions
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setInputValue(value ? getCountryName(value) ?? "" : "");
-  }, [value, getCountryName]);
+  }, [value]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsListOpen(false);
       }
     };
@@ -81,30 +84,21 @@ export const CountrySelector = ({
           country.name.toLowerCase().includes(normalizedQuery) ||
           country.englishName.toLowerCase().includes(normalizedQuery)
       );
-      setDisplayCountries(suggestions);
-      setIsSuggestMode(true);
+      // setDisplayCountries(suggestions);
+      // setIsSuggestMode(true);
       setIsListOpen(true);
     } else {
-      setDisplayCountries([]);
+      // setDisplayCountries([]);
       setIsListOpen(false);
-    }
-  };
-
-  const handleDropdownClick = () => {
-    if (isListOpen && !isSuggestMode) {
-      setIsListOpen(false);
-    } else {
-      setDisplayCountries(countrySource);
-      setIsSuggestMode(false);
-      setIsListOpen(true);
     }
   };
 
   const handleSelectCountry = (country: typeof countrySource[0]) => {
     setInputValue(country.name);
-    onChange?.(country.id); // Call onChange for homepage
-    onSuggestionSelect?.(country.id); // Call onSuggestionSelect for game page
+    onChange?.(country.id);
+    onSuggestionSelect?.(country.id);
     setIsListOpen(false);
+    setIsModalOpen(false); // Close modal on selection
   };
 
   const onBlur = () => {
@@ -130,24 +124,70 @@ export const CountrySelector = ({
     }
   };
 
+  // suggestions state
+  const [suggestions, setSuggestions] = useState<typeof countrySource>([]);
+
+  const Modal = () => {
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const filteredCountries = countrySource.filter(
+      (country) =>
+        country.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        country.englishName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md p-4 flex flex-col"
+      >
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-white">国を選択</h2>
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="text-white text-2xl"
+          >
+            &times;
+          </button>
+        </div>
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="国名を検索..."
+          className="w-full rounded-md border-0 bg-white/20 py-2.5 px-4 text-white placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm"
+        />
+        <ul className="flex-1 overflow-y-auto mt-4 space-y-2">
+          {filteredCountries.map((country) => (
+            <li
+              key={country.id}
+              onClick={() => handleSelectCountry(country)}
+              className="p-2 flex items-center gap-4 cursor-pointer rounded-md hover:bg-white/20"
+            >
+              <span className="text-3xl font-sans">{country.flag}</span>
+              <div>
+                <p className="font-semibold text-white">{country.name}</p>
+                <p className="text-sm text-gray-300">{country.englishName}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+    );
+  };
+
   const inputElement = (
     <div className="relative">
-       <input
+      <input
         id={id}
         type="text"
         value={inputValue}
         onChange={handleInputChange}
         onFocus={() => {
           if (inputValue) {
-            setIsSuggestMode(true);
-            const normalizedQuery = inputValue.toLowerCase();
-            const suggestions = countrySource.filter(
-              (country) =>
-                country.name.toLowerCase().includes(normalizedQuery) ||
-                country.englishName.toLowerCase().includes(normalizedQuery)
-            );
-            setDisplayCountries(suggestions);
-            setIsListOpen(true);
+            // Logic to show suggestions under the input
           }
         }}
         onBlur={onBlur}
@@ -155,12 +195,14 @@ export const CountrySelector = ({
         className={`w-full rounded-md border-0 bg-white/70 py-2.5 pl-4 pr-12 text-gray-900 shadow-sm ring-1 ring-inset ring-white/50 placeholder:text-gray-500 focus:bg-white/90 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 transition ${
           disabled ? "cursor-not-allowed opacity-50" : ""
         }`}
-        placeholder={disabled ? "スタート国を先に選んでください" : "国名を入力..."}
+        placeholder={
+          disabled ? "スタート国を先に選んでください" : "国名を入力..."
+        }
         autoComplete="off"
       />
       <button
         type="button"
-        onClick={handleDropdownClick}
+        onClick={() => setIsModalOpen(true)}
         disabled={disabled}
         className="absolute inset-y-0 right-0 flex items-center justify-center w-12 text-xl text-gray-600 hover:text-indigo-500 rounded-r-md transition-colors"
         aria-label="すべての国を表示"
@@ -168,33 +210,6 @@ export const CountrySelector = ({
         <span>🌐</span>
       </button>
     </div>
-  );
-
-  const listElement = isListOpen && (
-    <ul className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white/30 backdrop-blur-lg py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-      {displayCountries.length > 0 ? (
-        displayCountries.map((country) => (
-          <li
-            key={country.id}
-            onMouseDown={(e) => {
-              e.preventDefault();
-              handleSelectCountry(country);
-            }}
-            className="relative cursor-pointer select-none py-2 pl-3 pr-9 text-white hover:bg-indigo-500/50"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">{country.flag}</span>
-              <span className="block truncate font-semibold">{country.name}</span>
-              <span className="block truncate text-sm text-gray-200">{country.englishName}</span>
-            </div>
-          </li>
-        ))
-      ) : (
-        <li className="relative cursor-default select-none py-2 px-4 text-gray-200">
-          {isSuggestMode ? "一致する国がありません" : "国リストを読み込めません"}
-        </li>
-      )}
-    </ul>
   );
 
   return (
@@ -213,7 +228,7 @@ export const CountrySelector = ({
       ) : (
         inputElement
       )}
-      {listElement}
+      <AnimatePresence>{isModalOpen && <Modal />}</AnimatePresence>
     </div>
   );
 };

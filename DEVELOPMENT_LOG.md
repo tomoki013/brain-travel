@@ -1,5 +1,29 @@
 # 開発ログ
 
+## 2025-11-04 (Step 25)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ25 CountrySelector のバグ修正とモーダル化、およびゲームページへの適用
+
+**実装概要:**
+
+- **タスクA: CountrySelector.tsx の入力バグ修正:**
+  - `CountrySelector.tsx` の `useEffect` フックの依存配列から `getCountryName` を削除しました。これにより、`value` prop の変更時にのみ `inputValue` が更新されるようになり、ユーザーが自由に入力できるようになるバグを修正しました。
+- **タスクB: ドロップダウンの「全画面モーダル」化:**
+  - 従来のドロップダウンリストを廃止し、`framer-motion` を利用した全画面モーダルに変更しました。
+  - `isModalOpen` state を追加し、モーダルの表示を制御。
+  - モーダルは `bg-black/80 backdrop-blur-md` スタイルを適用し、世界観と統一感のあるデザインにしました。
+  - モーダル内に独立した検索機能を実装し、ユーザビリティを向上させました。
+- **タスクC: ゲームページへの CountrySelector 適用:**
+  - 指示にあった `src/components/features/game/AnswerForm.tsx` は、すでに以前の開発で `CountrySelector.tsx` に置き換えられていることを確認しました。
+  - `GamePanel.tsx` をレビューし、`CountrySelector` に渡される Props (`onSubmit`, `onSuggestionSelect`, `countriesList`) が正しく設定されていることを確認。修正は不要でした。
+
+**課題・申し送り:**
+
+- `CountrySelector` の UI がドロップダウンから全画面モーダルに大きく変更されたため、特にモバイルデバイスでの操作感について、ユーザーによる最終的な目視確認が推奨されます。
+- `framer-motion` を `CountrySelector.tsx` にも導入しました。
+
 ## 2025-11-04 (Step 23)
 
 **担当者:** Jules (AI Agent)
