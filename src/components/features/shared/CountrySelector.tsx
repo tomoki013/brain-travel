@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import { Country } from "@/types";
@@ -25,6 +26,7 @@ interface CountrySelectorProps {
   onChange?: (a3Code: string) => void; // Restored for homepage
   onSuggestionSelect?: (a3Code: string | null) => void;
   onSubmit?: (a3Code: string) => void;
+  onError?: (message: string) => void;
 }
 
 export const CountrySelector = ({
@@ -35,6 +37,7 @@ export const CountrySelector = ({
   onChange,
   onSuggestionSelect,
   onSubmit,
+  onError,
 }: CountrySelectorProps) => {
   const { countries, getCountryName, findCountryA3CodeByName } = useCountryData();
   const countrySource = useMemo(() => {
@@ -79,16 +82,15 @@ export const CountrySelector = ({
 
     if (query) {
       const normalizedQuery = query.toLowerCase();
-      const suggestions = countrySource.filter(
+      const filteredSuggestions = countrySource.filter(
         (country) =>
-          country.name.toLowerCase().includes(normalizedQuery) ||
-          country.englishName.toLowerCase().includes(normalizedQuery)
+          country.name.toLowerCase().startsWith(normalizedQuery) ||
+          country.englishName.toLowerCase().startsWith(normalizedQuery)
       );
-      // setDisplayCountries(suggestions);
-      // setIsSuggestMode(true);
+      setSuggestions(filteredSuggestions);
       setIsListOpen(true);
     } else {
-      // setDisplayCountries([]);
+      setSuggestions([]);
       setIsListOpen(false);
     }
   };
@@ -117,11 +119,11 @@ export const CountrySelector = ({
     const a3Code = findCountryA3CodeByName(inputValue);
     if (a3Code) {
       onSubmit?.(a3Code);
-      setInputValue("");
-      onSuggestionSelect?.(null);
     } else {
-      onSubmit?.("");
+      onError?.("有効な国名を入力してください");
     }
+    setInputValue("");
+    onSuggestionSelect?.(null);
   };
 
   // suggestions state
@@ -129,6 +131,12 @@ export const CountrySelector = ({
 
   const Modal = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+      setIsMounted(true);
+      return () => setIsMounted(false);
+    }, []);
 
     const filteredCountries = countrySource.filter(
       (country) =>
@@ -136,46 +144,54 @@ export const CountrySelector = ({
         country.englishName.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    return (
+    const modalContent = (
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md p-4 flex flex-col"
+        className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm p-4 overflow-y-auto flex flex-col items-center"
       >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-white">国を選択</h2>
-          <button
-            onClick={() => setIsModalOpen(false)}
-            className="text-white text-2xl"
-          >
-            &times;
-          </button>
-        </div>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="国名を検索..."
-          className="w-full rounded-md border-0 bg-white/20 py-2.5 px-4 text-white placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm"
-        />
-        <ul className="flex-1 overflow-y-auto mt-4 space-y-2">
-          {filteredCountries.map((country) => (
-            <li
-              key={country.id}
-              onClick={() => handleSelectCountry(country)}
-              className="p-2 flex items-center gap-4 cursor-pointer rounded-md hover:bg-white/20"
+        <div className="w-full max-w-lg h-full flex flex-col">
+          <div className="flex items-center justify-between mb-4 flex-shrink-0">
+            <h2 className="text-xl font-bold text-white">国を選択</h2>
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="text-white text-2xl"
             >
-              <span className="text-3xl font-sans">{country.flag}</span>
-              <div>
-                <p className="font-semibold text-white">{country.name}</p>
-                <p className="text-sm text-gray-300">{country.englishName}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+              &times;
+            </button>
+          </div>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="国名を検索..."
+            className="w-full rounded-md border-0 bg-white/20 py-2.5 px-4 text-white placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm flex-shrink-0"
+          />
+          <ul className="flex-1 overflow-y-auto mt-4 space-y-2 pr-2">
+            {filteredCountries.map((country) => (
+              <li
+                key={country.id}
+                onClick={() => handleSelectCountry(country)}
+                className="p-2 flex items-center gap-4 cursor-pointer rounded-md hover:bg-white/20"
+              >
+                <span className="text-3xl font-sans">{country.flag}</span>
+                <div>
+                  <p className="font-semibold text-white">{country.name}</p>
+                  <p className="text-sm text-gray-300">{country.englishName}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </motion.div>
     );
+
+    if (!isMounted) {
+      return null;
+    }
+
+    return createPortal(modalContent, document.body);
   };
 
   const inputElement = (
@@ -228,6 +244,33 @@ export const CountrySelector = ({
       ) : (
         inputElement
       )}
+
+      {/* Inline Suggestions */}
+      <AnimatePresence>
+        {isListOpen && suggestions.length > 0 && !isModalOpen && (
+          <motion.ul
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute z-10 w-full mt-1 bg-white/90 backdrop-blur-md rounded-md shadow-lg max-h-60 overflow-auto"
+          >
+            {suggestions.map((country) => (
+              <li
+                key={country.id}
+                onMouseDown={() => handleSelectCountry(country)}
+                className="p-3 flex items-center gap-4 cursor-pointer hover:bg-white"
+              >
+                <span className="text-2xl font-sans">{country.flag}</span>
+                <div>
+                  <p className="font-semibold text-gray-800">{country.name}</p>
+                  <p className="text-sm text-gray-500">{country.englishName}</p>
+                </div>
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+
       <AnimatePresence>{isModalOpen && <Modal />}</AnimatePresence>
     </div>
   );
