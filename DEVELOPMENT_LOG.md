@@ -1,5 +1,27 @@
 # 開発ログ
 
+## 2025-11-05 (Step 30)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ30 GamePanel のスクロールと CountrySelector の入力バグ修正
+
+**実装概要:**
+
+- **タスクA: GamePanel のスクロールバグ修正:**
+  - `src/components/features/game/GamePanel.tsx` を修正し、回答履歴を表示する `div` 要素に `overflow-y-auto` と適切な `padding`, `space` ユーティリティクラスを確実に適用しました。
+  - これにより、回答履歴が増えてもパネル全体が縦に伸びることなく、履歴エリア内のみがスクロールするようになり、レイアウト崩れのバグを修正しました。
+
+- **タスクB: CountrySelector の連続入力バグ修正:**
+  - `src/components/features/shared/CountrySelector.tsx` を再確認し、`handleSelectCountry`（サジェスト選択時）と `handleSubmit`（Enterキー押下時）の両方の関数で、回答が送信された後に入力欄の値をクリア（`setInputValue("")`）する処理が確実に行われるようにしました。
+  - `src/components/features/game/GamePanel.tsx` から `CountrySelector` コンポーネントに `onSubmit` Prop を渡すことで、Enterキーによる回答送信が有効であることを確認しました。
+
+**課題・申し送り:**
+
+- **Playwright検証の知見:** フロントエンドの検証用Playwrightスクリプトを作成した際、当初テストデータとして設定した日本 (`JPN`) には陸路の隣国が存在しないため、テストが失敗しました。これはコードのバグではなく、テストデータの不備が原因でした。
+- この経験から、ゲームのコアロジック（陸路での移動）を考慮したテストデータの選定（例: フランス→ドイツ）が、E2Eテストを成功させる上で不可欠であるという知見を得ました。
+
+
 ## 2025-11-05
 
 **担当者:** Jules (AI Agent)

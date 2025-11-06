@@ -85,7 +85,7 @@ export const GamePanel = ({
         </div>
 
         {/* Scrollable History */}
-        <div className="flex-1 overflow-y-auto pr-2">
+        <div className="flex-1 space-y-4 p-4 overflow-y-auto">
           <h2 className="text-base font-bold uppercase tracking-widest text-white/60 mb-2">
             移動履歴
           </h2>
@@ -119,7 +119,7 @@ export const GamePanel = ({
             id="game-country-selector"
             value={null}
             onChange={(a3Code) => submitAnswer(a3Code)}
-            onSubmit={(a3Code) => submitAnswer(a3Code)}
+            onSubmit={submitAnswer}
             onSuggestionSelect={setSelectedCountryId}
             availableCountries={getNeighborCountries()}
             onError={setError}
