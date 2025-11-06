@@ -3,7 +3,6 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import Footer from '@/components/layout/Footer';
-import Header from '@/components/layout/Header';
 
 export default function WithFooterLayout({
   children,
@@ -13,7 +12,6 @@ export default function WithFooterLayout({
   const pathname = usePathname();
   return (
     <>
-      {pathname !== '/' && <Header />}
       {children}
       <Footer />
     </>
