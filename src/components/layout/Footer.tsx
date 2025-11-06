@@ -5,6 +5,9 @@ const Footer = () => {
     <footer className="bg-black/30 text-white backdrop-blur-sm">
       <div className="container mx-auto px-6 py-8 text-center">
         <div className="mb-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+          <Link href="/" className="transition-opacity hover:opacity-80">
+            トップ
+          </Link>
           <Link href="/terms" className="transition-opacity hover:opacity-80">
             利用規約
           </Link>
