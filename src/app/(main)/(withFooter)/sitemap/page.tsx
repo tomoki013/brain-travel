@@ -35,7 +35,7 @@ const SitemapPage = () => {
       href: "#", // Not a direct link
       icon: <Map className="h-8 w-8 text-green-500" />,
       description:
-        "実際に脳内世界旅行をプレイするメインページ。国を選択してゴールを目指します。",
+        "実際にGeo Linkerをプレイするメインページ。国を選択してゴールを目指します。",
     },
     {
       name: "利用規約",
@@ -65,7 +65,7 @@ const SitemapPage = () => {
             サイトマップ
           </h1>
           <p className="mt-4 text-xl text-gray-600">
-            脳内世界旅行の全ページをご案内します。
+            Geo Linkerの全ページをご案内します。
           </p>
         </div>
 

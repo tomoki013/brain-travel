@@ -46,7 +46,7 @@
 **実装概要:**
 
 - **タスクA: 静的ページのコンテンツ確定:**
-  - `src/app/(main)/(withFooter)/terms/page.tsx` （利用規約）と `src/app/(main)/(withFooter)/privacy/page.tsx` （プライバシーポリシー）内のプレースホルダー `[開発者名]` を「脳内世界旅行 開発チーム」に正式に置き換え、コンテンツを完成させました。
+  - `src/app/(main)/(withFooter)/terms/page.tsx` （利用規約）と `src/app/(main)/(withFooter)/privacy/page.tsx` （プライバシーポリシー）内のプレースホルダー `[開発者名]` を「Geo Linker 開発チーム」に正式に置き換え、コンテンツを完成させました。
 
 - **タスクB: サイトマップの拡充とUI改修:**
   - `src/app/(main)/(withFooter)/sitemap/page.tsx` を全面的に刷新しました。
