@@ -1,5 +1,26 @@
 # 開発ログ
 
+## 2025-11-05
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** お問い合わせフォームの実装
+
+**実装概要:**
+
+- **タスクA: お問い合わせフォームのUI作成:**
+  - `src/components/features/contact/ContactForm.tsx` を新規作成し、お名前、メールアドレス、お問い合わせ内容を入力できるUIコンポーネントを実装しました。
+- **タスクB: React Server Actionによるフォーム送信:**
+  - `src/app/(main)/(withFooter)/contact/actions.ts` を作成し、フォームデータを受け取るサーバーアクション `submitContactForm` を実装しました。
+  - `ContactForm.tsx` 内で `useFormState` フックを利用し、このサーバーアクションを呼び出すように変更しました。これにより、`GEMINI.md` の設計指針に沿ったモダンなフォーム処理が実現できました。
+- **タスクC: お問い合わせページの更新:**
+  - `src/app/(main)/(withFooter)/contact/page.tsx` の静的なテキストコンテンツを、新しく作成した `ContactForm` コンポーネントに置き換えました。
+
+**課題・申し送り:**
+
+- **インポートパスの解決:** 当初、`ContactForm.tsx` から `actions.ts` への相対パスでのインポートがビルドエラーを引き起こしました。`tsconfig.json` で設定されているパスエイリアス (`@/`) を利用した絶対パス (`@/app/...`) に修正することで、問題を解決しました。コンポーネントとページのファイル階層が異なる場合のモジュール解決の良い学びとなりました。
+- フォームのバックエンド処理は、現状では受け取ったデータをサーバーのコンソールに出力するのみです。実際のメール送信やデータベースへの保存は、今後のタスクで実装が必要です。
+
 ## 2025-11-05 (Step 29)
 
 **担当者:** Jules (AI Agent)
@@ -594,7 +615,7 @@
   - `src/types/index.ts` を作成し、プロジェクト全体で利用する `GameStatus` と `Country` 型を定義。
   - `useGameLogic.ts` と `countries.ts` が新しい型定義ファイルをインポートするように修正し、コードの重複を排除した。
 - **タスクB: GamePanel.tsx のリファクタリング:**
-  - `GamePanel.tsx` が `useGameLogic` のカスタムフック全体を Prop として受け取るのではなく、個別の状態と関数（`currentCountry`, `onSubmit` など）を受け取るように修正。
+  - `GamePanel.tsx` が `useGame` のカスタムフック全体を Prop として受け取るのではなく、個別の状態と関数（`currentCountry`, `onSubmit` など）を受け取るように修正。
   - これにより、コンポーネントの責務が明確になり、再利用性が向上した。
 - **タスクC: トップページ (page.tsx) の世界観向上:**
   - `framer-motion` を導入し、トップページのタイトルやボタンにフェードインアニメーションを追加。
@@ -767,7 +788,7 @@
 
 - 開発サーバー (`npm run dev`) が正常に起動せず、フロントエンドの画面キャプチャによる検証が完了できなかった。`npm install` を実行したことで `next` コマンドが見つからない問題は解消されたが、依然としてサーバーが応答しない。
 - `GEMINI.md` に記載のあった `world.json` の `properties.a3` が実際には存在しなかったため、UNのM49標準の国コードリストを元に `country-codes.json` を作成し、`id` と `a3` をマッピングする対応を行った。この点は `GEMINI.md` の記述と実装の間に差異があるため、注意が必要。
-- 次のタスクで写真の外部API連携を実装するにあたり、PMから環境変数名 (`NEXT_PUBLIC_UNSPLASH_API_KEY` 等) を指定していただく必要がある。
+- 次のタスクで写真の外部API連携を実装するにあたり、PMから環境変数名 (`NEXT_PUBLIC_UNSPLASH_ACCESS_KEY` 等) を指定していただく必要がある。
 
 ## 2025-11-03 (Step 2)
 
