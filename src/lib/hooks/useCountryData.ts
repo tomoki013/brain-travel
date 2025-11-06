@@ -1,4 +1,5 @@
 import countryCodes from "../data/country-codes.json";
+import { a3ToNumericId } from "../data/country-codes";
 import { countryNameJa } from "../data/countries";
 import { localImageManifest } from "../data/localImageManifest";
 import { continentMap } from "../data/continentMapping";
@@ -6,16 +7,6 @@ import { Country } from "@/types";
 
 // Type assertion for country-codes.json
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
-
-// Create a mapping from a3 to numeric id and vice-versa
-export const a3ToNumericId: Record<string, string> = {};
-const numericIdToA3: Record<string, string> = {};
-
-Object.keys(codes).forEach((numericId) => {
-  const a3 = codes[numericId].a3;
-  a3ToNumericId[a3] = numericId;
-  numericIdToA3[numericId] = a3;
-});
 
 // Create a comprehensive list for searching
 const allCountries = Object.values(codes).map((country) => {
