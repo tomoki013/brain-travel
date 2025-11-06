@@ -29,6 +29,14 @@ const Footer = () => {
           >
             サイトマップ
           </Link>
+          <a
+            href="https://github.com/riku-shiru/brain-world-trip"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-opacity hover:opacity-80"
+          >
+            GitHub
+          </a>
         </div>
         <p className="text-xs text-white/60">&copy; 2025 脳内世界旅行</p>
       </div>
