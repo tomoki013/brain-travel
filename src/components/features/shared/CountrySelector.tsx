@@ -101,7 +101,7 @@ export const CountrySelector = ({
   const handleSelectCountry = (country: typeof countrySource[0]) => {
     onChange?.(country.id);
     onSuggestionSelect?.(country.id);
-    setInputValue("");
+    setInputValue(""); // 入力欄をクリア
     setIsListOpen(false);
     setIsModalOpen(false); // Close modal on selection
     setIsFocused(false);
@@ -131,7 +131,7 @@ export const CountrySelector = ({
       onError?.("有効な国名を入力してください");
       onSuggestionSelect?.(null);
     }
-    setInputValue("");
+    setInputValue(""); // 入力欄をクリア
     setIsFocused(false);
     setIsListOpen(false);
   };
