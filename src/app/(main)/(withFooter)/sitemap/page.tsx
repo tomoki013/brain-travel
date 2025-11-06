@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { Map, FileText, Lock, Mail, Shuffle, Home } from 'lucide-react';
-import borders from '@/lib/data/borders.json';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Map, FileText, Lock, Mail, Shuffle, Home } from "lucide-react";
+import borders from "@/lib/data/borders.json";
 
 const SitemapPage = () => {
   const router = useRouter();
   const countryCodes = Object.keys(borders);
 
   const handleRandomStart = () => {
-    let startCountry = '';
-    let goalCountry = '';
+    let startCountry = "";
+    let goalCountry = "";
 
     while (startCountry === goalCountry) {
       const randomIndex1 = Math.floor(Math.random() * countryCodes.length);
@@ -25,35 +25,35 @@ const SitemapPage = () => {
 
   const pages = [
     {
-      name: 'トップページ',
-      href: '/',
+      name: "トップページ",
+      href: "/",
       icon: <Home className="h-8 w-8 text-sky-500" />,
-      description: '旅の始まり。ここから新しい冒険が始まります。',
+      description: "旅の始まり。ここから新しい冒険が始まります。",
     },
     {
-      name: 'ゲームページ',
-      href: '#', // Not a direct link
+      name: "ゲームページ",
+      href: "#", // Not a direct link
       icon: <Map className="h-8 w-8 text-green-500" />,
       description:
-        '実際に脳内世界旅行をプレイするメインページ。国を選択してゴールを目指します。',
+        "実際に脳内世界旅行をプレイするメインページ。国を選択してゴールを目指します。",
     },
     {
-      name: '利用規約',
-      href: '/terms',
+      name: "利用規約",
+      href: "/terms",
       icon: <FileText className="h-8 w-8 text-gray-500" />,
-      description: 'サービスの利用に関するルールを記載しています。',
+      description: "サービスの利用に関するルールを記載しています。",
     },
     {
-      name: 'プライバシーポリシー',
-      href: '/privacy',
+      name: "プライバシーポリシー",
+      href: "/privacy",
       icon: <Lock className="h-8 w-8 text-gray-500" />,
-      description: '個人情報の取り扱いについて記載しています。',
+      description: "個人情報の取り扱いについて記載しています。",
     },
     {
-      name: 'お問い合わせ',
-      href: '/contact',
+      name: "お問い合わせ",
+      href: "/contact",
       icon: <Mail className="h-8 w-8 text-gray-500" />,
-      description: '開発チームへのご連絡はこちらから。',
+      description: "開発チームへのご連絡はこちらから。",
     },
   ];
 
@@ -78,13 +78,10 @@ const SitemapPage = () => {
               <div className="flex items-center gap-4">
                 {page.icon}
                 <h2 className="text-xl font-bold text-gray-900">
-                  {page.href === '#' ? (
+                  {page.href === "#" ? (
                     page.name
                   ) : (
-                    <Link
-                      href={page.href}
-                      className="hover:text-sky-600"
-                    >
+                    <Link href={page.href} className="hover:text-sky-600">
                       {page.name}
                     </Link>
                   )}

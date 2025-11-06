@@ -3,7 +3,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { CountryImage } from "./CountryImage";
 import { CountrySelector } from "@/components/features/shared/CountrySelector";
-import { useState } from "react";
 import type { GameStatus } from "@/types";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 

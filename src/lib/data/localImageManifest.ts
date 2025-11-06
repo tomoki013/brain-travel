@@ -7,7 +7,15 @@
  * The file names are expected to be in the format `${countryId}.jpg`.
  */
 export const localImageManifest = new Set<string>([
-  "JPN",
   "FRA",
-  "USA",
+  "BEL",
+  "EGY",
+  "GRC",
+  "IND",
+  "KOR",
+  "ESP",
+  "THA",
+  "TUR",
+  "VNM",
+  "JPN",
 ]);
