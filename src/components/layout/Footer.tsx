@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -11,26 +11,17 @@ const Footer = () => {
           <Link href="/terms" className="transition-opacity hover:opacity-80">
             利用規約
           </Link>
-          <Link
-            href="/privacy"
-            className="transition-opacity hover:opacity-80"
-          >
+          <Link href="/privacy" className="transition-opacity hover:opacity-80">
             プライバシーポリシー
           </Link>
-          <Link
-            href="/contact"
-            className="transition-opacity hover:opacity-80"
-          >
+          <Link href="/contact" className="transition-opacity hover:opacity-80">
             お問い合わせ
           </Link>
-          <Link
-            href="/sitemap"
-            className="transition-opacity hover:opacity-80"
-          >
+          <Link href="/sitemap" className="transition-opacity hover:opacity-80">
             サイトマップ
           </Link>
           <a
-            href="https://github.com/riku-shiru/brain-world-trip"
+            href="https://github.com/tomoki013/brain-travel"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-opacity hover:opacity-80"

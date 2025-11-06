@@ -69,7 +69,7 @@ export const useCountryData = () => {
     }
 
     // Priority 5: Return default image
-    return "/default-globe.jpg";
+    return "/images/default-globe.jpg";
   };
 
   /**
