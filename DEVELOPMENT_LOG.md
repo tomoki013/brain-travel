@@ -1,5 +1,28 @@
 # 開発ログ
 
+## 2025-11-05 (Step 29)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ29 必須バグの全面修正
+
+**実装概要:**
+
+- **タスクA: 地図の初期ハイライトバグ修正:**
+  - `a3ToNumericId` のマッピングロジックを `useCountryData.ts` から `src/lib/data/country-codes.ts` に移し、単一責任の原則に沿ってリファクタリングしました。
+  - `WorldMap.tsx` が新しい `country-codes.ts` から直接マッピングをインポートするように修正し、これまで機能していなかったスタート・ゴール国の初期ハイライトが正しく表示されるようにしました。
+- **タスクB: CountrySelector の連続入力バグ修正:**
+  - `src/components/features/shared/CountrySelector.tsx` の `handleSelectCountry` 関数を修正しました。
+  - `onChange` イベント（回答送信）が呼び出された後に、入力欄の `value` をクリア (`setInputValue("")`) する処理を追加し、ユーザーが即座に次の国を入力できるようにしました。
+- **タスクC: GamePanel のスクロールバグ修正:**
+  - `src/components/features/game/GamePanel.tsx` の主要コンテナに `overflow-y-auto` クラスを追加しました。
+  - これにより、回答履歴が増えてもパネル全体がスクロール可能になり、下部の入力フォームが見切れて操作不能になるUIのバグを修正しました。
+
+**課題・申し送り:**
+
+- **検証の障害:** 開発環境で `npm run dev` を実行した際、ローカル画像 (`/images/countries/`) やフォールバック画像 (`/default-globe.jpg`) が存在しないことが原因で、ページのレンダリングがループエラーに陥り、Playwrightによる画面キャプチャ検証が完了できませんでした。
+- **ユーザー判断による進行:** コードのビルドは成功しているため、ユーザーの指示に基づき、視覚的な検証をスキップして提出を進めました。根本的なデータ・環境問題については、別途対応が必要です。
+
 ## 2025-11-05
 
 **担当者:** Jules (AI Agent)

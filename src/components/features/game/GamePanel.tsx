@@ -60,7 +60,7 @@ export const GamePanel = ({
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex flex-1 flex-col gap-4 overflow-y-hidden">
+      <div className="flex flex-1 flex-col gap-4 overflow-y-auto">
         {/* Static Info */}
         <div className="space-y-4">
           <div>

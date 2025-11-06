@@ -5,7 +5,7 @@ import { feature } from "topojson-client";
 import { useEffect, useRef, useState, useMemo } from "react";
 import type { Feature, FeatureCollection } from "geojson";
 import type { Topology } from "topojson-specification";
-import { a3ToNumericId } from "@/lib/hooks/useCountryData";
+import { a3ToNumericId } from "@/lib/data/country-codes";
 
 type WorldMapProps = {
   startCountryId: string;

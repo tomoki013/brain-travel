@@ -99,9 +99,9 @@ export const CountrySelector = ({
   };
 
   const handleSelectCountry = (country: typeof countrySource[0]) => {
-    setInputValue(country.name);
     onChange?.(country.id);
     onSuggestionSelect?.(country.id);
+    setInputValue("");
     setIsListOpen(false);
     setIsModalOpen(false); // Close modal on selection
     setIsFocused(false);
