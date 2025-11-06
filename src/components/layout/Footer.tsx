@@ -29,7 +29,7 @@ const Footer = () => {
             GitHub
           </a>
         </div>
-        <p className="text-xs text-white/60">&copy; 2025 脳内世界旅行</p>
+        <p className="text-xs text-white/60">&copy; 2025 Geo Linker</p>
       </div>
     </footer>
   );

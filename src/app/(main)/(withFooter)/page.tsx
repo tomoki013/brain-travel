@@ -103,13 +103,13 @@ export default function TopPage() {
           className="text-4xl font-bold tracking-tight text-white sm:text-6xl"
           variants={itemVariants}
         >
-          脳内世界旅行
+          Geo Linker
         </motion.h1>
         <motion.p
           className="mt-6 text-lg leading-8 text-gray-200"
           variants={itemVariants}
         >
-          スタート国とゴール国を選んで、脳内旅行に出かけよう！
+          スタート国とゴール国を選んで、旅に出かけよう！
         </motion.p>
 
         {/* Random Start */}

@@ -8,8 +8,8 @@ const notoSansJP = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "脳内世界旅行",
-  description: "",
+  title: "Geo Linker",
+  description: "Geo Linkerへようこそ！",
 };
 
 export default function RootLayout({
