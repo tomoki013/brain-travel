@@ -28,35 +28,33 @@ export default function TopPage() {
   }, [startCountry, countries, getCountriesInSameContinent]);
 
   const handleStartRandom = () => {
-    // 既存のロジック（countries から2つ選ぶ）を削除します。
-    // getPlayableCountries() を呼び出し、プレイ可能な国のリストを取得します。
-    // そのリストからランダムにスタート国を1つ選びます。
-    const startCountry =
-      playableCountries[Math.floor(Math.random() * playableCountries.length)];
-
-    // getCountriesInSameContinent(スタート国ID) を呼び出し、同じ大陸塊の国リストを取得します。
-    const continentPeers = getCountriesInSameContinent(startCountry.id);
-
-    let goalCountryId: string | null = null;
-    // そのリストからランダムにゴール国を1つ選びます（スタート国と重複しないように再試行してください）。
-    // 大陸に国が1つしかない、というエッジケースを処理します。
-    if (continentPeers.length > 1) {
-      do {
-        const randomPeerId =
-          continentPeers[Math.floor(Math.random() * continentPeers.length)];
-        if (randomPeerId !== startCountry.id) {
-          goalCountryId = randomPeerId;
-        }
-      } while (goalCountryId === null);
-    } else {
-      // 「プレイ可能」な国が大陸に1つしかない、という稀なケースのフォールバック。
-      // 本来であればエラー表示やスタート国の再選択をすべきですが、
-      // このタスクでは、クリア不可能なゲームとして開始させます。
-      goalCountryId = startCountry.id;
+    setError(null);
+    if (playableCountries.length === 0) {
+      setError("プレイ可能な国が見つかりませんでした。");
+      return;
     }
 
-    // 取得した startCountry.id と goalCountry.id を使って router.push してください。
-    router.push(`/game?start=${startCountry.id}&goal=${goalCountryId}`);
+    // 1. プレイ可能な国からランダムにスタート国を選択
+    const start =
+      playableCountries[Math.floor(Math.random() * playableCountries.length)];
+
+    // 2. スタート国と同じ大陸に属する国を取得
+    const continentPeers = getCountriesInSameContinent(start.id);
+
+    // 3. スタート国自身を除いたリストから、ランダムにゴール国を選択
+    const possibleGoals = continentPeers.filter((id) => id !== start.id);
+
+    if (possibleGoals.length === 0) {
+      // このケースは`getPlayableCountries`のロジックが正しければ発生しないはずですが、
+      // 安全のためエラーハンドリングを行います。
+      setError("適切なゴール国が見つかりませんでした。もう一度お試しください。");
+      return;
+    }
+
+    const goal = possibleGoals[Math.floor(Math.random() * possibleGoals.length)];
+
+    // 4. ゲームページに遷移
+    router.push(`/game?start=${start.id}&goal=${goal}`);
   };
 
   const handleStartSelected = () => {

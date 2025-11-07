@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import type { GameStatus, Country } from "@/types";
 import borders from "../data/borders.json";
@@ -18,53 +18,51 @@ export const useGameLogic = () => {
   const [gameStatus, setGameStatus] = useState<GameStatus>("playing");
   const [error, setError] = useState<string | null>(null);
 
-  /**
-   * Initializes the game with a start and goal country.
-   * @param start - The ISO 3166-1 alpha-3 code of the starting country.
-   * @param goal - The ISO 3166-1 alpha-3 code of the goal country.
-   */
-  const initializeGame = (start: string, goal: string) => {
+  const initializeGame = useCallback((start: string, goal: string) => {
     setStartCountry(start);
     setGoalCountry(goal);
     setCurrentCountry(start);
     setRouteHistory([start]);
     setGameStatus("playing");
-  };
+  }, []);
 
   /**
    * Submits an answer and updates the game state.
    * @param answerCountry - The ISO 3166-1 alpha-3 code of the answered country.
    */
-  const submitAnswer = (answerCountry: string) => {
-    setError(null);
-    if (gameStatus !== "playing" || !currentCountry) {
-      return;
-    }
-
-    if (!countryBorders[answerCountry]) {
-      setError("存在しない国名です。");
-      return;
-    }
-
-    if (countryBorders[currentCountry]?.includes(answerCountry)) {
-      const newRouteHistory = [...routeHistory, answerCountry];
-      setRouteHistory(newRouteHistory);
-      setCurrentCountry(answerCountry);
-
-      if (answerCountry === goalCountry) {
-        setGameStatus("cleared");
-        router.push(`/result?route=${newRouteHistory.join(",")}`);
+  const submitAnswer = useCallback(
+    (answerCountry: string) => {
+      setError(null);
+      if (gameStatus !== "playing" || !currentCountry) {
+        return;
       }
-    } else {
-      setError("不正解です。その国へは陸路で移動できません。");
-    }
-  };
 
-  const getNeighborCountries = (): Country[] => {
+      if (!countryBorders[answerCountry]) {
+        setError("存在しない国名です。");
+        return;
+      }
+
+      if (countryBorders[currentCountry]?.includes(answerCountry)) {
+        const newRouteHistory = [...routeHistory, answerCountry];
+        setRouteHistory(newRouteHistory);
+        setCurrentCountry(answerCountry);
+
+        if (answerCountry === goalCountry) {
+          setGameStatus("cleared");
+          router.push(`/result?route=${newRouteHistory.join(",")}`);
+        }
+      } else {
+        setError("不正解です。その国へは陸路で移動できません。");
+      }
+    },
+    [gameStatus, currentCountry, routeHistory, goalCountry, router]
+  );
+
+  const getNeighborCountries = useCallback((): Country[] => {
     if (!currentCountry) return [];
     const neighborCodes = countryBorders[currentCountry] || [];
-    return countries.filter(c => neighborCodes.includes(c.id));
-  };
+    return countries.filter((c) => neighborCodes.includes(c.id));
+  }, [currentCountry]);
 
   /**
    * Gives up the game and navigates to the result page.
