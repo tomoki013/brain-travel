@@ -27,8 +27,7 @@ function GameContent() {
     } else {
       router.push("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [startCountry, goalCountry]);
+  }, [startCountry, goalCountry, router, gameLogic]);
 
   useEffect(() => {
     if (gameLogic.currentCountry) {
