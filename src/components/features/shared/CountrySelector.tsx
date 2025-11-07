@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCountryData } from "@/lib/hooks/useCountryData";
@@ -53,8 +53,12 @@ export const CountrySelector = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isListOpen, setIsListOpen] = useState(false); // For suggestions
   const [isFocused, setIsFocused] = useState(false);
+  const [suggestionsStyle, setSuggestionsStyle] = useState<React.CSSProperties>(
+    {}
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null); // Ref for the input element
 
   useEffect(() => {
     if (!isFocused) {
@@ -77,6 +81,31 @@ export const CountrySelector = ({
     };
   }, []);
 
+  useLayoutEffect(() => {
+    const calculateStyle = () => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        setSuggestionsStyle({
+          position: "absolute",
+          top: `${rect.bottom}px`,
+          left: `${rect.left}px`,
+          width: `${rect.width}px`,
+        });
+      }
+    };
+
+    if (isListOpen) {
+      calculateStyle();
+      window.addEventListener("resize", calculateStyle);
+      window.addEventListener("scroll", calculateStyle, true); // Use capture phase
+    }
+
+    return () => {
+      window.removeEventListener("resize", calculateStyle);
+      window.removeEventListener("scroll", calculateStyle, true);
+    };
+  }, [isListOpen]);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setInputValue(query);
@@ -86,8 +115,8 @@ export const CountrySelector = ({
       const normalizedQuery = query.toLowerCase();
       const filteredSuggestions = countrySource.filter(
         (country) =>
-          country.name.toLowerCase().startsWith(normalizedQuery) ||
-          country.englishName.toLowerCase().startsWith(normalizedQuery)
+          country.name.toLowerCase().includes(normalizedQuery) ||
+          country.englishName.toLowerCase().includes(normalizedQuery)
       );
       setSuggestions(filteredSuggestions);
       setIsListOpen(true);
@@ -98,12 +127,15 @@ export const CountrySelector = ({
   };
 
   const handleSelectCountry = (country: (typeof countrySource)[0]) => {
+    // In the game, selecting a suggestion is an act of submission.
+    onSubmit?.(country.id);
+    // Also call onChange for other uses (like homepage)
     onChange?.(country.id);
     setInputValue("");
     onSuggestionSelect?.(null);
     setIsListOpen(false);
     setIsModalOpen(false); // Close modal on selection
-    setIsFocused(false);
+    inputRef.current?.focus();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -115,8 +147,8 @@ export const CountrySelector = ({
       onSubmit?.(suggestions[0].id);
       setInputValue(""); // Clear input after submission
       onSuggestionSelect?.(null);
-      setIsFocused(false);
       setIsListOpen(false);
+      inputRef.current?.focus();
       return;
     }
 
@@ -124,14 +156,14 @@ export const CountrySelector = ({
     const a3Code = findCountryA3CodeByName(inputValue);
     if (a3Code) {
       onSubmit?.(a3Code);
+      setInputValue(""); // Clear input only on successful submission
       onSuggestionSelect?.(null);
     } else {
       onError?.("有効な国名を入力してください");
       onSuggestionSelect?.(null);
     }
-    setInputValue(""); // 入力欄をクリア
-    setIsFocused(false);
     setIsListOpen(false);
+    inputRef.current?.focus();
   };
 
   // suggestions state
@@ -205,6 +237,7 @@ export const CountrySelector = ({
   const inputElement = (
     <div className="relative">
       <input
+        ref={inputRef}
         id={id}
         type="text"
         value={inputValue}
@@ -249,30 +282,39 @@ export const CountrySelector = ({
         inputElement
       )}
 
-      {/* Inline Suggestions */}
+      {/* Suggestions Portal */}
       <AnimatePresence>
-        {isListOpen && suggestions.length > 0 && !isModalOpen && (
-          <motion.ul
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="absolute z-10 w-full mt-1 bg-white/90 backdrop-blur-md rounded-md shadow-lg max-h-60 overflow-auto"
-          >
-            {suggestions.map((country) => (
-              <li
-                key={country.id}
-                onMouseDown={() => handleSelectCountry(country)}
-                className="p-3 flex items-center gap-4 cursor-pointer hover:bg-white"
-              >
-                <span className="text-2xl font-sans">{country.flag}</span>
-                <div>
-                  <p className="font-semibold text-gray-800">{country.name}</p>
-                  <p className="text-sm text-gray-500">{country.englishName}</p>
-                </div>
-              </li>
-            ))}
-          </motion.ul>
-        )}
+        {isListOpen &&
+          suggestions.length > 0 &&
+          !isModalOpen &&
+          createPortal(
+            <motion.ul
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              style={suggestionsStyle}
+              className="z-[100] mt-1 bg-white/90 backdrop-blur-md rounded-md shadow-lg max-h-60 overflow-auto"
+            >
+              {suggestions.map((country) => (
+                <li
+                  key={country.id}
+                  onClick={() => handleSelectCountry(country)}
+                  className="p-3 flex items-center gap-4 cursor-pointer hover:bg-white"
+                >
+                  <span className="text-2xl font-sans">{country.flag}</span>
+                  <div>
+                    <p className="font-semibold text-gray-800">
+                      {country.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {country.englishName}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </motion.ul>,
+            document.body
+          )}
       </AnimatePresence>
 
       <AnimatePresence>{isModalOpen && <Modal />}</AnimatePresence>

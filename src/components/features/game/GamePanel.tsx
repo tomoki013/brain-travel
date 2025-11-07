@@ -59,9 +59,9 @@ export const GamePanel = ({
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex flex-1 flex-col gap-4 overflow-y-auto">
+      <div className="flex flex-1 flex-col gap-4 overflow-hidden">
         {/* Static Info */}
-        <div className="space-y-4">
+        <div className="flex-shrink-0 space-y-4">
           <div>
             <h2 className="text-base font-bold uppercase tracking-widest text-white/60">
               お題
@@ -84,31 +84,26 @@ export const GamePanel = ({
         </div>
 
         {/* Scrollable History */}
-        <div className="flex-1 space-y-4 p-4 overflow-y-auto">
+        <div className="flex-1 space-y-2 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
           <h2 className="text-base font-bold uppercase tracking-widest text-white/60 mb-2">
             移動履歴
           </h2>
-          <div className="rounded-md bg-black/20 p-3 text-sm">
-            <ul className="space-y-2">
-              {routeHistory.map((countryId, index) => (
-                <li
-                  key={`${countryId}-${index}`}
-                  className="flex items-baseline"
-                >
-                  <span className="mr-3 font-mono text-white/60">
-                    {String(index + 1).padStart(2, "0")}.
-                  </span>
-                  <span className="font-semibold">
-                    {getCountryName(countryId)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ul className="space-y-2">
+            {routeHistory.map((countryId, index) => (
+              <li key={`${countryId}-${index}`} className="flex items-baseline">
+                <span className="mr-3 font-mono text-white/60">
+                  {String(index + 1).padStart(2, "0")}.
+                </span>
+                <span className="font-semibold">
+                  {getCountryName(countryId)}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Action Form */}
-        <div className="mt-auto pt-4 space-y-3">
+        <div className="flex-shrink-0 pt-4 space-y-3">
           {error && (
             <div className="rounded-md bg-red-500/30 p-2 text-center text-sm font-semibold text-red-100">
               {error}
@@ -116,6 +111,7 @@ export const GamePanel = ({
           )}
           <CountrySelector
             id="game-country-selector"
+            key={routeHistory.length}
             value={null}
             onChange={(a3Code) => submitAnswer(a3Code)}
             onSubmit={submitAnswer}

@@ -56,8 +56,7 @@ export const WorldMap = ({
     const svg = d3.select(ref.current);
     svg.selectAll("*").remove(); // Clear previous render
 
-    const width = parseInt(svg.style("width"));
-    const height = parseInt(svg.style("height"));
+    const { width, height } = ref.current.getBoundingClientRect();
 
     const projection = d3
       .geoOrthographic()
