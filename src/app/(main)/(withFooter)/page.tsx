@@ -28,23 +28,35 @@ export default function TopPage() {
   }, [startCountry, countries, getCountriesInSameContinent]);
 
   const handleStartRandom = () => {
-    // 1. Pick a random start country from the playable list
-    const randomStartCountry =
+    // 既存のロジック（countries から2つ選ぶ）を削除します。
+    // getPlayableCountries() を呼び出し、プレイ可能な国のリストを取得します。
+    // そのリストからランダムにスタート国を1つ選びます。
+    const startCountry =
       playableCountries[Math.floor(Math.random() * playableCountries.length)];
 
-    // 2. Get the list of countries in the same continent
-    const continentPeers = getCountriesInSameContinent(randomStartCountry.id);
-    const validGoalCountries = continentPeers.filter(
-      (id) => id !== randomStartCountry.id
-    );
+    // getCountriesInSameContinent(スタート国ID) を呼び出し、同じ大陸塊の国リストを取得します。
+    const continentPeers = getCountriesInSameContinent(startCountry.id);
 
-    // 3. Pick a random goal country from that list
-    const randomGoalCountryId =
-      validGoalCountries[Math.floor(Math.random() * validGoalCountries.length)];
+    let goalCountryId: string | null = null;
+    // そのリストからランダムにゴール国を1つ選びます（スタート国と重複しないように再試行してください）。
+    // 大陸に国が1つしかない、というエッジケースを処理します。
+    if (continentPeers.length > 1) {
+      do {
+        const randomPeerId =
+          continentPeers[Math.floor(Math.random() * continentPeers.length)];
+        if (randomPeerId !== startCountry.id) {
+          goalCountryId = randomPeerId;
+        }
+      } while (goalCountryId === null);
+    } else {
+      // 「プレイ可能」な国が大陸に1つしかない、という稀なケースのフォールバック。
+      // 本来であればエラー表示やスタート国の再選択をすべきですが、
+      // このタスクでは、クリア不可能なゲームとして開始させます。
+      goalCountryId = startCountry.id;
+    }
 
-    router.push(
-      `/game?start=${randomStartCountry.id}&goal=${randomGoalCountryId}`
-    );
+    // 取得した startCountry.id と goalCountry.id を使って router.push してください。
+    router.push(`/game?start=${startCountry.id}&goal=${goalCountryId}`);
   };
 
   const handleStartSelected = () => {

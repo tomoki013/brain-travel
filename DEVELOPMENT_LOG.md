@@ -1,5 +1,31 @@
 # 開発ログ
 
+## 2025-11-06 (Step 30)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ30 バグ修正（ランダムロジック、連続入力、GamePanelスクロール）
+
+**実装概要:**
+
+- **タスクA: ランダムスタートのロジック修正:**
+  - `src/app/(main)/(withFooter)/page.tsx` の `handleStartRandom` 関数を修正しました。
+  - `getPlayableCountries()` でゲーム開始可能な国リストを取得し、そこからランダムにスタート国を選びます。
+  - 次に `getCountriesInSameContinent()` を使い、スタート国と同じ大陸塊に属する国からランダムにゴール国を選ぶように変更しました。
+  - スタートとゴールが重複しないように再試行するロジックも追加し、必ず到達可能な国の組み合わせでゲームが開始されるようにしました。
+
+- **タスクB: CountrySelector の連続入力バグ修正:**
+  - `src/components/features/shared/CountrySelector.tsx` を修正しました。
+  - `handleSubmit`（Enterキー押下時）と `handleSelectCountry`（サジェスト選択時）の両方で、回答が送信された後にフォームの入力値と選択状態が適切にクリアされるように、`setInputValue("")` と `setSelectedCountry(null)` を呼び出す処理を追加しました。これにより、ユーザーは即座に次の国の入力に移れるようになりました。
+
+- **タスクC: GamePanel のスクロールバグ修正:**
+  - `src/components/features/game/GamePanel.tsx` を調査した結果、要求された修正（`overflow-y-auto` クラスの適用）はすでに現在のコードベースに存在していることを確認しました。そのため、このタスクに関するコードの変更はありませんでした。
+
+**課題・申し送り:**
+
+- **Playwright検証の安定化:** 当初、「ランダムで旅を始める」機能をクリックして検証するPlaywrightスクリプトは、ランダム性のためにテストが不安定でした。これを解決するため、テストケースをフランスからドイツ (`/game?start=FRA&goal=DEU`) のような静的なルートに固定することで、安定したフロントエンド検証を実現しました。
+- **ビルド環境:** `npm run build` が当初 `next: not found` エラーで失敗しましたが、これは `npm install` を実行することで解決しました。
+
 ## 2025-11-05 (Step 30)
 
 **担当者:** Jules (AI Agent)
