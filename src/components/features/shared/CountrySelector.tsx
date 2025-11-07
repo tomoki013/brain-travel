@@ -99,8 +99,8 @@ export const CountrySelector = ({
 
   const handleSelectCountry = (country: (typeof countrySource)[0]) => {
     onChange?.(country.id);
-    onSuggestionSelect?.(country.id);
-    setInputValue(""); // 入力欄をクリア
+    setInputValue("");
+    onSuggestionSelect?.(null);
     setIsListOpen(false);
     setIsModalOpen(false); // Close modal on selection
     setIsFocused(false);
@@ -113,7 +113,6 @@ export const CountrySelector = ({
     // Case 1: If there is exactly one suggestion, submit it.
     if (suggestions.length === 1) {
       onSubmit?.(suggestions[0].id);
-      onSuggestionSelect?.(suggestions[0].id); // Highlight it
       setInputValue(""); // Clear input after submission
       onSuggestionSelect?.(null);
       setIsFocused(false);
@@ -125,7 +124,7 @@ export const CountrySelector = ({
     const a3Code = findCountryA3CodeByName(inputValue);
     if (a3Code) {
       onSubmit?.(a3Code);
-      onSuggestionSelect?.(a3Code); // Highlight it
+      onSuggestionSelect?.(null);
     } else {
       onError?.("有効な国名を入力してください");
       onSuggestionSelect?.(null);
