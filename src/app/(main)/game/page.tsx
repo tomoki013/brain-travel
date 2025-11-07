@@ -52,6 +52,7 @@ function GameContent() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <CountryImage
+          key={gameLogic.startCountry}
           countryId={gameLogic.startCountry}
           className="h-full w-full object-cover blur-md scale-110"
         />

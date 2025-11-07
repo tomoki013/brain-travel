@@ -61,12 +61,6 @@ export const CountrySelector = ({
   const inputRef = useRef<HTMLInputElement>(null); // Ref for the input element
 
   useEffect(() => {
-    if (!isFocused) {
-      setInputValue(value ? (getCountryName(value) ?? "") : "");
-    }
-  }, [value, isFocused, getCountryName]);
-
-  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         containerRef.current &&

@@ -52,6 +52,7 @@ export const GamePanel = ({
         >
           {currentCountry && (
             <CountryImage
+              key={currentCountry} // Add key to force re-mount on country change
               countryId={currentCountry}
               className="rounded-lg object-cover shadow-xl"
             />
