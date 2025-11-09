@@ -1,20 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { CountryModal } from "@/components/features/shared/CountryModal";
+import { useCountryData } from "@/lib/hooks/useCountryData";
+import type { Country } from "@/types";
 
 export default function TopPage() {
   const router = useRouter();
+  const { getPlayableCountries, getCountriesInSameContinent, countries } =
+    useCountryData();
+
+  const [startCountry, setStartCountry] = useState<Country | null>(null);
+  const [goalCountry, setGoalCountry] = useState<Country | null>(null);
+
   const [isStartModalOpen, setIsStartModalOpen] = useState(false);
   const [isGoalModalOpen, setIsGoalModalOpen] = useState(false);
 
   const handleStartRandom = () => {
-    // NOTE: This is a temporary dummy function as per the instructions
-    // to focus on UI creation.
-    router.push(`/game?start=JPN&goal=FRA`);
+    const playable = getPlayableCountries();
+    if (playable.length === 0) return;
+
+    const randomStart = playable[Math.floor(Math.random() * playable.length)];
+    const continentPeers = getCountriesInSameContinent(randomStart.id).filter(
+      (c) => c.id !== randomStart.id
+    );
+
+    if (continentPeers.length > 0) {
+      const randomGoal =
+        continentPeers[Math.floor(Math.random() * continentPeers.length)];
+      router.push(`/game?start=${randomStart.id}&goal=${randomGoal.id}`);
+    } else {
+      // Fallback if no peers found, though getPlayableCountries should prevent this
+      handleStartRandom();
+    }
+  };
+
+  const handleSelectStart = (country: Country) => {
+    setStartCountry(country);
+    setGoalCountry(null); // Reset goal when start changes
+  };
+
+  const goalCountries = useMemo(() => {
+    if (!startCountry) return [];
+    return getCountriesInSameContinent(startCountry.id);
+  }, [startCountry, getCountriesInSameContinent]);
+
+  const handleStartGame = () => {
+    if (startCountry && goalCountry) {
+      router.push(
+        `/game?start=${startCountry.id}&goal=${goalCountry.id}`
+      );
+    }
   };
 
   const containerVariants = {
@@ -103,13 +142,23 @@ export default function TopPage() {
               onClick={() => setIsStartModalOpen(true)}
               className="rounded-md bg-white/10 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-white/20"
             >
-              スタート国を選択
+              {startCountry ? startCountry.name : "スタート国を選択"}
             </button>
             <button
               onClick={() => setIsGoalModalOpen(true)}
-              className="rounded-md bg-white/10 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-white/20"
+              disabled={!startCountry}
+              className="rounded-md bg-white/10 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-white/20 disabled:cursor-not-allowed disabled:bg-white/5 disabled:text-gray-400"
             >
-              ゴール国を選択
+              {goalCountry ? goalCountry.name : "ゴール国を選択"}
+            </button>
+          </div>
+          <div className="mt-8">
+            <button
+              onClick={handleStartGame}
+              disabled={!startCountry || !goalCountry}
+              className="w-full rounded-md bg-green-600 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-green-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+            >
+              ゲーム開始
             </button>
           </div>
         </motion.div>
@@ -119,11 +168,15 @@ export default function TopPage() {
         isOpen={isStartModalOpen}
         onClose={() => setIsStartModalOpen(false)}
         title="スタート国を選択"
+        availableCountries={getPlayableCountries()}
+        onSelect={handleSelectStart}
       />
       <CountryModal
         isOpen={isGoalModalOpen}
         onClose={() => setIsGoalModalOpen(false)}
         title="ゴール国を選択"
+        availableCountries={goalCountries}
+        onSelect={setGoalCountry}
       />
     </main>
   );

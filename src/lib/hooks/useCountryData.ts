@@ -136,15 +136,21 @@ export const useCountryData = () => {
     []
   );
 
-  const getCountriesInSameContinent = useCallback((a3Code: string): string[] => {
-    const continentId = continentMap[a3Code];
-    if (continentId === undefined) {
-      return [];
-    }
-    return Object.keys(continentMap).filter(
-      (key) => continentMap[key] === continentId
-    );
-  }, []);
+  const getCountriesInSameContinent = useCallback(
+    (a3Code: string): Country[] => {
+      const continentId = continentMap[a3Code];
+      if (continentId === undefined) {
+        return [];
+      }
+      const continentA3Codes = Object.keys(continentMap).filter(
+        (key) => continentMap[key] === continentId
+      );
+      return countries.filter((country) =>
+        continentA3Codes.includes(country.id)
+      );
+    },
+    [countries]
+  );
 
   const getPlayableCountries = useCallback((): Country[] => {
     const continentCounts = Object.values(continentMap).reduce(
