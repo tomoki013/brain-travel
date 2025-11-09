@@ -68,7 +68,7 @@ export const GamePanel = ({
           <div className="flex-shrink-0 space-y-4">
             <div>
               <h2 className="text-base font-bold uppercase tracking-widest text-white/60">
-                お題
+                旅のルート
               </h2>
               <p className="mt-1 text-lg">
                 <span className="font-bold">{getCountryName(startCountry)}</span>{" "}
