@@ -1,5 +1,40 @@
 # 開発ログ
 
+## 2025-11-09 (Step 31)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ31 国選択機能の削除と再実装（シンプル化）
+
+**実装概要:**
+
+- **課題認識:** 既存の `CountrySelector.tsx` が過度に複雑化し、連続入力ができない等のバグの原因となっていたため、これを完全に廃止し、よりシンプルで堅牢なコンポーネントに置き換えることを目的とした。
+
+- **タスクA: CountrySelector の完全削除:**
+  - `src/components/features/shared/CountrySelector.tsx` をプロジェクトから削除した。
+
+- **タスクB: ゲームページ用 `AnswerForm.tsx` の再実装:**
+  - `src/components/features/game/AnswerForm.tsx` を新規に作成。
+  - `useCountryData` を利用し、国名のサジェスト機能とA3コードへの変換ロジックを実装。
+  - フォーム送信後 (`onSubmit`) やサジェスト選択後に、入力値とサジェストリストを完全にクリアする処理を徹底し、連続入力バグを根本的に解決した。
+
+- **タスクC: `GamePanel.tsx` への適用:**
+  - `src/components/features/game/GamePanel.tsx` 内のコンポーネント呼び出しを、古い `CountrySelector` から新しい `AnswerForm` に差し替えた。
+  - `gameLogic` の各種関数を `AnswerForm` の Props (`onSubmit`, `onError`, `onSuggestionSelect`) に正しく接続した。
+
+- **タスクD: トップページ (`page.tsx`) のUIシンプル化:**
+  - `src/app/(main)/(withFooter)/page.tsx` から `CountrySelector` の利用を廃止。
+  - UIをネイティブな `<select>` タグ（ドロップダウンリスト）に戻し、シンプルさと動作の信頼性を確保した。
+  - `getPlayableCountries` と `getCountriesInSameContinent` を利用した大陸塊に基づく国フィルタリングのロジックは維持し、UXは維持した。
+
+- **タスクE: `GEMINI.md` の更新:**
+  - 設計書 `GEMINI.md` のディレクトリ構成から `CountrySelector.tsx` を削除し、`AnswerForm.tsx` がゲーム内での国名入力の責務を持つことを明記した。
+
+**課題・申し送り:**
+
+- **ビルドエラーの修正:** 再実装の過程で `npm run build` を実行した際、`AnswerForm.tsx` 内で `useCountryData` の `findCountryIdByName` を呼び出していたが、これは古い関数名であり、正しくは `findCountryA3CodeByName` であったため、修正した。また、`getCountrySuggestions` が返すデータ構造が `AnswerForm` の期待と異なっていたため、`map` を使って整形した。
+- **検証:** `npm run build` が正常に完了することを確認。また、Playwright を用いたスクリーンショット検証により、トップページとゲームページの両方で新しいUIが意図通りに表示されていることを確認済み。今回のリファクタリングにより、コンポーネントの責務が明確になり、バグが解消され、保守性が大幅に向上した。
+
 ## 2025-11-07 (Step 32)
 
 **担当者:** Jules (AI Agent)

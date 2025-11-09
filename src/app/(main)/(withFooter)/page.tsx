@@ -3,7 +3,6 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { CountrySelector } from "@/components/features/shared/CountrySelector";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import Image from "next/image";
 
@@ -156,15 +155,22 @@ export default function TopPage() {
                 スタート国
               </label>
               <div className="mt-2">
-                <CountrySelector
+                <select
                   id="start-country"
-                  value={startCountry}
-                  onChange={(countryId) => {
-                    setStartCountry(countryId);
+                  value={startCountry ?? ""}
+                  onChange={(e) => {
+                    setStartCountry(e.target.value || null);
                     setGoalCountry(null); // Reset goal country when start changes
                   }}
-                  availableCountries={playableCountries}
-                />
+                  className="block w-full rounded-md border-0 bg-white/10 py-2 pl-3 pr-10 text-white ring-1 ring-inset ring-white/30 focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6"
+                >
+                  <option value="">選択してください</option>
+                  {playableCountries.map((country) => (
+                    <option key={country.id} value={country.id}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
             <div>
@@ -175,13 +181,20 @@ export default function TopPage() {
                 ゴール国
               </label>
               <div className="mt-2">
-                <CountrySelector
+                <select
                   id="goal-country"
-                  value={goalCountry}
-                  onChange={setGoalCountry}
-                  availableCountries={goalCountries}
+                  value={goalCountry ?? ""}
+                  onChange={(e) => setGoalCountry(e.target.value || null)}
                   disabled={!startCountry}
-                />
+                  className="block w-full rounded-md border-0 bg-white/10 py-2 pl-3 pr-10 text-white ring-1 ring-inset ring-white/30 focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6 disabled:cursor-not-allowed disabled:bg-white/5 disabled:text-gray-400"
+                >
+                  <option value="">選択してください</option>
+                  {goalCountries.map((country) => (
+                    <option key={country.id} value={country.id}>
+                      {country.name}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
           </div>
