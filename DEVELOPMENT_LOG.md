@@ -4,6 +4,40 @@
 
 **担当者:** Jules (AI Agent)
 
+**タスク:** ステップ31 国選択UIの削除と再構築（Apple風デザイン）
+
+**実装概要:**
+
+- **課題認識:** 既存の国選択コンポーネント (`CountrySelector.tsx`, `AnswerForm.tsx`) が機能不全であったため、UIを全面的に刷新することを目的とした。ロジックの接続はスコープ外とし、UIコンポーネントの作成に集中した。
+
+- **タスクA: 関連コンポーネントの削除:**
+  - `src/components/features/game/AnswerForm.tsx` を削除した。(`CountrySelector.tsx` は以前のタスクで削除済みであったため、対象外)。
+
+- **タスクB: 新規UIコンポーネント `CountryModal.tsx` の作成:**
+  - `src/components/features/shared/CountryModal.tsx` を新規に作成。
+  - AppleのVisionOSを意識した、ガラスモーフィズム効果を持つ全画面モーダルとして実装。
+  - `framer-motion` を利用して、スムーズな表示・非表示アニメーションを実装した。UI確認のため、ダミーの国リストをグリッドレイアウトで表示するスタブを作成した。
+
+- **タスクC: トップページ (`page.tsx`) への適用:**
+  - `src/app/(main)/(withFooter)/page.tsx` から古い国選択ロジックを削除。
+  - 新しい `CountryModal` を開くための「スタート国を選択」「ゴール国を選択」ボタンを設置し、`useState` でモーダルの開閉状態を管理するように修正した。
+
+- **タスクD: ゲームページ (`GamePanel.tsx`) への適用:**
+  - `src/components/features/game/GamePanel.tsx` から古い `AnswerForm` の呼び出しを削除。
+  - 「国を回答する」ボタンを設置し、クリックすると `CountryModal` が開くように `useState` で状態を管理するように修正した。
+
+- **タスクE: `GEMINI.md` の更新:**
+  - 設計書 `GEMINI.md` のディレクトリ構成から `AnswerForm.tsx` と `CountrySelector.tsx` を削除し、新しく `CountryModal.tsx` を追加した。
+
+**課題・申し送り:**
+
+- **ビルドエラーの修正:** `npm run build` を実行した際、`lucide-react` などの依存関係が不足していたためエラーが発生した。`npm install` を実行することで解決した。
+- **検証:** `npm run build` が正常に完了することを確認。また、Playwright を用いたスクリーンショット検証により、トップページとゲームページの両方で新しいモーダルUIが意図通りに表示されていることを確認済み。今回のタスクはUIスタブの実装のみであり、次ステップ以降で `useCountryData` などのデータロジックとの接続が必要となる。
+
+## 2025-11-09 (Step 31)
+
+**担当者:** Jules (AI Agent)
+
 **タスク:** ステップ31 国選択機能の削除と再実装（シンプル化）
 
 **実装概要:**

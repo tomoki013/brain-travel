@@ -62,7 +62,8 @@ src/
 │   │   ├── game/
 │   │   │   ├── WorldMap.tsx        # ★ d3.js 地図
 │   │   │   ├── GamePanel.tsx       # ★ 右側パネル
-│   │   │   └── AnswerForm.tsx      # ★ ゲーム中の回答フォーム
+│   │   ├── shared/
+│   │   │   └── CountryModal.tsx    # ★ 国選択モーダル
 │   │   └── result/                 # (結果表示関連コンポーネント)
 │   ├── layout/                     # ページレイアウト用コンポーネント
 │   │   └── Header.tsx
