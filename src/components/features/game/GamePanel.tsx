@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { MapPin, MapPinOff, FlagOff } from "lucide-react";
 import { CountryImage } from "./CountryImage";
 import { CountryModal } from "@/components/features/shared/CountryModal";
 import type { GameStatus, Country } from "@/types";
@@ -88,7 +89,7 @@ export const GamePanel = ({
           </div>
 
           {/* Scrollable History */}
-          <div className="flex-1 space-y-2 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
+          <div className="flex-1 min-h-0 space-y-2 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
             <h2 className="text-base font-bold uppercase tracking-widest text-white/60 mb-2">
               移動履歴
             </h2>
@@ -120,20 +121,27 @@ export const GamePanel = ({
             >
               国を回答する
             </button>
-            <div className="grid grid-cols-2 gap-3">
-              <button
+            <div className="grid grid-cols-3 gap-3">
+              <div />
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={() => setIsMapVisible(!isMapVisible)}
-                className="w-full rounded-md bg-white/20 px-4 py-2 text-white transition-colors hover:bg-white/30"
+                className="flex justify-center items-center rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 aspect-square"
+                aria-label={isMapVisible ? "地図を隠す" : "地図を表示"}
               >
-                {isMapVisible ? "地図を隠す" : "地図を表示"}
-              </button>
-              <button
+                {isMapVisible ? <MapPinOff size={20} /> : <MapPin size={20} />}
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={giveUp}
                 disabled={gameStatus !== "playing"}
-                className="w-full rounded-md bg-red-900/50 px-4 py-2 text-red-200 transition-colors hover:bg-red-900/70 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+                className="flex justify-center items-center rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+                aria-label="ギブアップ"
               >
-                ギブアップ
-              </button>
+                <FlagOff size={20} />
+              </motion.button>
             </div>
           </div>
         </div>

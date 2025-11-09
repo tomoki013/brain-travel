@@ -114,12 +114,14 @@ export default function TopPage() {
 
         {/* Random Start */}
         <motion.div className="mt-10" variants={itemVariants}>
-          <button
+          <motion.button
             onClick={handleStartRandom}
-            className="rounded-md bg-indigo-500 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-indigo-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
+            className="rounded-md bg-blue-600 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-600"
           >
             ランダムで旅を始める
-          </button>
+          </motion.button>
         </motion.div>
 
         {/* Divider */}
@@ -138,28 +140,34 @@ export default function TopPage() {
             自分で国を選んで旅する
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <button
+            <motion.button
               onClick={() => setIsStartModalOpen(true)}
-              className="rounded-md bg-white/10 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-white/20"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="rounded-md bg-neutral-800/80 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-neutral-700/90"
             >
               {startCountry ? startCountry.name : "スタート国を選択"}
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => setIsGoalModalOpen(true)}
               disabled={!startCountry}
-              className="rounded-md bg-white/10 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-white/20 disabled:cursor-not-allowed disabled:bg-white/5 disabled:text-gray-400"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="rounded-md bg-neutral-800/80 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-neutral-700/90 disabled:cursor-not-allowed disabled:bg-neutral-800/50 disabled:text-gray-400"
             >
               {goalCountry ? goalCountry.name : "ゴール国を選択"}
-            </button>
+            </motion.button>
           </div>
           <div className="mt-8">
-            <button
+            <motion.button
               onClick={handleStartGame}
               disabled={!startCountry || !goalCountry}
-              className="w-full rounded-md bg-green-600 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-green-500 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full rounded-md bg-white px-4 py-3 text-base font-semibold text-black shadow-lg transition hover:bg-gray-200 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
             >
               ゲーム開始
-            </button>
+            </motion.button>
           </div>
         </motion.div>
       </motion.div>
