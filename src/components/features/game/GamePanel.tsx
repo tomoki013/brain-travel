@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CountryImage } from "./CountryImage";
 import { CountryModal } from "@/components/features/shared/CountryModal";
-import type { GameStatus } from "@/types";
+import type { GameStatus, Country } from "@/types";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 
 type GamePanelProps = {
@@ -20,7 +20,7 @@ type GamePanelProps = {
   isMapVisible: boolean;
   setIsMapVisible: (value: boolean) => void;
   setSelectedCountryId: (countryId: string | null) => void;
-  getNeighborCountries: () => any[];
+  getNeighborCountries: () => Country[];
 };
 
 export const GamePanel = ({
@@ -115,7 +115,8 @@ export const GamePanel = ({
             )}
             <button
               onClick={() => setIsAnswerModalOpen(true)}
-              className="w-full rounded-md bg-indigo-500 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-indigo-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+              disabled={gameStatus !== "playing"}
+              className="w-full rounded-md bg-indigo-500 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-indigo-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
             >
               国を回答する
             </button>
@@ -141,6 +142,8 @@ export const GamePanel = ({
         isOpen={isAnswerModalOpen}
         onClose={() => setIsAnswerModalOpen(false)}
         title="次の国は？"
+        availableCountries={getNeighborCountries()}
+        onSelect={(country) => submitAnswer(country.id)}
       />
     </>
   );
