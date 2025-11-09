@@ -31,13 +31,16 @@ export const useGameLogic = () => {
     [countryMap]
   );
 
-  const initializeGame = useCallback((start: string, goal: string) => {
-    setStartCountry(start);
-    setGoalCountry(goal);
-    setCurrentCountry(start);
-    setRouteHistory([start]);
-    setGameStatus("playing");
-  }, []);
+  const initializeGame = useCallback(
+    (start: string, goal: string) => {
+      setStartCountry(start);
+      setGoalCountry(goal);
+      setCurrentCountry(start);
+      setRouteHistory([start]);
+      setGameStatus("playing");
+    },
+    [getCountryById]
+  );
 
   const submitAnswer = useCallback(
     (answerCountry: string) => {
@@ -64,7 +67,14 @@ export const useGameLogic = () => {
         setError("不正解です。その国へは陸路で移動できません。");
       }
     },
-    [gameStatus, currentCountry, routeHistory, goalCountry, router]
+    [
+      gameStatus,
+      currentCountry,
+      routeHistory,
+      goalCountry,
+      router,
+      getCountryById,
+    ]
   );
 
   const getNeighborCountries = useCallback((): Country[] => {
@@ -75,14 +85,14 @@ export const useGameLogic = () => {
       .filter((c): c is Country => c !== undefined);
   }, [currentCountry, getCountryById]);
 
-  const giveUp = () => {
+  const giveUp = useCallback(() => {
     setGameStatus("given_up");
     router.push(`/result?route=${routeHistory.join(",")}&status=given_up`);
-  };
+  }, [router, routeHistory]);
 
-  const setSelectedCountryId = (countryId: string | null) => {
+  const setSelectedCountryId = useCallback((countryId: string | null) => {
     // This could be used for map highlighting in the future
-  };
+  }, []);
 
   return {
     startCountry,

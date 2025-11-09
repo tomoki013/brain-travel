@@ -1,5 +1,26 @@
 # 開発ログ
 
+## 2025-11-09 (Step 33)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ33 useGameLogic の安定化（useCallback の導入）
+
+**実装概要:**
+
+- **課題認識:** ゲーム開始時に `game/page.tsx` の `useEffect` が、`useGameLogic` フックのデータ準備完了を待たずに実行されてしまい、ゲームが "failed" 状態で開始できない重大なバグが存在した。
+- **タスクA: useGameLogic.ts の関数を useCallback でメモ化:**
+  - `useGameLogic.ts` でエクスポートされている `initializeGame`, `getNeighborCountries`, `submitAnswer`, `giveUp`, `setSelectedCountryId` を含むすべての関数を `useCallback` でラップし、メモ化した。
+  - ユーザーの指示とコードレビューのフィードバックに基づき、各関数の依存配列（`getCountryById` など）を正確に設定し、不必要な再生成を防ぐようにした。
+- **タスクB: game/page.tsx の useEffect 依存配列を修正:**
+  - `src/app/(main)/game/page.tsx` のゲーム初期化を行う `useEffect` フックの依存配列を、`gameLogic` オブジェクト全体から、メモ化された `gameLogic.initializeGame` 関数に修正した。
+  - これにより、`initializeGame` 関数が安定し、意図したタイミング（初回レンダリング時）でのみゲームが初期化されるようになり、バグを根本的に解決した。
+
+**課題・申し送り:**
+
+- **コードレビューの重要性:** 当初の実装では `useCallback` の適用が一部の関数で漏れており、コードレビューでその不備を指摘された。フィードバックを受けて修正することで、バグを確実に修正できた。
+- **フックの依存配列:** Reactフック、特に `useEffect` と `useCallback` の依存配列は、アプリケーションのパフォーマンスと安定性に直接的な影響を及ぼす。カスタムフックから返される関数を依存配列に含める場合は、その関数自体がメモ化されていることが不可欠であるという重要な知見を得た。
+
 ## 2025-11-09 (Step 32)
 
 **担当者:** Jules (AI Agent)

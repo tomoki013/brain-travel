@@ -27,7 +27,7 @@ function GameContent() {
     } else {
       router.push("/");
     }
-  }, [startCountry, goalCountry, router, gameLogic]);
+  }, [startCountry, goalCountry, router, gameLogic.initializeGame]);
 
   useEffect(() => {
     if (gameLogic.currentCountry) {
