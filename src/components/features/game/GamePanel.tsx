@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { CountryImage } from "./CountryImage";
-import { CountrySelector } from "@/components/features/shared/CountrySelector";
+import AnswerForm from "./AnswerForm";
 import type { GameStatus } from "@/types";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 
@@ -110,16 +110,10 @@ export const GamePanel = ({
               {error}
             </div>
           )}
-          <CountrySelector
-            id="game-country-selector"
-            key={routeHistory.length}
-            value={null}
-            onChange={(a3Code) => submitAnswer(a3Code)}
+          <AnswerForm
             onSubmit={submitAnswer}
-            onSuggestionSelect={setSelectedCountryId}
-            availableCountries={getNeighborCountries()}
             onError={setError}
-            disabled={gameStatus !== "playing"}
+            onSuggestionSelect={setSelectedCountryId}
           />
           <div className="grid grid-cols-2 gap-3">
             <button
