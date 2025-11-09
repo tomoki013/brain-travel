@@ -55,7 +55,7 @@ export const CountryModal = ({
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 50, opacity: 0 }}
             transition={{ type: "spring", damping: 30, stiffness: 500 }}
-            className="relative flex h-full max-h-[80vh] w-full max-w-4xl flex-col rounded-2xl bg-gray-800/50 shadow-2xl"
+            className="relative flex h-full max-h-[80vh] w-full max-w-4xl flex-col rounded-2xl bg-neutral-900/80 border border-neutral-700 backdrop-blur-lg shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* 1. ヘッダー */}
@@ -64,6 +64,7 @@ export const CountryModal = ({
               <button
                 onClick={onClose}
                 className="text-gray-400 hover:text-white"
+                aria-label="Close"
               >
                 <X size={24} />
               </button>
@@ -76,7 +77,7 @@ export const CountryModal = ({
                 placeholder="国名を検索..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border-none bg-white/10 p-3 text-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg border-none bg-neutral-800/70 p-3 text-lg text-white placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-white"
               />
             </div>
 
@@ -88,7 +89,7 @@ export const CountryModal = ({
                     key={country.id}
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="rounded-lg bg-white/5 p-3 text-center text-white transition-colors hover:bg-white/10"
+                    className="bg-neutral-700/60 rounded-xl p-3 text-center text-white transition-colors hover:bg-neutral-700"
                     onClick={() => handleSelect(country)}
                   >
                     {country.name}
