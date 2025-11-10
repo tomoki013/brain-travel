@@ -8,15 +8,9 @@ import { ResultSlideshow } from "@/components/features/result/ResultSlideshow";
 import { CountryImage } from "@/components/features/game/CountryImage";
 import borderData from "@/lib/data/borders.json";
 import { Button } from "@/components/ui/Button";
-import {
-  Share2,
-  Link,
-  Facebook,
-  Copy,
-  X,
-  MessageSquare,
-  Check,
-} from "lucide-react";
+import { Share2, Copy, Check } from "lucide-react";
+import { FaFacebook, FaLine } from "react-icons/fa";
+import { FaX } from "react-icons/fa6";
 
 export const ResultPageClient = () => {
   const [isCopied, setIsCopied] = useState(false);
@@ -63,7 +57,7 @@ export const ResultPageClient = () => {
   };
 
   const handleShare = (
-    platform: "x" | "line" | "facebook" | "copy" | "webshare",
+    platform: "x" | "line" | "facebook" | "copy" | "webshare"
   ) => {
     const shareUrl = window.location.href;
     const shareText = isGivenUp
@@ -76,19 +70,19 @@ export const ResultPageClient = () => {
       case "x":
         window.open(
           `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
-          "_blank",
+          "_blank"
         );
         break;
       case "line":
         window.open(
           `https://line.me/R/msg/text/?${encodedText}%0A${encodedUrl}`,
-          "_blank",
+          "_blank"
         );
         break;
       case "facebook":
         window.open(
           `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
-          "_blank",
+          "_blank"
         );
         break;
       case "copy":
@@ -110,8 +104,6 @@ export const ResultPageClient = () => {
         break;
     }
   };
-
-  const MotionButton = motion.button;
 
   return (
     <div className="relative flex min-h-dvh flex-col items-center justify-center p-4 sm:p-8 overflow-hidden text-white">
@@ -157,6 +149,50 @@ export const ResultPageClient = () => {
           <ResultSlideshow routeHistory={routeHistory} />
         </div>
 
+        {/* Share Buttons */}
+        <div className="mt-12 border-t border-gray-600 pt-8">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-100">
+            旅の結果をシェアする
+          </h2>
+          <div className="flex flex-wrap justify-center items-center gap-4">
+            <Button
+              variant="social-x"
+              size="icon"
+              onClick={() => handleShare("x")}
+            >
+              <FaX />
+            </Button>
+            <Button
+              variant="social-line"
+              size="icon"
+              onClick={() => handleShare("line")}
+            >
+              <FaLine />
+            </Button>
+            <Button
+              variant="social-facebook"
+              size="icon"
+              onClick={() => handleShare("facebook")}
+            >
+              <FaFacebook />
+            </Button>
+            <Button
+              variant={isCopied ? "social-x" : "social-copy"}
+              size="icon"
+              onClick={() => handleShare("copy")}
+              disabled={isCopied}
+            >
+              {isCopied ? <Check /> : <Copy />}
+            </Button>
+            <Button
+              variant="glass"
+              size="icon"
+              onClick={() => handleShare("webshare")}
+            >
+              <Share2 />
+            </Button>
+          </div>
+        </div>
 
         {/* Action Buttons */}
         <div className="mt-12 border-t border-gray-600 pt-8">
@@ -184,51 +220,6 @@ export const ResultPageClient = () => {
             </Button>
             <Button onClick={handleGoTop} variant="glass" size="lg">
               トップへ
-            </Button>
-          </div>
-        </div>
-
-        {/* Share Buttons */}
-        <div className="mt-12 border-t border-gray-600 pt-8">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-100">
-            旅の結果をシェアする
-          </h2>
-          <div className="flex flex-wrap justify-center items-center gap-4">
-            <Button
-              variant="social-x"
-              size="icon"
-              onClick={() => handleShare("x")}
-            >
-              <X />
-            </Button>
-            <Button
-              variant="social-line"
-              size="icon"
-              onClick={() => handleShare("line")}
-            >
-              <MessageSquare />
-            </Button>
-            <Button
-              variant="social-facebook"
-              size="icon"
-              onClick={() => handleShare("facebook")}
-            >
-              <Facebook />
-            </Button>
-            <Button
-              variant={isCopied ? "social-x" : "social-copy"}
-              size="icon"
-              onClick={() => handleShare("copy")}
-              disabled={isCopied}
-            >
-              {isCopied ? <Check /> : <Copy />}
-            </Button>
-            <Button
-              variant="glass"
-              size="icon"
-              onClick={() => handleShare("webshare")}
-            >
-              <Share2 />
             </Button>
           </div>
         </div>

@@ -40,8 +40,9 @@ const buttonVariants = tv({
 });
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof MotionProps>,
+    VariantProps<typeof buttonVariants>,
+    MotionProps {
   children: ReactNode;
 }
 
