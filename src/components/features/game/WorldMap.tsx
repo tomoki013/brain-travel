@@ -33,7 +33,7 @@ export const WorldMap = ({
         if (worldAtlas) {
           const geoJson = feature(
             worldAtlas,
-            worldAtlas.objects.countries
+            worldAtlas.objects.countries,
           ) as FeatureCollection;
           setCountries(geoJson);
         }
@@ -91,11 +91,14 @@ export const WorldMap = ({
       g.selectAll("path").attr("d", path as any);
     });
 
-    const zoom = d3.zoom<SVGSVGElement, unknown>().scaleExtent([1, 10]).on("zoom", (event) => {
-      projection.scale(initialScale * event.transform.k);
-      path.projection(projection);
-      g.selectAll("path").attr("d", path as any);
-    });
+    const zoom = d3
+      .zoom<SVGSVGElement, unknown>()
+      .scaleExtent([1, 10])
+      .on("zoom", (event) => {
+        projection.scale(initialScale * event.transform.k);
+        path.projection(projection);
+        g.selectAll("path").attr("d", path as any);
+      });
 
     svg.call(drag).call(zoom);
   }, [countries]);
@@ -108,20 +111,39 @@ export const WorldMap = ({
     const startNumericId = a3ToNumericId[startCountryId];
     const goalNumericId = a3ToNumericId[goalCountryId];
     const currentNumericId = a3ToNumericId[currentCountryId];
-    const selectedNumericId = selectedCountryId ? a3ToNumericId[selectedCountryId] : null;
-    const routeHistoryNumericIds = routeHistoryIds.map((id) => a3ToNumericId[id]);
+    const selectedNumericId = selectedCountryId
+      ? a3ToNumericId[selectedCountryId]
+      : null;
+    const routeHistoryNumericIds = routeHistoryIds.map(
+      (id) => a3ToNumericId[id],
+    );
 
-    svg.select("g > .countries").selectAll("path").attr("class", (d: any) => {
-      const countryNumericId = d.id;
-      const baseClasses = "stroke-black stroke-[0.5px] transition-colors duration-300";
-      if (countryNumericId === goalNumericId) return `fill-rose-500 ${baseClasses}`;
-      if (countryNumericId === startNumericId) return `fill-emerald-400 ${baseClasses}`;
-      if (countryNumericId === currentNumericId) return `fill-amber-400 ${baseClasses}`;
-      if (countryNumericId === selectedNumericId) return `fill-sky-400 ${baseClasses}`;
-      if (routeHistoryNumericIds.includes(countryNumericId as string)) return `fill-emerald-400/50 ${baseClasses}`;
-      return `fill-gray-300 hover:fill-gray-400 ${baseClasses}`;
-    });
-  }, [startCountryId, goalCountryId, currentCountryId, routeHistoryIds, selectedCountryId]);
+    svg
+      .select("g > .countries")
+      .selectAll("path")
+      .attr("class", (d: any) => {
+        const countryNumericId = d.id;
+        const baseClasses =
+          "stroke-black stroke-[0.5px] transition-colors duration-300";
+        if (countryNumericId === goalNumericId)
+          return `fill-rose-500 ${baseClasses}`;
+        if (countryNumericId === startNumericId)
+          return `fill-emerald-400 ${baseClasses}`;
+        if (countryNumericId === currentNumericId)
+          return `fill-amber-400 ${baseClasses}`;
+        if (countryNumericId === selectedNumericId)
+          return `fill-sky-400 ${baseClasses}`;
+        if (routeHistoryNumericIds.includes(countryNumericId as string))
+          return `fill-emerald-400/50 ${baseClasses}`;
+        return `fill-gray-300 hover:fill-gray-400 ${baseClasses}`;
+      });
+  }, [
+    startCountryId,
+    goalCountryId,
+    currentCountryId,
+    routeHistoryIds,
+    selectedCountryId,
+  ]);
 
   // Handle initial rotation (start/goal)
   useEffect(() => {
@@ -146,7 +168,12 @@ export const WorldMap = ({
 
   // Handle animated rotation (current country)
   useEffect(() => {
-    if (!countries || !projectionRef.current || currentCountryId === startCountryId) return;
+    if (
+      !countries ||
+      !projectionRef.current ||
+      currentCountryId === startCountryId
+    )
+      return;
 
     const projection = projectionRef.current;
     const countryFeature = getCountryFeature(currentCountryId);
@@ -159,7 +186,10 @@ export const WorldMap = ({
       d3.transition()
         .duration(1000)
         .tween("rotate", () => {
-          const r = d3.interpolate(projection.rotate(), [-center[0], -center[1]]);
+          const r = d3.interpolate(projection.rotate(), [
+            -center[0],
+            -center[1],
+          ]);
           return (t) => {
             projection.rotate(r(t) as [number, number]);
             svg.selectAll("g path").attr("d", path as any);

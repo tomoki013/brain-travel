@@ -1,12 +1,11 @@
-
-'use client';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Map, Skull } from 'lucide-react';
-import { Country } from '@/types';
-import { CountryImage } from '@/components/features/game/CountryImage';
-import { CountryModal } from '@/components/features/shared/CountryModal';
-import { useGameLogic } from '@/lib/hooks/useGameLogic';
+"use client";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Map, Skull } from "lucide-react";
+import { Country } from "@/types";
+import { CountryImage } from "@/components/features/game/CountryImage";
+import { CountryModal } from "@/components/features/shared/CountryModal";
+import { useGameLogic } from "@/lib/hooks/useGameLogic";
 
 type Props = {
   gameLogic: ReturnType<typeof useGameLogic>;
@@ -26,17 +25,25 @@ export function GamePanel({ gameLogic }: Props) {
   } = gameLogic;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  if (!currentCountry) {
+    return (
+      <div className="flex h-full flex-col items-center justify-center overflow-y-auto bg-black/20 p-4 text-white backdrop-blur-sm">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="flex h-full flex-col overflow-y-auto bg-black/20 p-4 backdrop-blur-sm">
         <div className="w-full flex-shrink-0">
-          <CountryImage countryId={currentCountry.id} />
+          <CountryImage countryId={currentCountry} />
         </div>
 
         <div className="flex flex-1 flex-col justify-between pt-4">
           <div className="flex-1">
             <motion.div
-              key={currentCountry.id}
+              key={currentCountry}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
@@ -44,7 +51,7 @@ export function GamePanel({ gameLogic }: Props) {
             >
               <p className="text-lg text-neutral-300">現在の国</p>
               <p className="text-4xl font-bold text-white">
-                {getCountryName(currentCountry.id)}
+                {getCountryName(currentCountry)}
               </p>
             </motion.div>
 
@@ -53,9 +60,9 @@ export function GamePanel({ gameLogic }: Props) {
                 旅のルート
               </h2>
               <div className="flex items-center justify-center space-x-2 text-white">
-                <p className="font-semibold">{startCountry?.name || '???'}</p>
+                <p className="font-semibold">{getCountryName(startCountry)}</p>
                 <ArrowRight className="h-5 w-5 text-yellow-400" />
-                <p className="font-semibold">{goalCountry?.name || '???'}</p>
+                <p className="font-semibold">{getCountryName(goalCountry)}</p>
               </div>
             </div>
           </div>
@@ -72,7 +79,7 @@ export function GamePanel({ gameLogic }: Props) {
             </div>
             <div className="grid grid-cols-2 gap-2">
               <button
-                onClick={() => toggleMapVisibility()}
+                onClick={() => gameLogic.toggleMapVisibility()}
                 className="flex items-center justify-center gap-2 rounded-lg bg-white/10 p-2 text-sm text-white transition-colors hover:bg-white/20"
               >
                 <Map size={16} />

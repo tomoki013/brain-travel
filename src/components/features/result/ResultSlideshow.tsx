@@ -22,7 +22,8 @@ export const ResultSlideshow = ({ routeHistory }: ResultSlideshowProps) => {
 
   const goToPrev = () => {
     setIndex(
-      (prevIndex) => (prevIndex - 1 + routeHistory.length) % routeHistory.length
+      (prevIndex) =>
+        (prevIndex - 1 + routeHistory.length) % routeHistory.length,
     );
   };
 

@@ -24,9 +24,7 @@ export const ResultPageClient = () => {
     routeHistory.length > 0 ? routeHistory[routeHistory.length - 1] : "";
 
   const countryIds = Object.keys(borderData);
-  const bgCountryId = isGivenUp
-    ? startCountry
-    : goalCountry || startCountry;
+  const bgCountryId = isGivenUp ? startCountry : goalCountry || startCountry;
 
   const handleRetrySame = () => {
     // startCountry and goalCountry are derived from the routeHistory query param
@@ -72,7 +70,9 @@ export const ResultPageClient = () => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
           className={`text-5xl sm:text-7xl font-extrabold mb-4 drop-shadow-lg ${
-            isGivenUp ? "text-gray-300" : "text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500"
+            isGivenUp
+              ? "text-gray-300"
+              : "text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500"
           }`}
         >
           {isGivenUp ? "GIVE UP" : "CLEAR!"}

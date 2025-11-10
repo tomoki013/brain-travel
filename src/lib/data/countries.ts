@@ -8,7 +8,9 @@ import ja from "i18n-iso-countries/langs/ja.json";
 i18n.registerLocale(ja);
 
 // Create a mapping from A3 code to Japanese name
-export const countryNameJa: Record<string, string> = Object.keys(borders).reduce(
+export const countryNameJa: Record<string, string> = Object.keys(
+  borders,
+).reduce(
   (acc, a3) => {
     // The library uses uppercase Alpha-3 codes.
     const name = i18n.getName(a3, "ja");
@@ -20,7 +22,7 @@ export const countryNameJa: Record<string, string> = Object.keys(borders).reduce
     }
     return acc;
   },
-  {} as Record<string, string>
+  {} as Record<string, string>,
 );
 
 // Dynamically generate the list of countries from borders.json

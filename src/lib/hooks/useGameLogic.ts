@@ -11,7 +11,7 @@ const countryBorders = borders as Record<string, string[]>;
 
 export const useGameLogic = () => {
   const router = useRouter();
-  const { countries } = useCountryData();
+  const { countries, getCountryName } = useCountryData();
 
   const [startCountry, setStartCountry] = useState<string | null>(null);
   const [goalCountry, setGoalCountry] = useState<string | null>(null);
@@ -28,7 +28,7 @@ export const useGameLogic = () => {
     (id: string): Country | undefined => {
       return countryMap.get(id);
     },
-    [countryMap]
+    [countryMap],
   );
 
   const initializeGame = useCallback(
@@ -39,7 +39,13 @@ export const useGameLogic = () => {
       setRouteHistory([start]);
       setGameStatus("playing");
     },
-    [getCountryById]
+    [
+      setStartCountry,
+      setGoalCountry,
+      setCurrentCountry,
+      setRouteHistory,
+      setGameStatus,
+    ],
   );
 
   const submitAnswer = useCallback(
@@ -74,7 +80,7 @@ export const useGameLogic = () => {
       goalCountry,
       router,
       getCountryById,
-    ]
+    ],
   );
 
   const getNeighborCountries = useCallback((): Country[] => {
@@ -107,5 +113,6 @@ export const useGameLogic = () => {
     giveUp,
     getNeighborCountries,
     setSelectedCountryId,
+    getCountryName,
   };
 };
