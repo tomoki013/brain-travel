@@ -1,7 +1,6 @@
 "use client";
 
 import { useCountryData } from "@/lib/hooks/useCountryData";
-import type { Country } from "@/types";
 
 type ItineraryDisplayProps = {
   routeHistory: string[];
@@ -20,7 +19,7 @@ export const ItineraryDisplay = ({
   const goal = getCountryName(goalCountry);
 
   return (
-    <div className="absolute top-4 left-4 z-10 w-80 rounded-lg bg-black/50 p-4 text-white shadow-lg backdrop-blur-md">
+    <div className="absolute top-4 left-4 z-11 w-80 rounded-lg bg-black/50 p-4 text-white shadow-lg backdrop-blur-md">
       <div className="mb-3">
         <h2 className="text-sm font-bold uppercase tracking-widest text-white/60">
           旅のルート
