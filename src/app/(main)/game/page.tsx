@@ -16,7 +16,7 @@ function GameContent() {
   const gameLogic = useGameLogic();
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(
-    null
+    null,
   );
 
   const startCountry = searchParams.get("start");

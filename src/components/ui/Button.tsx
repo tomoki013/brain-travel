@@ -1,36 +1,41 @@
-'use client';
+"use client";
 
-import { motion, type MotionProps } from 'framer-motion';
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { tv, type VariantProps } from 'tailwind-variants';
-import { twMerge } from 'tailwind-merge';
+import { motion, type MotionProps } from "framer-motion";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { tv, type VariantProps } from "tailwind-variants";
+import { twMerge } from "tailwind-merge";
 
 const buttonVariants = tv({
-  base: 'inline-flex items-center justify-center rounded-xl px-5 py-3 text-base font-semibold tracking-wide transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-neutral-950 disabled:pointer-events-none disabled:opacity-40',
+  base: "inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-bold tracking-wider uppercase transition-all duration-300 ease-in-out focus:outline-none focus:ring-4 focus:ring-opacity-50 disabled:pointer-events-none disabled:opacity-40 transform hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40",
   variants: {
     variant: {
       primary:
-        'bg-white text-black hover:bg-neutral-200 focus:ring-neutral-300',
+        "bg-gradient-to-r from-teal-400 to-cyan-500 text-white shadow-lg shadow-cyan-500/30 focus:ring-cyan-400",
       secondary:
-        'bg-neutral-800/80 text-neutral-100 hover:bg-neutral-700/80 focus:ring-neutral-500 border border-neutral-700/80 backdrop-blur-sm',
-      outline:
-        'border border-neutral-700 bg-transparent text-neutral-100 hover:bg-neutral-800 focus:ring-neutral-600',
-      ghost:
-        'text-neutral-100 hover:bg-neutral-800 hover:text-white focus:ring-neutral-700',
+        "bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-pink-500/30 focus:ring-pink-400",
       destructive:
-        'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500',
-      icon: 'rounded-full bg-white/10 text-neutral-100 hover:bg-white/20 focus:ring-white/30 backdrop-blur-md',
+        "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-lg shadow-red-500/30 focus:ring-red-400",
+      glass:
+        "bg-white/10 text-white border-2 border-white/20 backdrop-blur-xl shadow-lg shadow-black/20 hover:bg-white/20 focus:ring-white/30",
+      "social-x":
+        "bg-black text-white hover:bg-neutral-800 focus:ring-neutral-600",
+      "social-line":
+        "bg-[#06C755] text-white hover:bg-[#05a546] focus:ring-[#06C755]",
+      "social-facebook":
+        "bg-[#1877F2] text-white hover:bg-[#166bda] focus:ring-[#1877F2]",
+      "social-copy":
+        "bg-neutral-600 text-white hover:bg-neutral-500 focus:ring-neutral-400",
     },
     size: {
-      default: 'h-12 py-2 px-6',
-      sm: 'h-10 rounded-lg px-4',
-      lg: 'h-14 rounded-2xl px-10 text-lg',
-      icon: 'h-12 w-12',
+      default: "h-12 py-2 px-8",
+      sm: "h-10 rounded-full px-6 text-sm",
+      lg: "h-14 rounded-full px-12 text-lg",
+      icon: "h-14 w-14",
     },
   },
   defaultVariants: {
-    variant: 'primary',
-    size: 'default',
+    variant: "primary",
+    size: "default",
   },
 });
 
@@ -50,7 +55,7 @@ const Button = ({
   const motionProps: MotionProps = {
     whileHover: { scale: 1.03 },
     whileTap: { scale: 0.98 },
-    transition: { type: 'spring', stiffness: 400, damping: 17 },
+    transition: { type: "spring", stiffness: 400, damping: 17 },
   };
 
   return (
@@ -64,6 +69,6 @@ const Button = ({
   );
 };
 
-Button.displayName = 'Button';
+Button.displayName = "Button";
 
 export { Button, buttonVariants };
