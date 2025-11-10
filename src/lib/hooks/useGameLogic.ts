@@ -114,5 +114,6 @@ export const useGameLogic = () => {
     getNeighborCountries,
     setSelectedCountryId,
     getCountryName,
+    countries,
   };
 };

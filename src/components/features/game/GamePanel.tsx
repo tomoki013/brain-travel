@@ -18,9 +18,9 @@ export function GamePanel({ gameLogic }: Props) {
     goalCountry,
     error,
     getCountryName,
-    getNeighborCountries,
     submitAnswer,
     giveUp,
+    countries,
     toggleMapVisibility,
   } = gameLogic;
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -103,7 +103,7 @@ export function GamePanel({ gameLogic }: Props) {
           submitAnswer(country.id);
           setIsModalOpen(false);
         }}
-        availableCountries={getNeighborCountries()}
+        availableCountries={countries}
         title="次の国を選択"
       />
     </>

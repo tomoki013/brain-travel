@@ -33,7 +33,7 @@ export const ItineraryDisplay = ({
       </div>
       <div className="max-h-60 overflow-y-auto">
         <h3 className="mb-2 text-sm font-bold uppercase tracking-widest text-white/60">
-          移動履歴
+          旅程
         </h3>
         <ul className="space-y-2 text-sm">
           {routeHistory.map((countryId, index) => (
