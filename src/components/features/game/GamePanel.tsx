@@ -9,9 +9,10 @@ import { useGameLogic } from "@/lib/hooks/useGameLogic";
 
 type Props = {
   gameLogic: ReturnType<typeof useGameLogic>;
+  toggleMapVisibility: () => void;
 };
 
-export function GamePanel({ gameLogic }: Props) {
+export function GamePanel({ gameLogic, toggleMapVisibility }: Props) {
   const {
     currentCountry,
     startCountry,
@@ -21,7 +22,6 @@ export function GamePanel({ gameLogic }: Props) {
     submitAnswer,
     giveUp,
     countries,
-    toggleMapVisibility,
   } = gameLogic;
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -77,9 +77,10 @@ export function GamePanel({ gameLogic }: Props) {
                 国を回答する
               </button>
             </div>
+            </div>
             <div className="grid grid-cols-2 gap-2">
               <button
-                onClick={() => gameLogic.toggleMapVisibility()}
+                onClick={toggleMapVisibility}
                 className="flex items-center justify-center gap-2 rounded-lg bg-white/10 p-2 text-sm text-white transition-colors hover:bg-white/20"
               >
                 <Map size={16} />

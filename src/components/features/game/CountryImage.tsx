@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 
 type CountryImageProps = {
   countryId: string;
+  /** containerClassName must include `relative` for next/image fill to work correctly. */
   className?: string;
 };
 
@@ -39,7 +40,7 @@ export const CountryImage = ({ countryId, className }: CountryImageProps) => {
   }, [countryId, getImageUrl]);
 
   const containerClassName =
-    className || "h-60 w-full overflow-hidden rounded-lg shadow-md";
+    className || "relative h-60 w-full overflow-hidden rounded-lg shadow-md";
 
   return (
     <div className={containerClassName}>
