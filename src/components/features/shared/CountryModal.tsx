@@ -32,8 +32,7 @@ export const CountryModal = ({
     return availableCountries.filter(
       (country) =>
         country.name.toLowerCase().includes(lowercasedQuery) ||
-        country.id.toLowerCase().includes(lowercasedQuery) ||
-        country.a2Code.toLowerCase().includes(lowercasedQuery), // Also search by A2 code
+        country.id.toLowerCase().includes(lowercasedQuery)
     );
   }, [searchQuery, availableCountries]);
 
