@@ -25,14 +25,14 @@ const SitemapPage = () => {
 
   const pages = [
     {
-      name: "トップページ",
+      name: "ホーム",
       href: "/",
       icon: <Home className="h-8 w-8 text-sky-500" />,
       description: "旅の始まり。ここから新しい冒険が始まります。",
     },
     {
       name: "ゲームページ",
-      href: "#", // Not a direct link
+      href: "/game",
       icon: <Map className="h-8 w-8 text-green-500" />,
       description:
         "実際にGeo Linkerをプレイするメインページ。国を選択してゴールを目指します。",
@@ -71,7 +71,8 @@ const SitemapPage = () => {
 
         <div className="mt-16 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {pages.map((page) => (
-            <div
+            <Link
+              href={page.href}
               key={page.name}
               className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl"
             >
@@ -81,14 +82,12 @@ const SitemapPage = () => {
                   {page.href === "#" ? (
                     page.name
                   ) : (
-                    <Link href={page.href} className="hover:text-sky-600">
-                      {page.name}
-                    </Link>
+                    <p className="hover:text-sky-600">{page.name}</p>
                   )}
                 </h2>
               </div>
               <p className="mt-4 text-gray-600">{page.description}</p>
-            </div>
+            </Link>
           ))}
         </div>
 

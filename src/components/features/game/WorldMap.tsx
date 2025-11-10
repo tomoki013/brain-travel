@@ -2,7 +2,7 @@
 
 import * as d3 from "d3";
 import { feature } from "topojson-client";
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Feature, FeatureCollection } from "geojson";
 import type { Topology } from "topojson-specification";
 import { a3ToNumericId } from "@/lib/data/country-codes";
@@ -33,7 +33,7 @@ export const WorldMap = ({
         if (worldAtlas) {
           const geoJson = feature(
             worldAtlas,
-            worldAtlas.objects.countries,
+            worldAtlas.objects.countries
           ) as FeatureCollection;
           setCountries(geoJson);
         }
@@ -115,7 +115,7 @@ export const WorldMap = ({
       ? a3ToNumericId[selectedCountryId]
       : null;
     const routeHistoryNumericIds = routeHistoryIds.map(
-      (id) => a3ToNumericId[id],
+      (id) => a3ToNumericId[id]
     );
 
     svg
@@ -138,6 +138,7 @@ export const WorldMap = ({
         return `fill-gray-300 hover:fill-gray-400 ${baseClasses}`;
       });
   }, [
+    countries,
     startCountryId,
     goalCountryId,
     currentCountryId,

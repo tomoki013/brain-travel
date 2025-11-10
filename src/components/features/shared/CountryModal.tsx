@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 import type { Country } from "@/types";
@@ -21,6 +21,7 @@ export const CountryModal = ({
   availableCountries,
 }: CountryModalProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const filteredCountries = useMemo(() => {
     if (!searchQuery) {
@@ -30,14 +31,25 @@ export const CountryModal = ({
     return availableCountries.filter(
       (country) =>
         country.name.toLowerCase().includes(lowercasedQuery) ||
-        country.id.toLowerCase().includes(lowercasedQuery), // Also search by A3 code
+        country.id.toLowerCase().includes(lowercasedQuery) // Also search by A3 code
     );
   }, [searchQuery, availableCountries]);
 
   const handleSelect = (country: Country) => {
     onSelect(country);
     onClose();
+    setSearchQuery("");
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      // アニメーション後にフォーカスを当てるため少し遅延させる
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100); // 100msの遅延
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
@@ -59,7 +71,7 @@ export const CountryModal = ({
             onClick={(e) => e.stopPropagation()}
           >
             {/* 1. ヘッダー */}
-            <div className="flex-shrink-0 flex items-center justify-between border-b border-white/10 p-4">
+            <div className="shrink-0 flex items-center justify-between border-b border-white/10 p-4">
               <h2 className="text-xl font-bold text-white">{title}</h2>
               <button
                 onClick={onClose}
@@ -71,8 +83,9 @@ export const CountryModal = ({
             </div>
 
             {/* 2. 検索バー */}
-            <div className="flex-shrink-0 p-4">
+            <div className="shrink-0 p-4">
               <input
+                ref={inputRef}
                 type="text"
                 placeholder="国名を検索..."
                 value={searchQuery}

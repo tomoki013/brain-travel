@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 py-8 text-center">
         <div className="mb-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
           <Link href="/" className="transition-opacity hover:opacity-80">
-            トップ
+            ホーム
           </Link>
           <Link href="/terms" className="transition-opacity hover:opacity-80">
             利用規約
@@ -21,7 +21,7 @@ const Footer = () => {
             サイトマップ
           </Link>
           <a
-            href="https://github.com/tomoki013/brain-travel"
+            href="https://github.com/tomoki013/geo-linker"
             target="_blank"
             rel="noopener noreferrer"
             className="transition-opacity hover:opacity-80"
@@ -29,7 +29,13 @@ const Footer = () => {
             GitHub
           </a>
         </div>
-        <p className="text-xs text-white/60">&copy; 2025 Geo Linker</p>
+        <p className="text-xs text-white/60">
+          &copy; 2025
+          {new Date().getFullYear() > 2025
+            ? `-${new Date().getFullYear()} `
+            : " "}
+          Geo Linker. All Rights Reserved.
+        </p>
       </div>
     </footer>
   );

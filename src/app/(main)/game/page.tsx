@@ -12,11 +12,9 @@ function GameContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const gameLogic = useGameLogic();
-  //
-  //
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(
-    null,
+    null
   );
 
   const startCountry = searchParams.get("start");
@@ -95,6 +93,7 @@ function GameContent() {
           <GamePanel
             gameLogic={gameLogic}
             toggleMapVisibility={() => setIsMapVisible(!isMapVisible)}
+            isMapVisible={isMapVisible}
           />
         </div>
       </div>
