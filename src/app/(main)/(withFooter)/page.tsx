@@ -4,9 +4,11 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { Shuffle, MapPin, Play } from "lucide-react";
 import { CountryModal } from "@/components/features/shared/CountryModal";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import type { Country } from "@/types";
+import { Button } from "@/components/ui/Button";
 
 export default function TopPage() {
   const router = useRouter();
@@ -112,18 +114,22 @@ export default function TopPage() {
 
         {/* Random Start */}
         <motion.div className="mt-10" variants={itemVariants}>
-          <motion.button
+          <Button
             onClick={handleStartRandom}
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.98 }}
-            className="rounded-md bg-blue-600 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-blue-700 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+            variant="secondary"
+            size="lg"
+            className="text-lg"
           >
+            <Shuffle className="mr-3 h-5 w-5" />
             ランダムで旅を始める
-          </motion.button>
+          </Button>
         </motion.div>
 
         {/* Divider */}
-        <motion.div className="my-8 flex items-center" variants={itemVariants}>
+        <motion.div
+          className="my-8 flex items-center"
+          variants={itemVariants}
+        >
           <div className="grow border-t border-gray-400"></div>
           <span className="mx-4 text-gray-300">OR</span>
           <div className="grow border-t border-gray-400"></div>
@@ -131,41 +137,41 @@ export default function TopPage() {
 
         {/* Selected Start */}
         <motion.div
-          className="rounded-lg bg-white/10 p-8 shadow-xl backdrop-blur-md"
+          className="rounded-2xl border border-neutral-800 bg-neutral-900/80 p-8 shadow-xl backdrop-blur-md"
           variants={itemVariants}
         >
-          <h2 className="text-2xl font-semibold text-white mb-6">
+          <h2 className="mb-6 text-2xl font-semibold text-white">
             自分で国を選んで旅する
           </h2>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-            <motion.button
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Button
               onClick={() => setIsStartModalOpen(true)}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="rounded-md bg-neutral-800/80 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-neutral-700/90"
+              variant="outline"
+              className="justify-start"
             >
+              <MapPin className="mr-3 h-5 w-5 text-neutral-400" />
               {startCountry ? startCountry.name : "スタート国を選択"}
-            </motion.button>
-            <motion.button
+            </Button>
+            <Button
               onClick={() => setIsGoalModalOpen(true)}
               disabled={!startCountry}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="rounded-md bg-neutral-800/80 px-4 py-3 text-base font-semibold text-white shadow-lg transition hover:bg-neutral-700/90 disabled:cursor-not-allowed disabled:bg-neutral-800/50 disabled:text-gray-400"
+              variant="outline"
+              className="justify-start"
             >
+              <MapPin className="mr-3 h-5 w-5 text-neutral-400" />
               {goalCountry ? goalCountry.name : "ゴール国を選択"}
-            </motion.button>
+            </Button>
           </div>
-          <div className="mt-8">
-            <motion.button
+          <div className="mt-6">
+            <Button
               onClick={handleStartGame}
               disabled={!startCountry || !goalCountry}
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full rounded-md bg-white px-4 py-3 text-base font-semibold text-black shadow-lg transition hover:bg-gray-200 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-white disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+              className="w-full"
+              size="lg"
             >
+              <Play className="mr-3 h-5 w-5" />
               ゲーム開始
-            </motion.button>
+            </Button>
           </div>
         </motion.div>
       </motion.div>

@@ -5,6 +5,7 @@ import {
   submitContactForm,
   type FormState,
 } from "@/app/(main)/(withFooter)/contact/actions";
+import { Button } from "@/components/ui/Button";
 
 const initialState: FormState = {
   message: "",
@@ -17,7 +18,7 @@ export default function ContactForm() {
     return (
       <div className="text-center">
         <h2 className="text-2xl font-bold text-emerald-400">送信しました</h2>
-        <p className="mt-4 text-lg">
+        <p className="mt-4 text-lg text-neutral-300">
           お問い合わせいただきありがとうございます。
         </p>
       </div>
@@ -29,7 +30,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="name"
-          className="block text-sm font-medium leading-6 text-gray-900"
+          className="block text-sm font-medium leading-6 text-neutral-300"
         >
           お名前
         </label>
@@ -40,7 +41,7 @@ export default function ContactForm() {
             type="text"
             autoComplete="name"
             required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -48,7 +49,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="email"
-          className="block text-sm font-medium leading-6 text-gray-900"
+          className="block text-sm font-medium leading-6 text-neutral-300"
         >
           メールアドレス
         </label>
@@ -59,7 +60,7 @@ export default function ContactForm() {
             type="email"
             autoComplete="email"
             required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
           />
         </div>
       </div>
@@ -67,7 +68,7 @@ export default function ContactForm() {
       <div>
         <label
           htmlFor="message"
-          className="block text-sm font-medium leading-6 text-gray-900"
+          className="block text-sm font-medium leading-6 text-neutral-300"
         >
           お問い合わせ内容
         </label>
@@ -77,24 +78,21 @@ export default function ContactForm() {
             name="message"
             rows={4}
             required
-            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            className="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 placeholder:text-neutral-400 focus:ring-2 focus:ring-inset focus:ring-sky-500 sm:text-sm sm:leading-6"
           />
         </div>
       </div>
 
       {state.message === "error" && (
-        <p className="text-sm text-red-600">
+        <p className="text-sm text-red-500">
           送信に失敗しました。もう一度お試しください。
         </p>
       )}
 
       <div>
-        <button
-          type="submit"
-          className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
+        <Button type="submit" className="w-full">
           送信
-        </button>
+        </Button>
       </div>
     </form>
   );
