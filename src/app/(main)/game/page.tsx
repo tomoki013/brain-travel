@@ -92,7 +92,10 @@ function GameContent() {
 
         {/* Panel Area */}
         <div className="lg:col-span-1 h-full">
-          <GamePanel gameLogic={gameLogic} />
+          <GamePanel
+            gameLogic={gameLogic}
+            toggleMapVisibility={() => setIsMapVisible(!isMapVisible)}
+          />
         </div>
       </div>
     </div>
