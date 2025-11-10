@@ -1,13 +1,25 @@
 "use client";
 
 import { useSearchParams, useRouter } from "next/navigation";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import { ResultSlideshow } from "@/components/features/result/ResultSlideshow";
 import { CountryImage } from "@/components/features/game/CountryImage";
 import borderData from "@/lib/data/borders.json";
+import { Button } from "@/components/ui/Button";
+import {
+  Share2,
+  Link,
+  Facebook,
+  Copy,
+  X,
+  MessageSquare,
+  Check,
+} from "lucide-react";
 
 export const ResultPageClient = () => {
+  const [isCopied, setIsCopied] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const routeQuery = searchParams.get("route");
@@ -48,6 +60,55 @@ export const ResultPageClient = () => {
 
   const handleGoTop = () => {
     router.push("/");
+  };
+
+  const handleShare = (
+    platform: "x" | "line" | "facebook" | "copy" | "webshare",
+  ) => {
+    const shareUrl = window.location.href;
+    const shareText = isGivenUp
+      ? `Geo Linkerで旅の途中でギブアップしました！\nルート: ${countryNames}\n#GeoLinker`
+      : `Geo Linkerで世界旅行を達成しました！\nルート: ${countryNames}\n#GeoLinker`;
+    const encodedUrl = encodeURIComponent(shareUrl);
+    const encodedText = encodeURIComponent(shareText);
+
+    switch (platform) {
+      case "x":
+        window.open(
+          `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+          "_blank",
+        );
+        break;
+      case "line":
+        window.open(
+          `https://line.me/R/msg/text/?${encodedText}%0A${encodedUrl}`,
+          "_blank",
+        );
+        break;
+      case "facebook":
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+          "_blank",
+        );
+        break;
+      case "copy":
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          setIsCopied(true);
+          setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+        });
+        break;
+      case "webshare":
+        if (navigator.share) {
+          navigator.share({
+            title: "Geo Linker Result",
+            text: shareText,
+            url: shareUrl,
+          });
+        } else {
+          alert("お使いのブラウザはWeb共有APIをサポートしていません。");
+        }
+        break;
+    }
   };
 
   const MotionButton = motion.button;
@@ -102,39 +163,72 @@ export const ResultPageClient = () => {
             次の旅に出かけよう
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <MotionButton
+            <Button
               onClick={handleRetrySame}
               disabled={isGivenUp || !startCountry || !goalCountry}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-md bg-indigo-600 px-4 py-3 text-base font-semibold text-white shadow-lg hover:bg-indigo-500 disabled:bg-gray-500 disabled:cursor-not-allowed"
+              variant="primary"
+              size="lg"
             >
-              もう一度同じ設定で挑戦
-            </MotionButton>
-            <MotionButton
+              もう一度
+            </Button>
+            <Button
               onClick={handleRetryDifferent}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-md bg-teal-600 px-4 py-3 text-base font-semibold text-white shadow-lg hover:bg-teal-500"
+              variant="secondary"
+              size="lg"
             >
-              違う設定で挑戦
-            </MotionButton>
-            <MotionButton
-              onClick={handleRetryRandom}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-md bg-sky-600 px-4 py-3 text-base font-semibold text-white shadow-lg hover:bg-sky-500"
+              設定変更
+            </Button>
+            <Button onClick={handleRetryRandom} variant="secondary" size="lg">
+              ランダム
+            </Button>
+            <Button onClick={handleGoTop} variant="glass" size="lg">
+              トップへ
+            </Button>
+          </div>
+        </div>
+
+        {/* Share Buttons */}
+        <div className="mt-12 border-t border-gray-600 pt-8">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-100">
+            旅の結果をシェアする
+          </h2>
+          <div className="flex flex-wrap justify-center items-center gap-4">
+            <Button
+              variant="social-x"
+              size="icon"
+              onClick={() => handleShare("x")}
             >
-              ランダムで挑戦
-            </MotionButton>
-            <MotionButton
-              onClick={handleGoTop}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="rounded-md bg-gray-700 px-4 py-3 text-base font-semibold text-white shadow-lg hover:bg-gray-600"
+              <X />
+            </Button>
+            <Button
+              variant="social-line"
+              size="icon"
+              onClick={() => handleShare("line")}
             >
-              トップに戻る
-            </MotionButton>
+              <MessageSquare />
+            </Button>
+            <Button
+              variant="social-facebook"
+              size="icon"
+              onClick={() => handleShare("facebook")}
+            >
+              <Facebook />
+            </Button>
+            <Button
+              variant={isCopied ? "social-x" : "social-copy"}
+              size="icon"
+              onClick={() => handleShare("copy")}
+              disabled={isCopied}
+            >
+              {isCopied ? <Check /> : <Copy />}
+            </Button>
+            <Button
+              variant="glass"
+              size="icon"
+              onClick={() => handleShare("webshare")}
+            >
+              <Share2 />
+            </Button>
           </div>
         </div>
       </div>

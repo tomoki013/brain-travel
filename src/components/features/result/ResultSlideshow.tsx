@@ -58,7 +58,7 @@ export const ResultSlideshow = ({ routeHistory }: ResultSlideshowProps) => {
         {/* Navigation Buttons */}
         <Button
           onClick={goToPrev}
-          variant="icon"
+          variant="glass"
           size="icon"
           className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
         >
@@ -66,7 +66,7 @@ export const ResultSlideshow = ({ routeHistory }: ResultSlideshowProps) => {
         </Button>
         <Button
           onClick={goToNext}
-          variant="icon"
+          variant="glass"
           size="icon"
           className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
         >

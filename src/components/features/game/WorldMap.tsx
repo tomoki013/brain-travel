@@ -33,7 +33,7 @@ export const WorldMap = ({
         if (worldAtlas) {
           const geoJson = feature(
             worldAtlas,
-            worldAtlas.objects.countries
+            worldAtlas.objects.countries,
           ) as FeatureCollection;
           setCountries(geoJson);
         }
@@ -115,7 +115,7 @@ export const WorldMap = ({
       ? a3ToNumericId[selectedCountryId]
       : null;
     const routeHistoryNumericIds = routeHistoryIds.map(
-      (id) => a3ToNumericId[id]
+      (id) => a3ToNumericId[id],
     );
 
     svg

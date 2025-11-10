@@ -126,10 +126,7 @@ export default function TopPage() {
         </motion.div>
 
         {/* Divider */}
-        <motion.div
-          className="my-8 flex items-center"
-          variants={itemVariants}
-        >
+        <motion.div className="my-8 flex items-center" variants={itemVariants}>
           <div className="grow border-t border-gray-400"></div>
           <span className="mx-4 text-gray-300">OR</span>
           <div className="grow border-t border-gray-400"></div>
@@ -146,7 +143,7 @@ export default function TopPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <Button
               onClick={() => setIsStartModalOpen(true)}
-              variant="outline"
+              variant="glass"
               className="justify-start"
             >
               <MapPin className="mr-3 h-5 w-5 text-neutral-400" />
@@ -155,7 +152,7 @@ export default function TopPage() {
             <Button
               onClick={() => setIsGoalModalOpen(true)}
               disabled={!startCountry}
-              variant="outline"
+              variant="glass"
               className="justify-start"
             >
               <MapPin className="mr-3 h-5 w-5 text-neutral-400" />

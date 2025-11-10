@@ -32,7 +32,7 @@ export const CountryModal = ({
     return availableCountries.filter(
       (country) =>
         country.name.toLowerCase().includes(lowercasedQuery) ||
-        country.id.toLowerCase().includes(lowercasedQuery) // Also search by A3 code
+        country.id.toLowerCase().includes(lowercasedQuery), // Also search by A3 code
     );
   }, [searchQuery, availableCountries]);
 
@@ -76,7 +76,7 @@ export const CountryModal = ({
               <h2 className="text-xl font-bold text-white">{title}</h2>
               <Button
                 onClick={onClose}
-                variant="ghost"
+                variant="glass"
                 size="icon"
                 aria-label="Close"
               >
