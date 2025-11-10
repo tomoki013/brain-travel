@@ -5,6 +5,10 @@ import { countryNameJa } from "../data/countries";
 import { localImageManifest } from "../data/localImageManifest";
 import { continentMap } from "../data/continentMapping";
 import { Country } from "@/types";
+import * as i18n from "i18n-iso-countries";
+import ja from "i18n-iso-countries/langs/ja.json";
+
+i18n.registerLocale(ja);
 
 // Type assertion for country-codes.json
 const codes = countryCodes as Record<string, { a3: string; name: string }>;
@@ -126,14 +130,26 @@ export const useCountryData = () => {
     [],
   );
 
-  const countries: Country[] = useMemo(
-    () =>
-      allCountries.map((c) => ({
+  const getFlagEmoji = (a2Code: string): string => {
+    return a2Code
+      .toUpperCase()
+      .replace(/./g, (char) =>
+        String.fromCodePoint(char.charCodeAt(0) + 0x1f1a5),
+      );
+  };
+
+  const countries: Country[] = useMemo(() => {
+    return allCountries.map((c) => {
+      const a2 = i18n.alpha3ToAlpha2(c.a3);
+      const a2Code = a2 || "--";
+      return {
         id: c.a3,
+        a2Code: a2Code,
         name: c.japaneseName || c.englishName,
-      })),
-    [],
-  );
+        flag: getFlagEmoji(a2Code),
+      };
+    });
+  }, []);
 
   const getCountriesInSameContinent = useCallback(
     (a3Code: string): Country[] => {
