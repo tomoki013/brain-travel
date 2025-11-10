@@ -1,139 +1,88 @@
-"use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MapPin, MapPinOff, FlagOff } from "lucide-react";
-import { CountryImage } from "./CountryImage";
-import { CountryModal } from "@/components/features/shared/CountryModal";
-import type { GameStatus, Country } from "@/types";
-import { useCountryData } from "@/lib/hooks/useCountryData";
+'use client';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Map, Skull } from 'lucide-react';
+import { Country } from '@/types';
+import { CountryImage } from '@/components/features/game/CountryImage';
+import { CountryModal } from '@/components/features/shared/CountryModal';
+import { useGameLogic } from '@/lib/hooks/useGameLogic';
 
-type GamePanelProps = {
-  currentCountry: string | null;
-  startCountry: string | null;
-  goalCountry: string | null;
-  routeHistory: string[];
-  gameStatus: GameStatus;
-  error: string | null;
-  setError: (error: string | null) => void;
-  submitAnswer: (answer: string) => void;
-  giveUp: () => void;
-  isMapVisible: boolean;
-  setIsMapVisible: (value: boolean) => void;
-  setSelectedCountryId: (countryId: string | null) => void;
-  getNeighborCountries: () => Country[];
+type Props = {
+  gameLogic: ReturnType<typeof useGameLogic>;
 };
 
-export const GamePanel = ({
-  currentCountry,
-  startCountry,
-  goalCountry,
-  routeHistory,
-  gameStatus,
-  error,
-  setError,
-  submitAnswer,
-  giveUp,
-  isMapVisible,
-  setIsMapVisible,
-  setSelectedCountryId,
-  getNeighborCountries,
-}: GamePanelProps) => {
-  const { getCountryName, countries } = useCountryData();
-  const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
+export function GamePanel({ gameLogic }: Props) {
+  const {
+    currentCountry,
+    startCountry,
+    goalCountry,
+    error,
+    getCountryName,
+    getNeighborCountries,
+    submitAnswer,
+    giveUp,
+    toggleMapVisibility,
+  } = gameLogic;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <>
-      <div className="flex h-full flex-col gap-4 rounded-lg bg-black/20 p-4 shadow-2xl backdrop-blur-md text-white">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentCountry}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative aspect-video w-full"
-          >
-            {currentCountry && (
-              <CountryImage
-                key={currentCountry} // Add key to force re-mount on country change
-                countryId={currentCountry}
-                className="rounded-lg object-cover shadow-xl"
-              />
-            )}
-          </motion.div>
-        </AnimatePresence>
+      <div className="flex h-full flex-col overflow-y-auto bg-black/20 p-4 backdrop-blur-sm">
+        <div className="w-full flex-shrink-0">
+          <CountryImage countryId={currentCountry.id} />
+        </div>
 
-        <div className="flex flex-1 flex-col gap-4 overflow-hidden">
-          {/* Static Info */}
-          <div className="flex-shrink-0 space-y-4">
-            <div>
-              <h2 className="text-base font-bold uppercase tracking-widest text-white/60">
+        <div className="flex flex-1 flex-col justify-between pt-4">
+          <div className="flex-1">
+            <motion.div
+              key={currentCountry.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-4 text-center"
+            >
+              <p className="text-lg text-neutral-300">現在の国</p>
+              <p className="text-4xl font-bold text-white">
+                {getCountryName(currentCountry.id)}
+              </p>
+            </motion.div>
+
+            <div className="mb-4 rounded-lg border border-yellow-800/50 bg-yellow-50/10 p-4">
+              <h2 className="mb-2 text-center text-sm font-bold text-yellow-300">
                 旅のルート
               </h2>
-              <p className="mt-1 text-lg">
-                <span className="font-bold">{getCountryName(startCountry)}</span>{" "}
-                から{" "}
-                <span className="font-bold">{getCountryName(goalCountry)}</span>{" "}
-                を目指せ！
-              </p>
-            </div>
-            <div>
-              <h2 className="text-base font-bold uppercase tracking-widest text-white/60">
-                現在の国
-              </h2>
-              <p className="mt-1 text-4xl font-bold text-white drop-shadow-lg">
-                {getCountryName(currentCountry)}
-              </p>
-            </div>
-          </div>
-
-          {/* Scrollable History */}
-          <div className="flex-1 min-h-0 space-y-2 overflow-y-auto rounded-md bg-black/20 p-3 text-sm">
-            <h2 className="text-base font-bold uppercase tracking-widest text-white/60 mb-2">
-              移動履歴
-            </h2>
-            <ul className="space-y-2">
-              {routeHistory.map((countryId, index) => (
-                <li key={`${countryId}-${index}`} className="flex items-baseline">
-                  <span className="mr-3 font-mono text-white/60">
-                    {String(index + 1).padStart(2, "0")}.
-                  </span>
-                  <span className="font-semibold">
-                    {getCountryName(countryId)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Action Form */}
-          <div className="flex-shrink-0 pt-4 space-y-3">
-            {error && (
-              <div className="rounded-md bg-red-500/30 p-2 text-center text-sm font-semibold text-red-100">
-                {error}
+              <div className="flex items-center justify-center space-x-2 text-white">
+                <p className="font-semibold">{startCountry?.name || '???'}</p>
+                <ArrowRight className="h-5 w-5 text-yellow-400" />
+                <p className="font-semibold">{goalCountry?.name || '???'}</p>
               </div>
-            )}
-            <button
-              onClick={() => setIsAnswerModalOpen(true)}
-              disabled={gameStatus !== "playing"}
-              className="w-full rounded-md bg-indigo-500 px-4 py-3 text-base font-semibold text-white shadow-lg transition-transform hover:scale-105 hover:bg-indigo-400 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
-            >
-              国を回答する
-            </button>
-            <div className="grid grid-cols-3 gap-3">
-              <div />
+            </div>
+          </div>
+
+          <div className="flex-shrink-0">
+            <div className="mb-4">
+              {error && <p className="text-center text-rose-400">{error}</p>}
               <button
-                onClick={() => setIsMapVisible(!isMapVisible)}
-                className="px-4 py-2 text-sm bg-neutral-700/60 rounded-lg hover:bg-neutral-600"
+                onClick={() => setIsModalOpen(true)}
+                className="w-full rounded-lg bg-blue-600 px-4 py-2 font-bold text-white transition-transform hover:scale-105"
               >
-                {isMapVisible ? "地図を隠す" : "地図を表示"}
+                国を回答する
+              </button>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => toggleMapVisibility()}
+                className="flex items-center justify-center gap-2 rounded-lg bg-white/10 p-2 text-sm text-white transition-colors hover:bg-white/20"
+              >
+                <Map size={16} />
+                地図
               </button>
               <button
                 onClick={giveUp}
-                disabled={gameStatus !== "playing"}
-                className="px-4 py-2 text-sm bg-red-800/60 rounded-lg hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
+                className="flex items-center justify-center gap-2 rounded-lg bg-white/10 p-2 text-sm text-white transition-colors hover:bg-rose-500/50"
               >
+                <Skull size={16} />
                 ギブアップ
               </button>
             </div>
@@ -141,12 +90,15 @@ export const GamePanel = ({
         </div>
       </div>
       <CountryModal
-        isOpen={isAnswerModalOpen}
-        onClose={() => setIsAnswerModalOpen(false)}
-        title="次の国は？"
-        availableCountries={countries}
-        onSelect={(country) => submitAnswer(country.id)}
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSelect={(country) => {
+          submitAnswer(country.id);
+          setIsModalOpen(false);
+        }}
+        availableCountries={getNeighborCountries()}
+        title="次の国を選択"
       />
     </>
   );
-};
+}
