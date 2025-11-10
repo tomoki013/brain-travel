@@ -30,7 +30,7 @@ const buttonVariants = tv({
       default: "h-12 py-2 px-8",
       sm: "h-10 rounded-full px-6 text-sm",
       lg: "h-14 rounded-full px-12 text-lg",
-      icon: "h-14 w-14",
+      icon: "h-14 w-14 p-4",
     },
   },
   defaultVariants: {

@@ -157,6 +157,7 @@ export const ResultPageClient = () => {
           <ResultSlideshow routeHistory={routeHistory} />
         </div>
 
+
         {/* Action Buttons */}
         <div className="mt-12 border-t border-gray-600 pt-8">
           <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-100">
