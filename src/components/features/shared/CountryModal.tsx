@@ -32,7 +32,8 @@ export const CountryModal = ({
     return availableCountries.filter(
       (country) =>
         country.name.toLowerCase().includes(lowercasedQuery) ||
-        country.id.toLowerCase().includes(lowercasedQuery), // Also search by A3 code
+        country.id.toLowerCase().includes(lowercasedQuery) ||
+        country.a2Code.toLowerCase().includes(lowercasedQuery), // Also search by A2 code
     );
   }, [searchQuery, availableCountries]);
 
@@ -61,6 +62,7 @@ export const CountryModal = ({
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex flex-col items-center justify-start bg-black/50 p-4 pt-20 backdrop-blur-xl"
           onClick={onClose}
+          data-testid="country-modal"
         >
           {/* モーダルコンテンツ（クリックが伝播しないように） */}
           <motion.div
@@ -99,16 +101,25 @@ export const CountryModal = ({
 
             {/* 3. 国グリッド */}
             <div className="flex-1 overflow-y-auto p-4">
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
                 {filteredCountries.map((country) => (
-                  <Button
+                  <motion.button
                     key={country.id}
-                    variant="secondary"
-                    className="h-auto whitespace-normal text-center"
+                    className="h-auto w-full p-3 rounded-xl justify-start text-left normal-case transition-colors duration-200 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/50"
                     onClick={() => handleSelect(country)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {country.name}
-                  </Button>
+                    <div className="flex w-full flex-col">
+                      <span className="text-2xl">{country.flag}</span>
+                      <span className="mt-1.5 font-bold text-base text-white truncate">
+                        {country.name}
+                      </span>
+                      <span className="text-sm font-mono text-white/50">
+                        {country.a2Code}
+                      </span>
+                    </div>
+                  </motion.button>
                 ))}
               </div>
             </div>
