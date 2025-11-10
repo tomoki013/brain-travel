@@ -4,6 +4,7 @@ import { useEffect, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { WorldMap } from "@/components/features/game/WorldMap";
 import { GamePanel } from "@/components/features/game/GamePanel";
+import { ItineraryDisplay } from "@/components/features/game/ItineraryDisplay";
 import { useGameLogic } from "@/lib/hooks/useGameLogic";
 import { CountryImage } from "@/components/features/game/CountryImage";
 
@@ -61,6 +62,11 @@ function GameContent() {
 
       {/* Game Layout */}
       <div className="relative z-10 grid h-full lg:grid-cols-3 gap-4 p-4">
+        <ItineraryDisplay
+            routeHistory={gameLogic.routeHistory}
+            startCountry={gameLogic.startCountry}
+            goalCountry={gameLogic.goalCountry}
+        />
         {/* Map Area */}
         <div className="lg:col-span-2 relative h-full">
           {isMapVisible ? (

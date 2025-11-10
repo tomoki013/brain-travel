@@ -1,5 +1,33 @@
 # 開発ログ
 
+## 2025-11-10 (Step 35)
+
+**担当者:** Jules (AI Agent)
+
+**タスク:** ステップ35 「旅程」UIを地図上にオーバーレイ表示
+
+**実装概要:**
+
+- **課題認識:** GamePanel内にあった移動履歴の表示は、地図の表示状態によっては見えなくなってしまう問題があった。これを解決し、より洗練されたUIを提供するため、履歴表示を地図上にオーバーレイする新しいコンポーネントに移行する。
+- **タスクA: GamePanel.tsx から履歴を削除:**
+    - `src/components/features/game/GamePanel.tsx` を修正し、回答履歴を表示していたdivを完全に削除した。これにより、`GamePanel` の責務が回答アクションと現在の状況表示に集中した。
+- **タスクB: 新規コンポーネント ItineraryDisplay.tsx の作成:**
+    - `src/components/features/game/ItineraryDisplay.tsx` を新規作成。
+    - 地図の左上に `absolute` ポジショニングで配置されるオーバーレイコンポーネントとして実装した。
+    - `backdrop-blur` を用いたガラスモーフィズム効果で、背景の地図と調和しつつも視認性を確保した。
+    - このコンポーネントは、旅のルート（スタートとゴール）と、移動履歴の両方を表示する責務を持つ。
+- **タスクC: game/page.tsx への適用:**
+    - `src/app/(main)/game/page.tsx` を修正し、`ItineraryDisplay` を配置した。
+    - `ItineraryDisplay` をオーバーレイとして正しく配置するため、親のグリッドコンテナに `className="relative"` を追加した。
+    - `useGameLogic` フックから取得した `routeHistory`, `startCountry`, `goalCountry` を `ItineraryDisplay` の props として渡した。
+- **その他:**
+    - `package.json` の `name` を `brain-travel` から `geo-linker` に変更した。
+
+**課題・申し送り:**
+
+- 今回の変更はUIのレイアウトとコンポーネントの責務分離が中心であり、コアロジックへの変更はないため、技術的な課題は発生しなかった。
+- 新しい `ItineraryDisplay` コンポーネントは、特に画面が小さいデバイスでの表示バランスについて、最終的な目視確認が推奨される。
+
 ## 2025-11-09 (Step 33)
 
 **担当者:** Jules (AI Agent)
