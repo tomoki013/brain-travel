@@ -24,7 +24,7 @@ export async function GET(req: Request) {
   if (typeof countryId !== "string" || !countryId) {
     return NextResponse.json(
       { error: "countryId is required" },
-      { status: 400 } // エラーレスポンス
+      { status: 400 }, // エラーレスポンス
     );
   }
 
@@ -34,7 +34,7 @@ export async function GET(req: Request) {
     "public",
     "images",
     "countries",
-    `${countryId}.jpg`
+    `${countryId}.jpg`,
   );
 
   if (fs.existsSync(localImagePath)) {
@@ -53,13 +53,13 @@ export async function GET(req: Request) {
       const query = `${countryName} landmark landscape`;
       const response = await fetch(
         `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-          query
+          query,
         )}&orientation=landscape&per_page=1`,
         {
           headers: {
             Authorization: `Client-ID ${apiKey}`,
           },
-        }
+        },
       );
 
       if (!response.ok) throw new Error("Unsplash API request failed");

@@ -16,7 +16,7 @@ function GameContent() {
   //
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(
-    null
+    null,
   );
 
   const startCountry = searchParams.get("start");
@@ -28,7 +28,8 @@ function GameContent() {
     } else {
       router.push("/");
     }
-  }, [startCountry, goalCountry, router, gameLogic.initializeGame]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [startCountry, goalCountry, router]);
 
   useEffect(() => {
     if (gameLogic.currentCountry) {
@@ -63,9 +64,9 @@ function GameContent() {
       {/* Game Layout */}
       <div className="relative z-10 grid h-full lg:grid-cols-3 gap-4 p-4">
         <ItineraryDisplay
-            routeHistory={gameLogic.routeHistory}
-            startCountry={gameLogic.startCountry}
-            goalCountry={gameLogic.goalCountry}
+          routeHistory={gameLogic.routeHistory}
+          startCountry={gameLogic.startCountry}
+          goalCountry={gameLogic.goalCountry}
         />
         {/* Map Area */}
         <div className="lg:col-span-2 relative h-full">
@@ -91,21 +92,7 @@ function GameContent() {
 
         {/* Panel Area */}
         <div className="lg:col-span-1 h-full">
-          <GamePanel
-            currentCountry={gameLogic.currentCountry}
-            startCountry={gameLogic.startCountry}
-            goalCountry={gameLogic.goalCountry}
-            routeHistory={gameLogic.routeHistory}
-            gameStatus={gameLogic.gameStatus}
-            submitAnswer={gameLogic.submitAnswer}
-            error={gameLogic.error}
-            setError={gameLogic.setError}
-            getNeighborCountries={gameLogic.getNeighborCountries}
-            giveUp={gameLogic.giveUp}
-            isMapVisible={isMapVisible}
-            setIsMapVisible={setIsMapVisible}
-            setSelectedCountryId={setSelectedCountryId}
-          />
+          <GamePanel gameLogic={gameLogic} />
         </div>
       </div>
     </div>

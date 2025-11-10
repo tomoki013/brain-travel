@@ -1,4 +1,3 @@
-
 import { useCallback, useMemo } from "react";
 import countryCodes from "../data/country-codes.json";
 import { a3ToNumericId } from "../data/country-codes";
@@ -66,13 +65,13 @@ export const useCountryData = () => {
         const query = `${countryName} landmark landscape`;
         const response = await fetch(
           `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
-            query
+            query,
           )}&orientation=landscape&per_page=1`,
           {
             headers: {
               Authorization: `Client-ID ${apiKey}`,
             },
-          }
+          },
         );
 
         if (!response.ok) {
@@ -94,7 +93,7 @@ export const useCountryData = () => {
       // Final fallback: Return default image if API fails or returns no results.
       return "/images/default-globe.jpg";
     },
-    [getCountryName]
+    [getCountryName],
   );
 
   const findCountryA3CodeByName = useCallback((name: string): string | null => {
@@ -103,14 +102,14 @@ export const useCountryData = () => {
       (c) =>
         c.a3.toLowerCase() === normalizedInput ||
         c.englishName.toLowerCase() === normalizedInput ||
-        (c.japaneseName && c.japaneseName.toLowerCase() === normalizedInput)
+        (c.japaneseName && c.japaneseName.toLowerCase() === normalizedInput),
     );
     return found ? found.a3 : null;
   }, []);
 
   const getCountrySuggestions = useCallback(
     (
-      input: string
+      input: string,
     ): { a3: string; englishName: string; japaneseName: string }[] => {
       const normalizedInput = input.trim().toLowerCase();
       if (!normalizedInput) return [];
@@ -120,11 +119,11 @@ export const useCountryData = () => {
             c.a3.toLowerCase().startsWith(normalizedInput) ||
             c.englishName.toLowerCase().startsWith(normalizedInput) ||
             (c.japaneseName &&
-              c.japaneseName.toLowerCase().startsWith(normalizedInput))
+              c.japaneseName.toLowerCase().startsWith(normalizedInput)),
         )
         .slice(0, 5); // Return top 5 matches
     },
-    []
+    [],
   );
 
   const countries: Country[] = useMemo(
@@ -133,7 +132,7 @@ export const useCountryData = () => {
         id: c.a3,
         name: c.japaneseName || c.englishName,
       })),
-    []
+    [],
   );
 
   const getCountriesInSameContinent = useCallback(
@@ -143,13 +142,13 @@ export const useCountryData = () => {
         return [];
       }
       const continentA3Codes = Object.keys(continentMap).filter(
-        (key) => continentMap[key] === continentId
+        (key) => continentMap[key] === continentId,
       );
       return countries.filter((country) =>
-        continentA3Codes.includes(country.id)
+        continentA3Codes.includes(country.id),
       );
     },
-    [countries]
+    [countries],
   );
 
   const getPlayableCountries = useCallback((): Country[] => {
@@ -158,7 +157,7 @@ export const useCountryData = () => {
         acc[id] = (acc[id] || 0) + 1;
         return acc;
       },
-      {} as Record<number, number>
+      {} as Record<number, number>,
     );
 
     const playableA3Codes = Object.keys(continentMap).filter((a3) => {

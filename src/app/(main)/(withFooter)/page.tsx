@@ -25,7 +25,7 @@ export default function TopPage() {
 
     const randomStart = playable[Math.floor(Math.random() * playable.length)];
     const continentPeers = getCountriesInSameContinent(randomStart.id).filter(
-      (c) => c.id !== randomStart.id
+      (c) => c.id !== randomStart.id,
     );
 
     if (continentPeers.length > 0) {
@@ -50,9 +50,7 @@ export default function TopPage() {
 
   const handleStartGame = () => {
     if (startCountry && goalCountry) {
-      router.push(
-        `/game?start=${startCountry.id}&goal=${goalCountry.id}`
-      );
+      router.push(`/game?start=${startCountry.id}&goal=${goalCountry.id}`);
     }
   };
 

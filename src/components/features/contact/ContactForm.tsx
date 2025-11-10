@@ -1,24 +1,22 @@
-'use client';
+"use client";
 
-import { useFormState } from 'react-dom';
+import { useFormState } from "react-dom";
 import {
   submitContactForm,
   type FormState,
-} from '@/app/(main)/(withFooter)/contact/actions';
+} from "@/app/(main)/(withFooter)/contact/actions";
 
 const initialState: FormState = {
-  message: '',
+  message: "",
 };
 
 export default function ContactForm() {
   const [state, formAction] = useFormState(submitContactForm, initialState);
 
-  if (state.message === 'success') {
+  if (state.message === "success") {
     return (
       <div className="text-center">
-        <h2 className="text-2xl font-bold text-emerald-400">
-          送信しました
-        </h2>
+        <h2 className="text-2xl font-bold text-emerald-400">送信しました</h2>
         <p className="mt-4 text-lg">
           お問い合わせいただきありがとうございます。
         </p>
@@ -84,7 +82,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {state.message === 'error' && (
+      {state.message === "error" && (
         <p className="text-sm text-red-600">
           送信に失敗しました。もう一度お試しください。
         </p>
