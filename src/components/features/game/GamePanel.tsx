@@ -39,7 +39,7 @@ export const GamePanel = ({
   setSelectedCountryId,
   getNeighborCountries,
 }: GamePanelProps) => {
-  const { getCountryName } = useCountryData();
+  const { getCountryName, countries } = useCountryData();
   const [isAnswerModalOpen, setIsAnswerModalOpen] = useState(false);
 
   return (
@@ -123,25 +123,19 @@ export const GamePanel = ({
             </button>
             <div className="grid grid-cols-3 gap-3">
               <div />
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={() => setIsMapVisible(!isMapVisible)}
-                className="flex justify-center items-center rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 aspect-square"
-                aria-label={isMapVisible ? "地図を隠す" : "地図を表示"}
+                className="px-4 py-2 text-sm bg-neutral-700/60 rounded-lg hover:bg-neutral-600"
               >
-                {isMapVisible ? <MapPinOff size={20} /> : <MapPin size={20} />}
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
+                {isMapVisible ? "地図を隠す" : "地図を表示"}
+              </button>
+              <button
                 onClick={giveUp}
                 disabled={gameStatus !== "playing"}
-                className="flex justify-center items-center rounded-full bg-white/10 p-3 text-white transition-colors hover:bg-white/20 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
-                aria-label="ギブアップ"
+                className="px-4 py-2 text-sm bg-red-800/60 rounded-lg hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-gray-600/50 disabled:text-gray-400"
               >
-                <FlagOff size={20} />
-              </motion.button>
+                ギブアップ
+              </button>
             </div>
           </div>
         </div>
@@ -150,7 +144,7 @@ export const GamePanel = ({
         isOpen={isAnswerModalOpen}
         onClose={() => setIsAnswerModalOpen(false)}
         title="次の国は？"
-        availableCountries={getNeighborCountries()}
+        availableCountries={countries}
         onSelect={(country) => submitAnswer(country.id)}
       />
     </>
