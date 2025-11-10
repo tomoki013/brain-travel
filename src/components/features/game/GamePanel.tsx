@@ -1,10 +1,11 @@
 "use client";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Map, Skull } from "lucide-react";
+import { ArrowRight, Map, Skull, Send } from "lucide-react";
 import { CountryImage } from "@/components/features/game/CountryImage";
 import { CountryModal } from "@/components/features/shared/CountryModal";
 import { useGameLogic } from "@/lib/hooks/useGameLogic";
+import { Button } from "@/components/ui/Button";
 
 type Props = {
   gameLogic: ReturnType<typeof useGameLogic>;
@@ -71,33 +72,36 @@ export function GamePanel({
             </div>
           </div>
 
-          <div className="shrink-0">
-            <div className="mb-4">
-              {error && <p className="text-center text-rose-400">{error}</p>}
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="w-full rounded-lg bg-blue-600 px-4 py-2 font-bold text-white transition-transform hover:scale-105"
+          <div className="shrink-0 space-y-2">
+            {error && <p className="text-center text-rose-400">{error}</p>}
+            <Button
+              onClick={() => setIsModalOpen(true)}
+              className="w-full"
+              size="lg"
+            >
+              <Send className="mr-2 h-5 w-5" />
+              国を回答する
+            </Button>
+            <div className="grid grid-cols-2 gap-2">
+              <Button
+                onClick={toggleMapVisibility}
+                variant="secondary"
+                size="sm"
+                className="w-full"
               >
-                国を回答する
-              </button>
+                <Map size={16} className="mr-2" />
+                {isMapVisible ? "地図を非表示" : "地図を表示"}
+              </Button>
+              <Button
+                onClick={giveUp}
+                variant="destructive"
+                size="sm"
+                className="w-full"
+              >
+                <Skull size={16} className="mr-2" />
+                ギブアップ
+              </Button>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={toggleMapVisibility}
-              className="flex items-center justify-center gap-2 rounded-lg bg-white/10 p-2 text-sm text-white transition-colors hover:bg-white/20"
-            >
-              <Map size={16} />
-              地図を
-              {isMapVisible ? "非表示" : "表示"}
-            </button>
-            <button
-              onClick={giveUp}
-              className="flex items-center justify-center gap-2 rounded-lg bg-white/10 p-2 text-sm text-white transition-colors hover:bg-rose-500/50"
-            >
-              <Skull size={16} />
-              ギブアップ
-            </button>
           </div>
         </div>
       </div>

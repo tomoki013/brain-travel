@@ -2,11 +2,13 @@
 
 import { useEffect, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Map } from "lucide-react";
 import { WorldMap } from "@/components/features/game/WorldMap";
 import { GamePanel } from "@/components/features/game/GamePanel";
 import { ItineraryDisplay } from "@/components/features/game/ItineraryDisplay";
 import { useGameLogic } from "@/lib/hooks/useGameLogic";
 import { CountryImage } from "@/components/features/game/CountryImage";
+import { Button } from "@/components/ui/Button";
 
 function GameContent() {
   const router = useRouter();
@@ -78,12 +80,14 @@ function GameContent() {
             />
           ) : (
             <div className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-gray-900/50 backdrop-blur-md">
-              <button
+              <Button
                 onClick={() => setIsMapVisible(true)}
-                className="rounded-full bg-cyan-500/80 px-6 py-3 text-lg font-bold text-white shadow-lg transition-transform hover:scale-105"
+                variant="primary"
+                size="lg"
               >
+                <Map className="mr-2 h-5 w-5" />
                 地図を表示する
-              </button>
+              </Button>
             </div>
           )}
         </div>
