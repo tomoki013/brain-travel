@@ -62,14 +62,23 @@ function GameContent() {
       </div>
 
       {/* Game Layout */}
-      <div className="relative z-10 grid h-full lg:grid-cols-3 gap-4 p-4">
+      <div className="relative z-10 flex h-full flex-col lg:grid lg:grid-cols-3 gap-4 p-4">
         <ItineraryDisplay
           routeHistory={gameLogic.routeHistory}
           startCountry={gameLogic.startCountry}
           goalCountry={gameLogic.goalCountry}
         />
+
+        {/* Panel Area */}
+        <div className="h-1/2 lg:h-full lg:col-span-1">
+          <GamePanel
+            gameLogic={gameLogic}
+            toggleMapVisibility={() => setIsMapVisible(!isMapVisible)}
+            isMapVisible={isMapVisible}
+          />
+        </div>
         {/* Map Area */}
-        <div className="lg:col-span-2 relative h-full">
+        <div className="relative h-1/2 lg:h-full lg:col-span-2 lg:col-start-1 lg:row-start-1">
           {isMapVisible ? (
             <WorldMap
               startCountryId={gameLogic.startCountry}
@@ -90,15 +99,6 @@ function GameContent() {
               </Button>
             </div>
           )}
-        </div>
-
-        {/* Panel Area */}
-        <div className="lg:col-span-1 h-full">
-          <GamePanel
-            gameLogic={gameLogic}
-            toggleMapVisibility={() => setIsMapVisible(!isMapVisible)}
-            isMapVisible={isMapVisible}
-          />
         </div>
       </div>
     </div>
