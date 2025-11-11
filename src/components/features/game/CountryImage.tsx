@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCountryData } from "@/lib/hooks/useCountryData";
 import { useEffect, useState } from "react";
+import Loading from "@/components/ui/Loading";
 
 type CountryImageProps = {
   countryId: string;
@@ -55,7 +56,9 @@ export const CountryImage = ({ countryId, className }: CountryImageProps) => {
         />
       ) : (
         // Loading state
-        <div className="w-full h-full bg-slate-200 animate-pulse"></div>
+        <div className="w-full h-full flex items-center justify-center bg-slate-200">
+          <Loading height={100} width={100} />
+        </div>
       )}
     </div>
   );
